@@ -44,7 +44,21 @@ public class Mockup1 extends AppCompatActivity {
             }
         });
 
-    }
+        final Button button2 = findViewById(R.id.button2);
+        button2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                // Code here executes on main thread after user presses button
+                Intent nextScreen2 = new Intent(view.getContext(), CreateAccount.class);
+                startActivityForResult(nextScreen2, 0);
+            }
+
+        });
+
+
+
+
+
+        }
 
 
 }
