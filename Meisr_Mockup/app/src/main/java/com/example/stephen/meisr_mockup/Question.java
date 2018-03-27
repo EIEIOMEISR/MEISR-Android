@@ -11,12 +11,14 @@ public class Question {
     private int moduleNumber;
     private int questionNumber;
     private int questionAnswer;
+    private int questionAge;
 
-    public Question(String text, int module, int question)
+    public Question(String text, int module, int question, int age)
     {
         questionText = text;
         moduleNumber = module;
         questionNumber = question;
+        questionAge = age;
     }
 
     public void setNextQuestion(Question next)
@@ -27,6 +29,11 @@ public class Question {
     public void setQuestionAnswer(int answer)
     {
         questionAnswer = answer;
+    }
+
+    public void setQuestionAge(int age)
+    {
+        questionAge = age;
     }
 
     public String getQuestionText()
@@ -47,6 +54,11 @@ public class Question {
     public int getQuestionNumber()
     {
         return questionNumber;
+    }
+
+    public int getQuestionAge()
+    {
+        return questionAge;
     }
 
     public Question getNextQuestion()
