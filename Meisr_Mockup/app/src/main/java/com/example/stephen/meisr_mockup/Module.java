@@ -32,8 +32,9 @@ public class Module {
         JSONObject question = null;
         try {
             for (int i = 0; i < questionList.size(); i++) {
-                if (questionList.get(i).getInt("age") == age) {
+                if (questionList.get(i).getInt("starting_age") == age) {
                     question = questionList.get(i);
+                    questionList.remove(i);
                     break;
                 }
             }
