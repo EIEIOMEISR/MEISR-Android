@@ -1,5 +1,8 @@
 package com.example.stephen.meisr_mockup;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 /**
@@ -8,44 +11,39 @@ import java.util.ArrayList;
 
 public class Module {
 
-    private ArrayList<Question> questionList;
+    private ArrayList<JSONObject> questionList;
+    private ArrayList<JSONObject> answeredList;
     private int id;
 
     public Module()
     {
-        questionList =  new ArrayList<Question>();
+        questionList =  new ArrayList<JSONObject>();
+        answeredList = new ArrayList<JSONObject>();
     }
 
-    public void addQuestion(Question question)
+    public void addQuestion(JSONObject question)
     {
-        boolean ageIncluded = false;
-        for(int i = 0; i < questionList.size(); i++)
-        {
-            if(questionList.get(i).getQuestionAge() == question.getQuestionAge())
-            {
-                question.setNextQuestion(questionList.get(i));
-                questionList.add(i, question);
-                ageIncluded = true;
-            }
-        }
-        if(!ageIncluded)
-        {
-            questionList.add(question);
-        }
+        questionList.add(question);
     }
 
-    public Question getQuestion(int age)
+    public JSONObject getQuestion(int age)
     {
-        Question foundQuestion = null;
-        for(int i = 0; i < questionList.size(); i++)
-        {
-            if(questionList.get(i).getQuestionAge() == age)
-            {
-                foundQuestion = questionList.get(i);
-                questionList.add(i, foundQuestion.getNextQuestion());
+
+        JSONObject question = null;
+        try {
+            for (int i = 0; i < questionList.size(); i++) {
+                if (questionList.get(i).getInt("age") == age) {
+                    question = questionList.get(i);
+                    break;
+                }
             }
+
         }
-        return foundQuestion;
+        catch(JSONException e)
+        {
+            e.printStackTrace();
+        }
+        return question;
     }
 
     public int getId()
