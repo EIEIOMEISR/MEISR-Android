@@ -1,25 +1,31 @@
 package com.example.stephen.meisr_mockup;
 
-import org.json.JSONArray;
+import java.util.ArrayList;
 
 /**
- * Created by kevin on 3/29/2018.
+ * Created by sabow on 3/26/2018.
  */
 
 public class Survey {
-    //JSONArray listQuestions;
-    String test;
 
-    /*public JSONArray getQuestions(){
-        return listQuestions;
-    }*/
+    private int enteredAge;
+    private int currentAge;
+    private ArrayList<Integer> ageMilestones;
+    private ArrayList<Module> modules;
 
-    public void setQuestions(String y) {
-       // listQuestions = x;
-        test = y;
+    public Survey(int age)
+    {
+        enteredAge = age;
     }
 
-    public String getString(){
-        return test;
+    public void addQuestion(Question question)
+    {
+        modules.get(question.getQuestionModule()).addQuestion(question);
     }
+
+    //To Do
+    //Add network functions
+    //Add question answering
+    //Add question selection algorithm
+
 }
