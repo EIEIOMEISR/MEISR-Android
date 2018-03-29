@@ -1,5 +1,6 @@
 package com.example.stephen.meisr_mockup;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,18 +25,30 @@ public class Survey {
     private ArrayList<Integer> ageMilestones;
     private ArrayList<Module> modules;
 
-    public Survey(int age)
+    public Survey(int age, JSONArray questions)
     {
         enteredAge = age;
+        try
+        {
+            for(int i = 0; i < questions.length(); i++)
+            {
+                addQuestion(questions.getJSONObject(i));
+            }
+        }
+        catch(JSONException e)
+        {
+            e.printStackTrace();
+        }
+
     }
 
     public void addQuestion(JSONObject question)
     {
         try {
-            modules.get(question.getInt("module")).addQuestion(question);
-            if(!ageMilestones.contains(question.getInt("age")))
+            modules.get(question.getInt("section")).addQuestion(question);
+            if(!ageMilestones.contains(question.getInt("starting_age")))
             {
-                ageMilestones.add(question.getInt("age"));
+                ageMilestones.add(question.getInt("starting_age"));
             }
         }
         catch(JSONException e)
@@ -59,6 +72,20 @@ public class Survey {
     public void answerQuestion()
     {
 
+    }
+
+    public JSONArray getQuestions()
+    {
+        JSONArray returnQuestions = new JSONArray();
+        int i = 0;
+        JSONObject question = currentModule.getQuestion(currentAge);
+        while(i < 5 && question != null)
+        {
+            returnQuestions.put(question);
+            i++;
+            question = currentModule.getQuestion(currentAge);
+        }
+        return returnQuestions;
     }
 
     public void advanceQuestion()
