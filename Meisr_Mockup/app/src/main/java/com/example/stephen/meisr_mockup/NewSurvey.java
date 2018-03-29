@@ -26,17 +26,13 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import java.util.Map;
-import java.util.HashMap;
-import java.io.Console;
 
 
 public class NewSurvey  extends AppCompatActivity {
@@ -126,9 +122,14 @@ public class NewSurvey  extends AppCompatActivity {
         queue.add(myRequest);*/
 
 
+
+
         final TextView mTextView = (TextView) findViewById(R.id.textView12);
         final TextView q1 = (TextView) findViewById(R.id.textView6);
         final TextView q2 = (TextView) findViewById(R.id.textView7);
+        final TextView q3 = (TextView) findViewById(R.id.textView8);
+        final TextView q4 = (TextView) findViewById(R.id.textView9);
+
 // ...
 
 // Instantiate the RequestQueue.
@@ -136,11 +137,14 @@ public class NewSurvey  extends AppCompatActivity {
         String url3 ="http://www.google.com";
         String url2 = "https://api.androidhive.info/volley/person_object.json";
         String url ="http://skim99.pythonanywhere.com/api/questions/?format=json";
-        final String lol = "lol";
 
-        final Survey survey = new Survey();
+        final VolleyCallback callback = new VolleyCallback() {
+            @Override
+            public void onSuccess(JSONArray result) {
+                System.out.println("We got the array");
 
-
+            }
+        };
 
 // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -150,12 +154,13 @@ public class NewSurvey  extends AppCompatActivity {
                         // Display the first 500 characters of the response string.
                         //mTextView.setText("Response is: "+ response);
                         System.out.println(response);
-                        System.out.println(response.substring(1, response.length()-1));
-                        String gloop = response.substring(1, response.length()-1);
-
-                        try{
+                        try {
                             JSONArray jsonArr = new JSONArray(response);
-                           // survey.setQuestions(jsonArr, "thisstr");
+
+                            //survey.setQuestions(jsonArr);
+                            System.out.println("IN VOLLEY");
+                            callback.onSuccess(jsonArr);
+
                             JSONObject jsonObj = jsonArr.getJSONObject(0);
 
                             System.out.println("created object");
@@ -167,13 +172,20 @@ public class NewSurvey  extends AppCompatActivity {
 
 
                             JSONObject jsonObj2 = jsonArr.getJSONObject(1);
-
                             String what2 = (String) jsonObj2.get("question_text");
-
                             q2.setText(what2);
 
+                            JSONObject jsonObj3 = jsonArr.getJSONObject(2);
+                            String what3 = (String) jsonObj3.get("question_text");
+                            q3.setText(what3);
 
-                        }catch(JSONException e){
+                            JSONObject jsonObj4 = jsonArr.getJSONObject(3);
+                            String what4 = (String) jsonObj4.get("question_text");
+                            q4.setText(what4);
+
+
+
+                        } catch (JSONException e) {
                             // Recovery
                         }
                     }
@@ -187,16 +199,12 @@ public class NewSurvey  extends AppCompatActivity {
 // Add the request to the RequestQueue.
         queue.add(stringRequest);
         //stringRequest
-        //JSONArray questions = survey.getQuestions();
-        String what = survey.getString();
-        System.out.println(what);
-       // System.out.println(questions);
+        /*JSONArray questions = survey.getQuestions();
+        String out = survey.getString();
+        System.out.println("DID VOLLEY OUTPUT?");
+        System.out.println(out);
 
-        final Survey tester = new Survey();
-        tester.setQuestions("tester string");
-        String answer = tester.getString();
-
-        /*try {
+        try {
             JSONObject jsonObj = questions.getJSONObject(0);
 
             System.out.println("created objectOUTSIDE");
@@ -207,7 +215,8 @@ public class NewSurvey  extends AppCompatActivity {
         } catch (JSONException e) {
             Log.e("MYAPP", "unexpected JSON exception", e);
             // Do something to recover ... or kill the app.
-        }*/
+        }
+*/
 
         final Button submit = findViewById(R.id.button5);
         submit.setOnClickListener(new View.OnClickListener() {
@@ -236,12 +245,77 @@ public class NewSurvey  extends AppCompatActivity {
                 System.out.println("value");
                 System.out.println(value);
 
+                RadioGroup radioGroup2 = (RadioGroup) findViewById(R.id.radioGroup2);
+                int selectedId2 = radioGroup2.getCheckedRadioButtonId();
+                int value2 = 0;
+                switch (selectedId2) {
+                    case R.id.radiobutton5:
+                        value2 = 1;
+                        break;
+                    case R.id.radiobutton6:
+                        value2 = 2;
+                        break;
+                    case R.id.radiobutton7:
+                        value2 = 3;
+                        break;
+
+                    case R.id.radiobutton8:
+                        value2 = 4;
+                        break;
+
+                }
+                System.out.println("value2");
+                System.out.println(value2);
+
+                RadioGroup radioGroup3 = (RadioGroup) findViewById(R.id.radioGroup3);
+                int selectedId3 = radioGroup3.getCheckedRadioButtonId();
+                int value3 = 0;
+                switch (selectedId3) {
+                    case R.id.radiobutton9:
+                        value3 = 1;
+                        break;
+                    case R.id.radiobutton10:
+                        value3 = 2;
+                        break;
+                    case R.id.radiobutton11:
+                        value3 = 3;
+                        break;
+
+                    case R.id.radiobutton12:
+                        value3 = 4;
+                        break;
+
+                }
+                System.out.println("value3");
+                System.out.println(value3);
+
+                RadioGroup radioGroup4 = (RadioGroup) findViewById(R.id.radioGroup4);
+                int selectedId4 = radioGroup4.getCheckedRadioButtonId();
+                int value4 = 0;
+                switch (selectedId4) {
+                    case R.id.radiobutton13:
+                        value4 = 1;
+                        break;
+                    case R.id.radiobutton14:
+                        value4 = 2;
+                        break;
+                    case R.id.radiobutton15:
+                        value4 = 3;
+                        break;
+
+                    case R.id.radiobutton16:
+                        value4 = 4;
+                        break;
+
+                }
+                System.out.println("value4");
+                System.out.println(value4);
 
 
 
 
-                //Intent nextScreen = new Intent(view.getContext(), NewSurvey.class);
-                //startActivityForResult(nextScreen, 0);
+                Intent nextScreen = new Intent(view.getContext(), NewSurvey.class);
+                startActivityForResult(nextScreen, 0);
 
 
                 //query login information from database
