@@ -142,6 +142,8 @@ public class NewSurvey  extends AppCompatActivity {
             @Override
             public void onSuccess(JSONArray result) {
                 System.out.println("We got the array");
+                
+
 
             }
         };

@@ -23,7 +23,7 @@ public class MainPage  extends AppCompatActivity {
         newsurvey.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 // Code here executes on main thread after user presses button
-                Intent nextScreen = new Intent(view.getContext(), NewSurvey.class);
+                Intent nextScreen = new Intent(view.getContext(), Explaination.class);
                 startActivityForResult(nextScreen, 0);
 
 
