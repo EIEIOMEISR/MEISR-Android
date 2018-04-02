@@ -5,8 +5,10 @@ package com.example.stephen.meisr_mockup;
  */
 import android.app.DownloadManager;
 import android.content.Intent;
+import android.provider.SyncStateContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.JsonWriter;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -33,12 +36,27 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import static android.provider.Telephony.Carriers.PASSWORD;
 
 
-public class NewSurvey  extends AppCompatActivity {
+public class NewSurvey extends AppCompatActivity {
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_survey);
+        System.out.println("wtTTTTTTTTTTTTTTTTTTTTTTTTTTTTTf");
+
+        Intent myIntent = getIntent(); // gets the previously created intent
+        System.out.println("LOL");
+        final String agef = myIntent.getStringExtra("age");
+        final String Jsonarray = myIntent.getStringExtra("JSONARRAY");
+
+        System.out.println(agef);
+        System.out.println(Jsonarray);
 
         /*final TextView mTextView = (TextView) findViewById(R.id.textView12);
 
@@ -130,32 +148,92 @@ public class NewSurvey  extends AppCompatActivity {
         final TextView q3 = (TextView) findViewById(R.id.textView8);
         final TextView q4 = (TextView) findViewById(R.id.textView9);
 
+
+        try {
+            JSONArray jsonArr = new JSONArray(Jsonarray);
+
+            //survey.setQuestions(jsonArr);
+            System.out.println("IN VOLLEY");
+            JSONObject jsonObj = jsonArr.getJSONObject(0);
+
+            System.out.println("created object");
+            System.out.println(jsonObj);
+            System.out.println(jsonObj.get("id"));
+            System.out.println(jsonObj.get("question_text"));
+            String what = (String) jsonObj.get("question_text");
+            q1.setText(what);
+
+
+            JSONObject jsonObj2 = jsonArr.getJSONObject(1);
+            String what2 = (String) jsonObj2.get("question_text");
+            q2.setText(what2);
+
+            JSONObject jsonObj3 = jsonArr.getJSONObject(2);
+            String what3 = (String) jsonObj3.get("question_text");
+            q3.setText(what3);
+
+            JSONObject jsonObj4 = jsonArr.getJSONObject(3);
+            String what4 = (String) jsonObj4.get("question_text");
+            q4.setText(what4);
+
+
+
+        } catch (JSONException e) {
+            System.out.println("REtrival Failed");
+            // Recovery
+        }
+
 // ...
 
 // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
+        //RequestQueue queue = Volley.newRequestQueue(this);
         String url3 ="http://www.google.com";
         String url2 = "https://api.androidhive.info/volley/person_object.json";
         String url ="http://skim99.pythonanywhere.com/api/questions/?format=json";
+        String urlf="http://skim99.pythonanywhere.com/api/questions/?format=json";
 
-        final VolleyCallback callback = new VolleyCallback() {
+        /*final VolleyCallback callback = new VolleyCallback() {
             @Override
             public void onSuccess(JSONArray result) {
                 System.out.println("We got the array");
-                
+
+                //HERE ARE THE VARAIABLES STEPHEN
+                //System.out.print(result);
+                System.out.println(agef);
+
+
+
+
+                JSONObject jsonObj = null;
+                try {
+                    jsonObj = result.getJSONObject(0);
+                    System.out.println("created object");
+                    System.out.println(jsonObj);
+                    System.out.println(jsonObj.get("id"));
+                    System.out.println(jsonObj.get("question_text"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
 
 
             }
-        };
+        };*/
 
 // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+        System.out.println("Before Request");
+
+        /*StringRequest stringRequest;
+
+
+        stringRequest = new StringRequest(Request.Method.GET, urlf,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
                         //mTextView.setText("Response is: "+ response);
-                        System.out.println(response);
+                        System.out.println("Got response");
+                        //System.out.println(response);
                         try {
                             JSONArray jsonArr = new JSONArray(response);
 
@@ -188,6 +266,7 @@ public class NewSurvey  extends AppCompatActivity {
 
 
                         } catch (JSONException e) {
+                            System.out.println("REtrival Failed");
                             // Recovery
                         }
                     }
@@ -195,11 +274,23 @@ public class NewSurvey  extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 mTextView.setText("That didn't work!");
+                error.printStackTrace();
             }
-        });
+        });*/
+       /* {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                //headers.put("Content-Type", "application/json");
+                headers.put("key", "value");
+                return headers;
+            }
+        };*/
 
 // Add the request to the RequestQueue.
-        queue.add(stringRequest);
+        /*stringRequest.setRetryPolicy(new DefaultRetryPolicy( 50000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(stringRequest);*/
         //stringRequest
         /*JSONArray questions = survey.getQuestions();
         String out = survey.getString();
@@ -323,6 +414,19 @@ public class NewSurvey  extends AppCompatActivity {
                 //query login information from database
             }
         });
+
+        final Button save = findViewById(R.id.submit);
+        save.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                // Code here executes on main thread after user presses button
+                Intent nextScreen = new Intent(view.getContext(), MainPage.class);
+                startActivityForResult(nextScreen, 0);
+
+
+                //query login information from database
+            }
+        });
+
 
 
 

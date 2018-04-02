@@ -31,6 +31,19 @@ public class MainPage  extends AppCompatActivity {
             }
         });
 
+        final Button logout = findViewById(R.id.logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                // Code here executes on main thread after user presses button
+                Intent nextScreen = new Intent(view.getContext(), Mockup1.class);
+                startActivityForResult(nextScreen, 0);
+
+
+                //query login information from database
+            }
+        });
+
+
 
     }
 
