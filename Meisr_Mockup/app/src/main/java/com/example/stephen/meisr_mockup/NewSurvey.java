@@ -48,96 +48,18 @@ public class NewSurvey extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_survey);
-        System.out.println("wtTTTTTTTTTTTTTTTTTTTTTTTTTTTTTf");
 
         Intent myIntent = getIntent(); // gets the previously created intent
-        System.out.println("LOL");
+        System.out.println("HERE IS AGE, JSONARRAY, AND MODULE STEVEN!!!");
         final String agef = myIntent.getStringExtra("age");
         final String Jsonarray = myIntent.getStringExtra("JSONARRAY");
+        final String mod = myIntent.getStringExtra("Module");
+        final String ind = myIntent.getStringExtra("Index");
+        int tempindex = Integer.parseInt(ind);
 
         System.out.println(agef);
         System.out.println(Jsonarray);
-
-        /*final TextView mTextView = (TextView) findViewById(R.id.textView12);
-
-// Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://skim99.pythonanywhere.com/api/questions/?format=json";
-        String url2 = "https://api.androidhive.info/volley/person_object.json";*/
-
-
-// Request a string response from the provided URL.
-
-    /*    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET,
-                url,
-
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            Log.d("GOT JSON", "YEEEEEEEEEEEEEEEEEEEEeEhaW");
-                            VolleyLog.v("Response:%n %s", response.toString(4));
-                            System.out.println(response.toString(4));
-                            mTextView.setText(response.toString(4));
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("NO JSON", "NOOOOOOOOOOOOOOOOOO");
-
-
-                VolleyLog.e("Error: ", error.getMessage());
-                VolleyLog.e("Error: ", error.networkResponse);
-
-
-            }
-        });
-
-// Add the request to the RequestQueue.
-        queue.add(jsonObjectRequest);*/
-
-
-        /*Map<String, String> jsonParams = new HashMap<String, String>();
-        jsonParams.put("param1", "name");
-        jsonParams.put("param2", "email");
-
-        jsonParams.put("param3", "phone");
-
-        JSONObject jsonObj = new JSONObject(jsonParams);
-
-
-        JsonObjectRequest myRequest = new JsonObjectRequest(
-                Request.Method.GET, url,
-                jsonObj,
-
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("GOT JSON", "YEEEEEEEEEEEEEEEEEEEEeEhaW");
-                        Log.d("ROLL TIDE", response.toString());
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("NO JSON", "NOOOOOOOOOOOOOOOOOO");
-                    }
-                }) {
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/json; charset=utf-8");
-                headers.put("User-agent", "My useragent");
-                return headers;
-            }
-        };
-        queue.add(myRequest);*/
+        System.out.println(mod);
 
 
 
@@ -153,29 +75,44 @@ public class NewSurvey extends AppCompatActivity {
             JSONArray jsonArr = new JSONArray(Jsonarray);
 
             //survey.setQuestions(jsonArr);
-            System.out.println("IN VOLLEY");
-            JSONObject jsonObj = jsonArr.getJSONObject(0);
+            System.out.println("IN VOLLEY LOOOOOOOOOOPPPPP!!!");
+            System.out.println(tempindex);
+            System.out.println(mod);
 
-            System.out.println("created object");
-            System.out.println(jsonObj);
-            System.out.println(jsonObj.get("id"));
-            System.out.println(jsonObj.get("question_text"));
-            String what = (String) jsonObj.get("question_text");
-            q1.setText(what);
+            for(int i = 0; i< jsonArr.length(); i++) {
+                JSONObject jsonObj = jsonArr.getJSONObject(i);
+                int modint = (int) jsonObj.get("routine");
+                String modstr = Integer.toString(modint);
+                if(modstr.equals(mod)){
+                    jsonObj = jsonArr.getJSONObject(i+tempindex);
+                    System.out.println("created object");
+                    System.out.println(jsonObj);
+                    System.out.println(jsonObj.get("id"));
+                    System.out.println(jsonObj.get("question_text"));
+                    String what = (String) jsonObj.get("question_text");
+                    q1.setText(what);
 
 
-            JSONObject jsonObj2 = jsonArr.getJSONObject(1);
-            String what2 = (String) jsonObj2.get("question_text");
-            q2.setText(what2);
+                    JSONObject jsonObj2 = jsonArr.getJSONObject(i+1+tempindex);
+                    String what2 = (String) jsonObj2.get("question_text");
+                    q2.setText(what2);
 
-            JSONObject jsonObj3 = jsonArr.getJSONObject(2);
-            String what3 = (String) jsonObj3.get("question_text");
-            q3.setText(what3);
+                    JSONObject jsonObj3 = jsonArr.getJSONObject(i+2+tempindex);
+                    String what3 = (String) jsonObj3.get("question_text");
+                    q3.setText(what3);
 
-            JSONObject jsonObj4 = jsonArr.getJSONObject(3);
-            String what4 = (String) jsonObj4.get("question_text");
-            q4.setText(what4);
+                    JSONObject jsonObj4 = jsonArr.getJSONObject(i+3+tempindex);
+                    String what4 = (String) jsonObj4.get("question_text");
+                    q4.setText(what4);
 
+                    tempindex = tempindex + 4;
+                    break;
+
+                }
+
+
+
+            }
 
 
         } catch (JSONException e) {
@@ -192,91 +129,11 @@ public class NewSurvey extends AppCompatActivity {
         String url ="http://skim99.pythonanywhere.com/api/questions/?format=json";
         String urlf="http://skim99.pythonanywhere.com/api/questions/?format=json";
 
-        /*final VolleyCallback callback = new VolleyCallback() {
-            @Override
-            public void onSuccess(JSONArray result) {
-                System.out.println("We got the array");
-
-                //HERE ARE THE VARAIABLES STEPHEN
-                //System.out.print(result);
-                System.out.println(agef);
-
-
-
-
-                JSONObject jsonObj = null;
-                try {
-                    jsonObj = result.getJSONObject(0);
-                    System.out.println("created object");
-                    System.out.println(jsonObj);
-                    System.out.println(jsonObj.get("id"));
-                    System.out.println(jsonObj.get("question_text"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-
-            }
-        };*/
 
 // Request a string response from the provided URL.
         System.out.println("Before Request");
 
-        /*StringRequest stringRequest;
 
-
-        stringRequest = new StringRequest(Request.Method.GET, urlf,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        //mTextView.setText("Response is: "+ response);
-                        System.out.println("Got response");
-                        //System.out.println(response);
-                        try {
-                            JSONArray jsonArr = new JSONArray(response);
-
-                            //survey.setQuestions(jsonArr);
-                            System.out.println("IN VOLLEY");
-                            callback.onSuccess(jsonArr);
-
-                            JSONObject jsonObj = jsonArr.getJSONObject(0);
-
-                            System.out.println("created object");
-                            System.out.println(jsonObj);
-                            System.out.println(jsonObj.get("id"));
-                            System.out.println(jsonObj.get("question_text"));
-                            String what = (String) jsonObj.get("question_text");
-                            q1.setText(what);
-
-
-                            JSONObject jsonObj2 = jsonArr.getJSONObject(1);
-                            String what2 = (String) jsonObj2.get("question_text");
-                            q2.setText(what2);
-
-                            JSONObject jsonObj3 = jsonArr.getJSONObject(2);
-                            String what3 = (String) jsonObj3.get("question_text");
-                            q3.setText(what3);
-
-                            JSONObject jsonObj4 = jsonArr.getJSONObject(3);
-                            String what4 = (String) jsonObj4.get("question_text");
-                            q4.setText(what4);
-
-
-
-                        } catch (JSONException e) {
-                            System.out.println("REtrival Failed");
-                            // Recovery
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                mTextView.setText("That didn't work!");
-                error.printStackTrace();
-            }
-        });*/
        /* {
 
             @Override
@@ -289,30 +146,11 @@ public class NewSurvey extends AppCompatActivity {
         };*/
 
 // Add the request to the RequestQueue.
-        /*stringRequest.setRetryPolicy(new DefaultRetryPolicy( 50000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        queue.add(stringRequest);*/
         //stringRequest
-        /*JSONArray questions = survey.getQuestions();
-        String out = survey.getString();
-        System.out.println("DID VOLLEY OUTPUT?");
-        System.out.println(out);
+        final int index = tempindex;
 
-        try {
-            JSONObject jsonObj = questions.getJSONObject(0);
-
-            System.out.println("created objectOUTSIDE");
-            System.out.println(jsonObj);
-            System.out.println(jsonObj.get("id"));
-            System.out.println(jsonObj.get("question_text"));
-
-        } catch (JSONException e) {
-            Log.e("MYAPP", "unexpected JSON exception", e);
-            // Do something to recover ... or kill the app.
-        }
-*/
-
-        final Button submit = findViewById(R.id.button5);
-        submit.setOnClickListener(new View.OnClickListener() {
+        final Button cont = findViewById(R.id.button5);
+        cont.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 // Code here executes on main thread after user presses button
                 RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
@@ -406,9 +244,15 @@ public class NewSurvey extends AppCompatActivity {
 
 
 
+                String Index = Integer.toString(index);
+                Intent myIntent = new Intent(view.getContext(), NewSurvey.class);
+                myIntent.putExtra("age",agef);
+                myIntent.putExtra("JSONARRAY", Jsonarray);
+                myIntent.putExtra("Module", mod);
+                myIntent.putExtra("Index",Index);
+                startActivity(myIntent);
+                startActivityForResult(myIntent, 0);
 
-                Intent nextScreen = new Intent(view.getContext(), NewSurvey.class);
-                startActivityForResult(nextScreen, 0);
 
 
                 //query login information from database
