@@ -36,7 +36,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static android.provider.Telephony.Carriers.PASSWORD;
@@ -55,7 +57,14 @@ public class NewSurvey extends AppCompatActivity {
         final String Jsonarray = myIntent.getStringExtra("JSONARRAY");
         final String mod = myIntent.getStringExtra("Module");
         final String ind = myIntent.getStringExtra("Index");
+        final Answer foo = (Answer) myIntent.getExtras().getSerializable("Answers");
+
         int tempindex = Integer.parseInt(ind);
+        int int1 = 0;
+        int int2 = 0;
+        int int3 = 0;
+        int int4 = 0;
+
 
         System.out.println(agef);
         System.out.println(Jsonarray);
@@ -91,19 +100,26 @@ public class NewSurvey extends AppCompatActivity {
                     System.out.println(jsonObj.get("question_text"));
                     String what = (String) jsonObj.get("question_text");
                     q1.setText(what);
+                    int1 = (int) jsonObj.get("id");
 
 
                     JSONObject jsonObj2 = jsonArr.getJSONObject(i+1+tempindex);
                     String what2 = (String) jsonObj2.get("question_text");
                     q2.setText(what2);
+                    int2 = (int) jsonObj2.get("id");
+
 
                     JSONObject jsonObj3 = jsonArr.getJSONObject(i+2+tempindex);
                     String what3 = (String) jsonObj3.get("question_text");
                     q3.setText(what3);
+                    int3 = (int) jsonObj3.get("id");
+
 
                     JSONObject jsonObj4 = jsonArr.getJSONObject(i+3+tempindex);
                     String what4 = (String) jsonObj4.get("question_text");
                     q4.setText(what4);
+                    int4 = (int) jsonObj4.get("id");
+
 
                     tempindex = tempindex + 4;
                     break;
@@ -148,6 +164,10 @@ public class NewSurvey extends AppCompatActivity {
 // Add the request to the RequestQueue.
         //stringRequest
         final int index = tempindex;
+        final int fint = int1;
+        final int sint = int2;
+        final int tint = int3;
+        final int foint = int4;
 
         final Button cont = findViewById(R.id.button5);
         cont.setOnClickListener(new View.OnClickListener() {
@@ -241,6 +261,34 @@ public class NewSurvey extends AppCompatActivity {
                 }
                 System.out.println("value4");
                 System.out.println(value4);
+                System.out.println(fint);
+                System.out.println(sint);
+                System.out.println(tint);
+                System.out.println(foint);
+
+                List<Integer> y = foo.getIds();
+                List<Integer> x = foo.getValues();
+
+                x.add(value);
+                x.add(value2);
+                x.add(value3);
+                x.add(value4);
+
+                y.add(fint);
+                y.add(sint);
+                y.add(tint);
+                y.add(foint);
+
+                foo.setIds(y);
+                foo.setValues(x);
+                System.out.println("VALUES AND IDS BEING ADDED TO ANSWER");
+                for(int i = 0; i < x.size(); i++){
+
+                    System.out.println("val: "+x.get(i)+" id: "+y.get(i));
+                }
+
+
+
 
 
 
@@ -250,6 +298,7 @@ public class NewSurvey extends AppCompatActivity {
                 myIntent.putExtra("JSONARRAY", Jsonarray);
                 myIntent.putExtra("Module", mod);
                 myIntent.putExtra("Index",Index);
+                myIntent.putExtra("Answers", (Serializable) foo);
                 startActivity(myIntent);
                 startActivityForResult(myIntent, 0);
 
@@ -265,6 +314,25 @@ public class NewSurvey extends AppCompatActivity {
                 // Code here executes on main thread after user presses button
                 Intent nextScreen = new Intent(view.getContext(), MainPage.class);
                 startActivityForResult(nextScreen, 0);
+
+
+                //query login information from database
+            }
+        });
+
+        final Button chase = findViewById(R.id.button8);
+        chase.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                // Code here executes on main thread after user presses button
+
+                Intent myIntent = new Intent(view.getContext(), Scoring.class);
+                myIntent.putExtra("age",agef);
+                myIntent.putExtra("JSONARRAY", Jsonarray);
+                myIntent.putExtra("Module", mod);
+                //myIntent.putExtra("Index",Index);
+                myIntent.putExtra("Answers", (Serializable) foo);
+                startActivity(myIntent);
+                startActivityForResult(myIntent, 0);
 
 
                 //query login information from database

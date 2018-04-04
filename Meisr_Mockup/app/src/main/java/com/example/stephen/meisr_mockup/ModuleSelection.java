@@ -13,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -28,6 +29,7 @@ public class ModuleSelection extends AppCompatActivity{
         System.out.println("HERE IS AGE AND JSONARRAY STEVEN");
         final String agef = myIntent.getStringExtra("age");
         final String Jsonarray = myIntent.getStringExtra("JSONARRAY");
+        final Answer foo = (Answer) myIntent.getExtras().getSerializable("Answers");
 
         System.out.println(agef);
         System.out.println(Jsonarray);
@@ -77,6 +79,7 @@ public class ModuleSelection extends AppCompatActivity{
                 myIntent.putExtra("JSONARRAY", Jsonarray);
                 myIntent.putExtra("Module", itemValue);
                 myIntent.putExtra("Index", "0");
+                myIntent.putExtra("Answers", (Serializable) foo);
                 startActivity(myIntent);
                 startActivityForResult(myIntent, 0);
 

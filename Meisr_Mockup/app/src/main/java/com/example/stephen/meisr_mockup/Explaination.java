@@ -22,6 +22,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 /**
  * Created by kevin on 3/29/2018.
  */
@@ -126,6 +128,8 @@ public class Explaination extends AppCompatActivity {
                 Intent myIntent = new Intent(view.getContext(), ModuleSelection.class);
                 myIntent.putExtra("age",age);
                 myIntent.putExtra("JSONARRAY", mResponse);
+                Answer foo = new Answer();
+                myIntent.putExtra("Answers", foo);
                 startActivity(myIntent);
                 startActivityForResult(myIntent, 0);
 
