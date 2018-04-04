@@ -15,8 +15,9 @@ public class Module {
     private ArrayList<JSONObject> answeredList;
     private int id;
 
-    public Module()
+    public Module(int idEntered)
     {
+        id = idEntered;
         questionList =  new ArrayList<JSONObject>();
         answeredList = new ArrayList<JSONObject>();
     }
