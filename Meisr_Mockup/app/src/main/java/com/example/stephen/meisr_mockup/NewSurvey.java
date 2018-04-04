@@ -81,8 +81,8 @@ public class NewSurvey extends AppCompatActivity {
 
             for(int i = 0; i< jsonArr.length(); i++) {
                 JSONObject jsonObj = jsonArr.getJSONObject(i);
-                int modint = (int) jsonObj.get("routine");
-                String modstr = Integer.toString(modint);
+                String modstr = (String) jsonObj.get("routine");
+                //String modstr = Integer.toString(modint);
                 if(modstr.equals(mod)){
                     jsonObj = jsonArr.getJSONObject(i+tempindex);
                     System.out.println("created object");

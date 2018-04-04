@@ -37,8 +37,8 @@ public class ModuleSelection extends AppCompatActivity{
         JSONArray jsonarray = new JSONArray(Jsonarray);
         for(int i = 0; i< jsonarray.length(); i++){
             JSONObject obj = jsonarray.getJSONObject(i);
-            int mod = (int) obj.get("routine");
-            String mods = Integer.toString(mod);
+            String mods = (String) obj.get("routine");
+            //String mods = Integer.toString(mod);
             if(listItems.contains(mods)){
                 //nothing
             }else{

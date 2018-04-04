@@ -121,6 +121,8 @@ public class Explaination extends AppCompatActivity {
                 String age = textviewage.getText().toString();
 
                 //Intent nextScreen = new Intent(view.getContext(), NewSurvey.class);
+                System.out.println("End of Explaination");
+                //System.out.println(mResponse);
                 Intent myIntent = new Intent(view.getContext(), ModuleSelection.class);
                 myIntent.putExtra("age",age);
                 myIntent.putExtra("JSONARRAY", mResponse);
