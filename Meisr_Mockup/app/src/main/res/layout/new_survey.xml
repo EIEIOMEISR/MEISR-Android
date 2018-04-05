@@ -7,12 +7,12 @@
 
     <RadioGroup
         android:id="@+id/radioGroup4"
-        android:layout_width="180dp"
+        android:layout_width="120dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="36dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/button5"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup3"
         tools:orientation="horizontal">
 
         <RadioButton
@@ -35,22 +35,16 @@
             android:layout_height="50dp"
             android:layout_weight="1" />
 
-        <RadioButton
-            android:id="@+id/radiobutton16"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_weight="1" />
-
     </RadioGroup>
 
     <RadioGroup
         android:id="@+id/radioGroup3"
-        android:layout_width="180dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="45dp"
+        android:layout_width="120dp"
+        android:layout_height="51dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/radioGroup4"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup2"
         tools:orientation="horizontal">
 
         <RadioButton
@@ -73,22 +67,17 @@
             android:layout_height="50dp"
             android:layout_weight="1" />
 
-        <RadioButton
-            android:id="@+id/radiobutton12"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_weight="1" />
-
     </RadioGroup>
 
     <RadioGroup
         android:id="@+id/radioGroup"
-        android:layout_width="180dp"
+        android:layout_width="120dp"
         android:layout_height="51dp"
-        android:layout_marginBottom="45dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/radioGroup2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        app:layout_constraintVertical_bias="0.32999998"
         tools:orientation="horizontal">
 
         <RadioButton
@@ -112,22 +101,16 @@
             android:layout_height="50dp"
             android:layout_weight="1" />
 
-        <RadioButton
-            android:id="@+id/radiobutton4"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_weight="1" />
-
     </RadioGroup>
 
     <RadioGroup
         android:id="@+id/radioGroup2"
-        android:layout_width="180dp"
+        android:layout_width="120dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="45dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/radioGroup3"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
         tools:orientation="horizontal">
 
         <RadioButton
@@ -150,12 +133,6 @@
             android:layout_height="50dp"
             android:layout_weight="1" />
 
-        <RadioButton
-            android:id="@+id/radiobutton8"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_weight="1" />
-
     </RadioGroup>
 
     <Button
@@ -170,61 +147,52 @@
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="185dp"
+        android:layout_width="245dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="45dp"
         android:layout_marginStart="16dp"
         android:text="This is question 1, what is the answer?"
         app:layout_constraintBottom_toTopOf="@+id/textView7"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
     <TextView
         android:id="@+id/textView7"
-        android:layout_width="185dp"
+        android:layout_width="245dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="45dp"
         android:layout_marginStart="16dp"
         android:text="This is question 2, what is the answer?"
         app:layout_constraintBottom_toTopOf="@+id/textView8"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <TextView
         android:id="@+id/textView8"
-        android:layout_width="185dp"
+        android:layout_width="245dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="45dp"
         android:layout_marginStart="16dp"
         android:text="This is question 3, what is the answer?"
         app:layout_constraintBottom_toTopOf="@+id/textView9"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="185dp"
+        android:layout_width="245dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="36dp"
         android:layout_marginStart="16dp"
         android:text="This is question 4, what is the answer?"
-        app:layout_constraintBottom_toTopOf="@+id/button5"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/submit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <TextView
         android:id="@+id/textView10"
-        android:layout_width="183dp"
-        android:layout_height="32dp"
-        android:layout_marginBottom="14dp"
-        android:text="1          2          3       Beyond"
-        app:layout_constraintBottom_toTopOf="@+id/radioGroup"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <TextView
-        android:id="@+id/textView12"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="61dp"
-        android:layout_marginTop="30dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:text="1           2           3"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -245,5 +213,15 @@
         android:text="CHASE"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button5" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Scores:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

@@ -124,7 +124,7 @@ public class Mockup1 extends AppCompatActivity {
                             }else{
                                 //login is correct
                                 Toast.makeText(getApplicationContext(), "Login Suceeded", 3).show();
-                                Intent myIntent = new Intent(getApplicationContext(), MainPage.class);
+                                Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
                                 myIntent.putExtra("Token", mResponse);
                                 startActivity(myIntent);
                                 startActivityForResult(myIntent, 0);
@@ -165,6 +165,18 @@ public class Mockup1 extends AppCompatActivity {
                 startActivityForResult(nextScreen2, 0);
             }
 
+        });
+
+        final Button but = findViewById(R.id.tester);
+        but.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                // Code here executes on main thread after user presses button
+                Intent nextScreen = new Intent(view.getContext(), MainActivity.class);
+                startActivityForResult(nextScreen, 0);
+
+
+                //query login information from database
+            }
         });
 
 

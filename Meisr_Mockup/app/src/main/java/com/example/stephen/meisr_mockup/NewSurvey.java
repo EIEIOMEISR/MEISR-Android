@@ -188,9 +188,9 @@ public class NewSurvey extends AppCompatActivity {
                         value = 3;
                         break;
 
-                    case R.id.radiobutton4:
-                        value = 4;
-                        break;
+                    //case R.id.radiobutton4:
+                     //   value = 4;
+                     //   break;
 
                 }
                 System.out.println("value");
@@ -210,9 +210,9 @@ public class NewSurvey extends AppCompatActivity {
                         value2 = 3;
                         break;
 
-                    case R.id.radiobutton8:
-                        value2 = 4;
-                        break;
+                    //case R.id.radiobutton8:
+                    //    value2 = 4;
+                     //   break;
 
                 }
                 System.out.println("value2");
@@ -232,9 +232,9 @@ public class NewSurvey extends AppCompatActivity {
                         value3 = 3;
                         break;
 
-                    case R.id.radiobutton12:
-                        value3 = 4;
-                        break;
+                   // case R.id.radiobutton12:
+                   //     value3 = 4;
+                   //     break;
 
                 }
                 System.out.println("value3");
@@ -254,9 +254,9 @@ public class NewSurvey extends AppCompatActivity {
                         value4 = 3;
                         break;
 
-                    case R.id.radiobutton16:
-                        value4 = 4;
-                        break;
+                    //case R.id.radiobutton16:
+                    //    value4 = 4;
+                    //    break;
 
                 }
                 System.out.println("value4");
