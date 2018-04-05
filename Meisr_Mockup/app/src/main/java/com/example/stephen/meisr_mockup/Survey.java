@@ -25,9 +25,15 @@ public class Survey {
     private ArrayList<Integer> ageMilestones;
     private ArrayList<Module> modules;
 
-    public Survey(int age, JSONArray questions)
+    public Survey(int age, int module, JSONArray questions)
     {
         enteredAge = age;
+        currentModule = new Module(module);
+        currentModuleId = module;
+        oneCounter = 0;
+        threeCounter = 0;
+        prevOneCounter = 0;
+        prevThreeCounter = 0;
         try
         {
             for(int i = 0; i < questions.length(); i++)
@@ -38,6 +44,27 @@ public class Survey {
         catch(JSONException e)
         {
             e.printStackTrace();
+        }
+        Collections.sort(ageMilestones);
+        if(enteredAge <= 12)
+        {
+            currentAge = 0;
+        }
+        else if(enteredAge > ageMilestones.get(ageMilestones.size() - 1))
+        {
+            currentAge = ageMilestones.get(ageMilestones.size() - 1) - 12;
+            while(!ageMilestones.contains(currentAge))
+            {
+                currentAge = currentAge - 1;
+            }
+        }
+        else
+        {
+            currentAge = enteredAge - 12;
+            while(!ageMilestones.contains(currentAge))
+            {
+                currentAge = currentAge - 1;
+            }
         }
 
     }
