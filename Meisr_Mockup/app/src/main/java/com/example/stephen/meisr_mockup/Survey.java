@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Stack;
 
 /**
  * Created by sabow on 3/26/2018.
@@ -192,6 +193,17 @@ public class Survey {
                 //prompt to end survey here
             }
         }
+    }
+
+    public ArrayList<NewAnswer> getLastAnswered()
+    {
+        return currentModule.getPreviousAnswers();
+    }
+
+    public Stack<NewAnswer> getModuleAnswers(int mod)
+    {
+        Module thisMod = modules.get(mod);
+        return thisMod.getAnswers();
     }
 
     //To Do
