@@ -19,7 +19,7 @@ public class Survey {
     private int threeCounter;
     private int prevOneCounter;
     private int prevThreeCounter;
-    private JSONObject currentQuestion;
+    private JSONArray currentQuestions;
     private int currentModuleId;
     private Module currentModule;
     private ArrayList<Integer> ageMilestones;
@@ -28,8 +28,6 @@ public class Survey {
     public Survey(int age, int module, JSONArray questions)
     {
         enteredAge = age;
-        currentModule = new Module(module);
-        currentModuleId = module;
         oneCounter = 0;
         threeCounter = 0;
         prevOneCounter = 0;
@@ -72,6 +70,10 @@ public class Survey {
     public void addQuestion(JSONObject question)
     {
         try {
+            if(modules.get(question.getInt("section")) == null)
+            {
+                modules.add(question.getInt("section"), new Module(question.getInt("section")));
+            }
             modules.get(question.getInt("section")).addQuestion(question);
             if(!ageMilestones.contains(question.getInt("starting_age")))
             {
@@ -96,9 +98,20 @@ public class Survey {
         }
     }
 
-    public void answerQuestion()
+    public void answerQuestion(int[] answers)
     {
-
+        for(int i = 0; i < currentQuestions.length(); i++)
+        {
+            try {
+                JSONObject currentQ = currentQuestions.getJSONObject(i);
+                NewAnswer answeredQuestion = new NewAnswer(currentQ.getInt("section"), answers[i], currentQ.getString("id"), currentQ.getString("text"));
+                currentModule.answerQuestion(answeredQuestion);
+            }
+            catch(JSONException e)
+            {
+                e.printStackTrace();
+            }
+        }
     }
 
     public JSONArray getQuestions()
@@ -112,6 +125,7 @@ public class Survey {
             i++;
             question = currentModule.getQuestion(currentAge);
         }
+        currentQuestions = returnQuestions;
         return returnQuestions;
     }
 
