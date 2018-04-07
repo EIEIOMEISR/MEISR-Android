@@ -77,8 +77,33 @@ public class Module {
         return question;
     }
 
+    public JSONObject peekQuestion(int age)
+    {
+        JSONObject question = null;
+        try {
+            for (int i = 0; i < questionList.size(); i++) {
+                if (questionList.get(i).getInt("starting_age") == age) {
+                    question = questionList.get(i);
+                    break;
+                }
+            }
+
+        }
+        catch(JSONException e)
+        {
+            e.printStackTrace();
+        }
+        return question;
+    }
+
     public int getId()
     {
         return id;
     }
+
+    public void pushAnswer(NewAnswer answer)
+    {
+        answers.push(answer);
+    }
 }
+

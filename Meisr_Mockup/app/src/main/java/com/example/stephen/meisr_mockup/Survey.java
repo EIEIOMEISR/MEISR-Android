@@ -104,6 +104,14 @@ public class Survey {
         for(int i = 0; i < currentQuestions.length(); i++)
         {
             try {
+                if(answers[i] == 3)
+                {
+                    threeCounter++;
+                }
+                else if(answers[i] == 1)
+                {
+                    oneCounter++;
+                }
                 JSONObject currentQ = currentQuestions.getJSONObject(i);
                 NewAnswer answeredQuestion = new NewAnswer(currentQ.getInt("section"), answers[i], currentQ.getString("id"), currentQ.getString("text"));
                 currentModule.answerQuestion(answeredQuestion);
@@ -113,6 +121,7 @@ public class Survey {
                 e.printStackTrace();
             }
         }
+        advanceQuestion();
     }
 
     public JSONArray getQuestions()
@@ -140,19 +149,23 @@ public class Survey {
             {
                 currentAge = ageMilestones.get(currentIndex - 1);
             }
-            JSONObject nextQuestion = currentModule.getQuestion(currentAge);
+            JSONObject nextQuestion = currentModule.peekQuestion(currentAge);
             while(nextQuestion == null)
             {
                 currentIndex = currentIndex - 1;
                 if(currentIndex >= 0) {
                     currentAge = ageMilestones.get(currentIndex);
-                    nextQuestion = currentModule.getQuestion(currentAge);
+                    nextQuestion = currentModule.peekQuestion(currentAge);
                 }
                 else
                 {
                     //Prompt to end survey here
                 }
             }
+            oneCounter = 0;
+            prevOneCounter = 0;
+            threeCounter = 0;
+            prevThreeCounter = 0;
         }
         else if(threeCounter + prevThreeCounter > 4)
         {
@@ -160,23 +173,27 @@ public class Survey {
             {
                 currentAge = ageMilestones.get(currentIndex + 1);
             }
-            JSONObject nextQuestion = currentModule.getQuestion(currentAge);
+            JSONObject nextQuestion = currentModule.peekQuestion(currentAge);
             while(nextQuestion == null)
             {
                 currentIndex = currentIndex + 1;
                 if(currentIndex <= ageMilestones.size() - 1) {
                     currentAge = ageMilestones.get(currentIndex);
-                    nextQuestion = currentModule.getQuestion(currentAge);
+                    nextQuestion = currentModule.peekQuestion(currentAge);
                 }
                 else
                 {
                     //Prompt to end survey here
                 }
             }
+            oneCounter = 0;
+            prevOneCounter = 0;
+            threeCounter = 0;
+            prevThreeCounter = 0;
         }
         else
         {
-            JSONObject nextQuestion = currentModule.getQuestion(currentAge);
+            JSONObject nextQuestion = currentModule.peekQuestion(currentAge);
             if(currentAge != enteredAge) {
                 while (nextQuestion == null) {
                     currentIndex = currentIndex + 1;
@@ -187,6 +204,10 @@ public class Survey {
                         //Prompt to end survey here
                     }
                 }
+                prevOneCounter = oneCounter;
+                oneCounter = 0;
+                prevThreeCounter = threeCounter;
+                threeCounter = 0;
             }
             else if(nextQuestion == null)
             {
@@ -204,6 +225,14 @@ public class Survey {
     {
         Module thisMod = modules.get(mod);
         return thisMod.getAnswers();
+    }
+
+    public void updateAnswers(Stack<NewAnswer> updated)
+    {
+        while(!updated.isEmpty())
+        {
+            currentModule.pushAnswer(updated.pop());
+        }
     }
 
     //To Do
