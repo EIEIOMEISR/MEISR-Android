@@ -16,6 +16,7 @@ public class Module {
     private ArrayList<JSONObject> answeredList;
     private int id;
     private boolean complete = false;
+    private boolean canBeCompleted = false;
     private Stack<NewAnswer> answers = new Stack();
 
     public Module(int idEntered)
@@ -105,5 +106,75 @@ public class Module {
     {
         answers.push(answer);
     }
+
+    public boolean isComplete()
+    {
+        return complete;
+    }
+
+    public boolean canComplete()
+    {
+        return canBeCompleted;
+    }
+
+    public void markComplete()
+    {
+        complete = true;
+    }
+
+    public void markCanComplete()
+    {
+        canBeCompleted = true;
+    }
+
+    public void fillOnesAbove(int age)
+    {
+        try {
+            for (int i = 0; i < questionList.size(); i++) {
+                if (questionList.get(i).getInt("starting_age") > age) {
+                    NewAnswer answer = new NewAnswer(id, 1, questionList.get(i).getString("id"), questionList.get(i).getString("question_text"));
+                    questionList.remove(i);
+                    answerQuestion(answer);
+                }
+            }
+        }
+        catch(JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void fillThreesAbove(int age)
+    {
+            try {
+                for (int i = 0; i < questionList.size(); i++) {
+                    if (questionList.get(i).getInt("starting_age") < age) {
+                        NewAnswer answer = new NewAnswer(id, 3, questionList.get(i).getString("id"), questionList.get(i).getString("question_text"));
+                        questionList.remove(i);
+                        answerQuestion(answer);
+                    }
+                }
+            }
+            catch(JSONException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    public void fillInRemainingQuestions()
+    {
+        try {
+            for (int i = 0; i < questionList.size(); i++) {
+                    NewAnswer answer = new NewAnswer(id, 2, questionList.get(i).getString("id"), questionList.get(i).getString("question_text"));
+                    questionList.remove(i);
+                    answerQuestion(answer);
+                    complete = true;
+            }
+        }
+        catch(JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
 }
 

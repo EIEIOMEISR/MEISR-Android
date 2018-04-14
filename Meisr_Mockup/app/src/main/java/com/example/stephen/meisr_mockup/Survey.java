@@ -71,15 +71,12 @@ public class Survey {
     public void addQuestion(JSONObject question)
     {
         try {
-            if(modules.get(question.getInt("section")) == null)
+            JSONObject routine = question.getJSONObject("routine");
+            if(modules.get(routine.getInt("id")) != null)
             {
-                modules.add(question.getInt("section"), new Module(question.getInt("section")));
+                modules.add(routine.getInt("id"), new Module(routine.getInt("id")));
             }
-            modules.get(question.getInt("section")).addQuestion(question);
-            if(!ageMilestones.contains(question.getInt("starting_age")))
-            {
-                ageMilestones.add(question.getInt("starting_age"));
-            }
+            modules.get(routine.getInt("id")).addQuestion(question);
         }
         catch(JSONException e)
         {
@@ -145,6 +142,7 @@ public class Survey {
         int currentIndex = ageMilestones.indexOf(currentAge);
         if(oneCounter + prevOneCounter > 4)
         {
+            currentModule.fillOnesAbove(currentAge);
             if(currentIndex != 0)
             {
                 currentAge = ageMilestones.get(currentIndex - 1);
@@ -159,7 +157,7 @@ public class Survey {
                 }
                 else
                 {
-                    //Prompt to end survey here
+                    currentModule.markCanComplete();
                 }
             }
             oneCounter = 0;
@@ -169,6 +167,7 @@ public class Survey {
         }
         else if(threeCounter + prevThreeCounter > 4)
         {
+            currentModule.fillThreesAbove(currentAge);
             if(currentIndex != ageMilestones.size() - 1)
             {
                 currentAge = ageMilestones.get(currentIndex + 1);
@@ -183,7 +182,7 @@ public class Survey {
                 }
                 else
                 {
-                    //Prompt to end survey here
+                    currentModule.markCanComplete();
                 }
             }
             oneCounter = 0;
@@ -201,7 +200,7 @@ public class Survey {
                         currentAge = ageMilestones.get(currentIndex);
                         nextQuestion = currentModule.getQuestion(currentAge);
                     } else {
-                        //Prompt to end survey here
+                        currentModule.markCanComplete();
                     }
                 }
                 prevOneCounter = oneCounter;
@@ -211,7 +210,7 @@ public class Survey {
             }
             else if(nextQuestion == null)
             {
-                //prompt to end survey here
+                currentModule.markComplete();
             }
         }
     }
@@ -233,6 +232,29 @@ public class Survey {
         {
             currentModule.pushAnswer(updated.pop());
         }
+    }
+
+    public void pushBackQuestionList()
+    {
+        try {
+            for (int i = 0; i < currentQuestions.length(); i++) {
+                currentModule.addQuestion(currentQuestions.getJSONObject(i));
+            }
+        }
+        catch(JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean isModuleComplete(int id)
+    {
+        return modules.get(id).isComplete();
+    }
+
+    public boolean canModuleComplete(int id)
+    {
+        return modules.get(id).canComplete();
     }
 
     //To Do
