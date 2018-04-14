@@ -21,11 +21,17 @@ import java.util.ArrayList;
  */
 
 public class ModuleSelection extends AppCompatActivity{
+
+    String token;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.module_selection);
 
         Intent myIntent = getIntent(); // gets the previously created intent
+        token = myIntent.getStringExtra("Token");
+
+
         System.out.println("HERE IS AGE AND JSONARRAY STEVEN");
         final String agef = myIntent.getStringExtra("age");
         final String Jsonarray = myIntent.getStringExtra("JSONARRAY");
@@ -39,7 +45,8 @@ public class ModuleSelection extends AppCompatActivity{
         JSONArray jsonarray = new JSONArray(Jsonarray);
         for(int i = 0; i< jsonarray.length(); i++){
             JSONObject obj = jsonarray.getJSONObject(i);
-            String mods = (String) obj.get("routine");
+            JSONObject obj2 = (JSONObject) obj.get("routine");
+            String mods = (String) obj2.get("description");
             //String mods = Integer.toString(mod);
             if(listItems.contains(mods)){
                 //nothing
@@ -74,14 +81,16 @@ public class ModuleSelection extends AppCompatActivity{
                 String  itemValue    = (String) myListView.getItemAtPosition(position);
 
 
-                Intent myIntent = new Intent(view.getContext(), NewSurvey.class);
-                myIntent.putExtra("age",agef);
-                myIntent.putExtra("JSONARRAY", Jsonarray);
-                myIntent.putExtra("Module", itemValue);
-                myIntent.putExtra("Index", "0");
-                myIntent.putExtra("Answers", (Serializable) foo);
-                startActivity(myIntent);
-                startActivityForResult(myIntent, 0);
+                Intent nextScreen = new Intent(view.getContext(), NewSurvey.class);
+                nextScreen.putExtra("age",agef);
+                nextScreen.putExtra("JSONARRAY", Jsonarray);
+                nextScreen.putExtra("Module", itemValue);
+                nextScreen.putExtra("Index", "0");
+                nextScreen.putExtra("Answers", (Serializable) foo);
+                nextScreen.putExtra("Token", token);
+
+                startActivity(nextScreen);
+                startActivityForResult(nextScreen, 0);
 
             }
 

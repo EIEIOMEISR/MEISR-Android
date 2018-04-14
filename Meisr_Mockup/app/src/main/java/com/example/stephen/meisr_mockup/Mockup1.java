@@ -12,10 +12,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -24,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -91,6 +95,28 @@ public class Mockup1 extends AppCompatActivity {
         String response = "Failure";
         sharedResponse(response);
 
+        NetworkResponse response2 = error.networkResponse;
+        if (error instanceof ServerError && response2 != null) {
+            try {
+                String res = new String(response2.data,
+                        HttpHeaderParser.parseCharset(response2.headers, "utf-8"));
+                // Now you can use any deserializer to make sense of data
+                System.out.println("ERROR RESPONSE");
+                System.out.println(res);
+
+                JSONObject obj = new JSONObject(res);
+                System.out.println("ERROR RESPONSE");
+                System.out.println(res);
+            } catch (UnsupportedEncodingException e1) {
+                // Couldn't properly decode data to string
+                e1.printStackTrace();
+            } catch (JSONException e2) {
+                // returned data is not JSONObject?
+                e2.printStackTrace();
+            }
+        }
+
+
         //Log.d("Error.Response", response);
     }
     }
@@ -101,10 +127,13 @@ public class Mockup1 extends AppCompatActivity {
     System.out.println("IN GET PARAMETERS");
     System.out.println(login);
     System.out.println(password);
-    params.put("username", login);
+    //params.put("username", login);
     params.put("email", "kziegler@crimson.ua.edu");
-    params.put("password", password);
-    return params;
+    //params.put("password", password);
+        params.put("username", "tester3");
+        params.put("password", "password2");
+
+        return params;
     }
                 };
                 queue.add(postRequest);

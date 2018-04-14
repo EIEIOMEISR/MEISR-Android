@@ -18,6 +18,9 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    String token;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +29,7 @@ public class MainActivity extends AppCompatActivity
         //setSupportActionBar(toolbar);
         Intent myIntent = getIntent(); // gets the previously created intent
         System.out.println("HERE IS AGE, JSONARRAY, AND MODULE STEVEN!!!");
-        final String token = myIntent.getStringExtra("Token");
+        token = myIntent.getStringExtra("Token");
 
         System.out.println("Token in MainActivity");
         System.out.println(token);
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                 // Code here executes on main thread after user presses button
                 Intent nextScreen = new Intent(view.getContext(), Explaination.class);
+                nextScreen.putExtra("Token", token);
                 startActivityForResult(nextScreen, 0);
 
 
@@ -98,8 +102,9 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
-                    Intent nextScreen = new Intent(getApplicationContext(), Explaination.class);
-                    startActivityForResult(nextScreen, 0);
+            Intent nextScreen = new Intent(getApplicationContext(), Explaination.class);
+            nextScreen.putExtra("JSONARRAY", token);
+            startActivityForResult(nextScreen, 0);
 
 
                     //query login information from database
