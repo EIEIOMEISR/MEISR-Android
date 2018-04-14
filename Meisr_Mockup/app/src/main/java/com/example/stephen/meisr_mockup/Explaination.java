@@ -28,7 +28,9 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -46,6 +48,13 @@ public class Explaination extends AppCompatActivity {
         editor.putString("Response", response);
         editor.commit();
     }
+    private void sharedResponse2(String response){
+        SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = m.edit();
+        editor.putString("Response2", response);
+        editor.commit();
+    }
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,7 +149,7 @@ public class Explaination extends AppCompatActivity {
                             //survey.setQuestions(jsonArr);
                             System.out.println("IN VOLLEY");
                             //callback.onSuccess(jsonArr);
-                            sharedResponse(response);
+                            sharedResponse2(response);
 
 
                         } catch (JSONException e) {
@@ -197,15 +206,39 @@ public class Explaination extends AppCompatActivity {
         queue.add(previousanswers);
 
         System.out.println("Wooooooooooooorked2");
-        m = PreferenceManager.getDefaultSharedPreferences(this);
-        final String prevAns = m.getString("Response", "");
+        SharedPreferences m2 = PreferenceManager.getDefaultSharedPreferences(this);
+        final String prevAns = m2.getString("Response2", "");
         System.out.println("PREVIOUS ANSWERS");
-
         System.out.println(prevAns);
 
+        final Answer foo = new Answer();
+        List<Integer> ids = foo.getIds();
+        List<Integer> vals = foo.getValues();
 
 
-            final Button next = findViewById(R.id.button6);
+        try {
+            JSONArray jsonArr = new JSONArray(prevAns);
+            for(int i = 0; i<jsonArr.length(); i++){
+                JSONObject obj = jsonArr.getJSONObject(i);
+                int qid = (int) obj.get("question");
+                int qval = (int) obj.get("rating");
+                System.out.println(qid);
+                System.out.println(qval);
+
+                // int tempqid = Integer.parseInt(qid);
+                //int tempqval = Integer.parseInt(qval);
+                ids.add(qid);
+                vals.add(qval);
+
+            }
+
+    }catch( JSONException e) {
+
+        }
+        foo.setIds(ids);
+        foo.setValues(vals);
+
+        final Button next = findViewById(R.id.button6);
         final EditText textviewage = findViewById(R.id.editText5);
 
         next.setOnClickListener(new View.OnClickListener() {
@@ -221,8 +254,6 @@ public class Explaination extends AppCompatActivity {
                 Intent nextScreen = new Intent(view.getContext(), ModuleSelection.class);
                 nextScreen.putExtra("age",age);
                 nextScreen.putExtra("JSONARRAY", mResponse);
-                Answer foo = new Answer();
-
                 nextScreen.putExtra("Answers", foo);
                 nextScreen.putExtra("Token", token);
 

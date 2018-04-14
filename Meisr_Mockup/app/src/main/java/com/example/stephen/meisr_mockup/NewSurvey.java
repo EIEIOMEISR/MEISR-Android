@@ -162,10 +162,127 @@ public class NewSurvey extends AppCompatActivity {
             // Recovery
         }
 
-// ...
+        //Fill in radio buttons
+
+        List<Integer> fooids = foo.getIds();
+        List<Integer> foovals = foo.getValues();
+
+        for(int i = 0; i<fooids.size(); i++){
+            System.out.println(fooids.get(i));
+            System.out.println(foovals.get(i));
+
+        }
+
+        int currentqid;
+            currentqid = int1;
+            System.out.println(int1);
+
+            for(int j = 0; j< fooids.size(); j++){
+                if(fooids.get(j) == currentqid){
+                    int tempval = foovals.get(j);
+                    switch(tempval){
+                        case 1:
+                        RadioButton rb = (RadioButton) findViewById(R.id.radiobutton1);
+                        rb.setChecked(true);
+                        break;
+                        case 2:
+                            RadioButton rb2 = (RadioButton) findViewById(R.id.radiobutton2);
+                            rb2.setChecked(true);
+                            break;
+
+                        case 3:
+                            RadioButton rb3 = (RadioButton) findViewById(R.id.radiobutton3);
+                            rb3.setChecked(true);
+                            break;
+
+
+
+
+                    }
+
+                }
+            }
+        currentqid = int2;
+        for(int j = 0; j< fooids.size(); j++){
+            if(fooids.get(j) == currentqid){
+                int tempval = foovals.get(j);
+                switch(tempval){
+                    case 1:
+                        RadioButton rb = (RadioButton) findViewById(R.id.radiobutton5);
+                        rb.setChecked(true);
+                        break;
+                    case 2:
+                        RadioButton rb2 = (RadioButton) findViewById(R.id.radiobutton6);
+                        rb2.setChecked(true);
+                        break;
+
+                    case 3:
+                        RadioButton rb3 = (RadioButton) findViewById(R.id.radiobutton7);
+                        rb3.setChecked(true);
+                        break;
+
+
+
+                }
+
+            }
+        }
+
+        currentqid = int3;
+        for(int j = 0; j< fooids.size(); j++){
+            if(fooids.get(j) == currentqid){
+                int tempval = foovals.get(j);
+                switch(tempval){
+                    case 1:
+                        RadioButton rb = (RadioButton) findViewById(R.id.radiobutton9);
+                        rb.setChecked(true);
+                        break;
+                    case 2:
+                        RadioButton rb2 = (RadioButton) findViewById(R.id.radiobutton10);
+                        rb2.setChecked(true);
+                        break;
+
+                    case 3:
+                        RadioButton rb3 = (RadioButton) findViewById(R.id.radiobutton11);
+                        rb3.setChecked(true);
+                        break;
+
+
+
+                }
+
+            }
+        }
+        currentqid = int4;
+        for(int j = 0; j< fooids.size(); j++){
+            if(fooids.get(j) == currentqid){
+                int tempval = foovals.get(j);
+                switch(tempval){
+                    case 1:
+                        RadioButton rb = (RadioButton) findViewById(R.id.radiobutton13);
+                        rb.setChecked(true);
+                        break;
+                    case 2:
+                        RadioButton rb2 = (RadioButton) findViewById(R.id.radiobutton14);
+                        rb2.setChecked(true);
+                        break;
+
+                    case 3:
+                        RadioButton rb3 = (RadioButton) findViewById(R.id.radiobutton15);
+                        rb3.setChecked(true);
+                        break;
+
+
+
+                }
+
+            }
+        }
+
+
 
 // Instantiate the RequestQueue.
-        //RequestQueue queue = Volley.newRequestQueue(this);
+
         String url3 ="http://www.google.com";
         String url2 = "https://api.androidhive.info/volley/person_object.json";
         String url ="http://skim99.pythonanywhere.com/api/questions/?format=json";
