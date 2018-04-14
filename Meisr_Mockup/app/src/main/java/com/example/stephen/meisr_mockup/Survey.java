@@ -33,6 +33,13 @@ public class Survey {
         threeCounter = 0;
         prevOneCounter = 0;
         prevThreeCounter = 0;
+        modules = new ArrayList<Module>();
+        ageMilestones = new ArrayList<Integer>();
+        ageMilestones.add(0);
+        for(int i = 0; i < 30; i++)
+        {
+            modules.add(null);
+        }
         try
         {
             for(int i = 0; i < questions.length(); i++)
@@ -72,11 +79,15 @@ public class Survey {
     {
         try {
             JSONObject routine = question.getJSONObject("routine");
-            if(modules.get(routine.getInt("id")) != null)
+            if(modules.get(routine.getInt("id")) == null)
             {
-                modules.add(routine.getInt("id"), new Module(routine.getInt("id")));
+                modules.set(routine.getInt("id"), new Module(routine.getInt("id")));
             }
             modules.get(routine.getInt("id")).addQuestion(question);
+            if(!ageMilestones.contains(question.getInt("starting_age")))
+            {
+                ageMilestones.add(question.getInt("starting_age"));
+            }
         }
         catch(JSONException e)
         {
@@ -87,7 +98,7 @@ public class Survey {
     public void selectModule(int mod)
     {
         currentModuleId = mod;
-        for(int i = 0; i <  modules.size(); i++) {
+        for(int i = 1; i <  modules.size(); i++) {
             if(modules.get(i).getId() == mod)
             {
                 currentModule = modules.get(i);
@@ -110,7 +121,7 @@ public class Survey {
                     oneCounter++;
                 }
                 JSONObject currentQ = currentQuestions.getJSONObject(i);
-                NewAnswer answeredQuestion = new NewAnswer(currentQ.getInt("section"), answers[i], currentQ.getString("id"), currentQ.getString("text"));
+                NewAnswer answeredQuestion = new NewAnswer(currentQ.getJSONObject("routine").getInt("id"), answers[i], currentQ.getString("id"), currentQ.getString("question_text"));
                 currentModule.answerQuestion(answeredQuestion);
             }
             catch(JSONException e)
@@ -133,6 +144,7 @@ public class Survey {
             question = currentModule.getQuestion(currentAge);
         }
         currentQuestions = returnQuestions;
+        //advanceQuestion();
         return returnQuestions;
     }
 

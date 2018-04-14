@@ -43,6 +43,8 @@
         <activity android:name=".MainActivity">
         </activity>
 
+        <activity android:name=".DisplayModule">
+        </activity>
 
     </application>
 

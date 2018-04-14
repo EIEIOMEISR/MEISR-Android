@@ -189,7 +189,7 @@ public class Explaination extends AppCompatActivity {
                 try {
                     JSONObject jsonObj = new JSONObject(token);
                     String tok = (String) jsonObj.get("token");
-                    System.out.println("JWT INC");
+                    System.out.println("Token in Explaination \n JWT INC");
 
                     System.out.println(tok);
                     params.put("Authorization", "JWT " + tok);
@@ -206,6 +206,7 @@ public class Explaination extends AppCompatActivity {
         queue.add(previousanswers);
 
         System.out.println("Wooooooooooooorked2");
+        System.out.println(token);
         SharedPreferences m2 = PreferenceManager.getDefaultSharedPreferences(this);
         final String prevAns = m2.getString("Response2", "");
         System.out.println("PREVIOUS ANSWERS");
