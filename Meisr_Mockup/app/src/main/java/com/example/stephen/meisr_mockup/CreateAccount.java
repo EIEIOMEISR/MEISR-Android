@@ -66,16 +66,19 @@ public class CreateAccount extends AppCompatActivity {
                 TextView editText2 = findViewById(R.id.editText4);
                 TextView editText3 = findViewById(R.id.editText6);
                 TextView editText4 = findViewById(R.id.editText12);
+                TextView editText5 = findViewById(R.id.editText7);
 
 
                 final String login = editText.getText().toString();
                 final String password = editText2.getText().toString();
                 final String password2 = editText3.getText().toString();
                 final String email = editText4.getText().toString();
+                final String dob = editText5.getText().toString();
+                System.out.println(dob);
 
                 if (password.equals(password2)) {
-                    String url2 = "http://skim99.pythonanywhere.com/rest-auth/login/";
-                    String url = "http://skim99.pythonanywhere.com/rest-auth/registration/";
+                    String url = "http://skim99.pythonanywhere.com/rest-auth/register/";
+
 
                     StringRequest postRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                         @Override
@@ -92,6 +95,8 @@ public class CreateAccount extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             System.out.println("Failure!");
+                            System.out.println(error);
+
                             error.printStackTrace();
                             String response = "Failure";
                             sharedResponse(response);
@@ -110,6 +115,8 @@ public class CreateAccount extends AppCompatActivity {
                             params.put("email", email);
                             params.put("password1", password);
                             params.put("password2", password2);
+                            params.put("birth_date", dob);
+
                             return params;
                         }
                     };

@@ -65,6 +65,20 @@ public class NewSurvey extends AppCompatActivity {
         int int3 = 0;
         int int4 = 0;
 
+        int age = Integer.parseInt(agef);
+
+        /*try{
+            JSONArray jsonArr = new JSONArray(Jsonarray);
+            Survey returnQues = new Survey(age, 1, jsonArr);
+            returnQues.selectModule(1);
+            System.out.println("GET QUESTIONS CALL!");
+            System.out.println(returnQues.getQuestions());
+
+        } catch (JSONException e) {
+        System.out.println("REtrival Failed");
+        // Recovery
+         }*/
+
 
         System.out.println(agef);
         System.out.println(Jsonarray);

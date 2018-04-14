@@ -24,6 +24,13 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
+        Intent myIntent = getIntent(); // gets the previously created intent
+        System.out.println("HERE IS AGE, JSONARRAY, AND MODULE STEVEN!!!");
+        final String token = myIntent.getStringExtra("Token");
+
+        System.out.println("Token in MainActivity");
+        System.out.println(token);
+
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
