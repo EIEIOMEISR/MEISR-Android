@@ -200,7 +200,7 @@ public class Mockup1 extends AppCompatActivity {
         but.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 // Code here executes on main thread after user presses button
-                Intent nextScreen = new Intent(view.getContext(), MainActivity.class);
+                Intent nextScreen = new Intent(view.getContext(), DisplayGraphs.class);
                 startActivityForResult(nextScreen, 0);
 
 

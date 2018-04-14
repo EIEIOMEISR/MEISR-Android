@@ -42,7 +42,9 @@
 
         <activity android:name=".MainActivity">
         </activity>
+        <activity android:name=".DisplayGraphs">
 
+        </activity>
 
     </application>
 
