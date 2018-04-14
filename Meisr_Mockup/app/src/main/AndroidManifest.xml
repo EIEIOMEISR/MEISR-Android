@@ -45,6 +45,8 @@
         <activity android:name=".DisplayGraphs">
 
         </activity>
+        <activity android:name=".DisplayModule">
+        </activity>
 
     </application>
 
