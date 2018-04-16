@@ -135,13 +135,25 @@ public class Survey {
     public JSONArray getQuestions()
     {
         JSONArray returnQuestions = new JSONArray();
-        int i = 0;
+        int i = 1;
         JSONObject question = currentModule.getQuestion(currentAge);
-        while(i < 5 && question != null)
+        while(i < 5)
         {
             returnQuestions.put(question);
             i++;
-            question = currentModule.getQuestion(currentAge);
+            if(currentModule.peekQuestion(currentAge) == null && !currentModule.isComplete())
+            {
+                currentAge += 1;
+                while(!ageMilestones.contains(currentAge))
+                {
+                    currentAge = currentAge + 1;
+                }
+                question = currentModule.getQuestion(currentAge);
+            }
+            else if(currentModule.peekQuestion(currentAge) != null)
+            {
+                question = currentModule.getQuestion(currentAge);
+            }
         }
         currentQuestions = returnQuestions;
         //advanceQuestion();
