@@ -178,6 +178,8 @@ public class NewSurvey extends AppCompatActivity {
         List<Integer> fooids = foo.getIds();
         List<Integer> foovals = foo.getValues();
 
+        System.out.println("FOO ANSWERS ARE HERE");
+
         for(int i = 0; i<fooids.size(); i++){
             System.out.println(fooids.get(i));
             System.out.println(foovals.get(i));
@@ -691,7 +693,7 @@ public class NewSurvey extends AppCompatActivity {
                 System.out.println("STARTED SUBMITTTT!!");
 
 
-                stringRequest = new StringRequest(Request.Method.PUT, url,
+                /*stringRequest = new StringRequest(Request.Method.PUT, url,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -764,7 +766,7 @@ public class NewSurvey extends AppCompatActivity {
                 };
                 stringRequest.setRetryPolicy(new DefaultRetryPolicy(50000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                 queue.add(stringRequest);
-                System.out.println("FINSIHED SUBMIT VOLLEY");
+                System.out.println("FINSIHED SUBMIT VOLLEY");*/
 
 
                 Intent myIntent = new Intent(view.getContext(), DisplayModule.class);

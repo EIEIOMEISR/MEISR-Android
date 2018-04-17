@@ -49,8 +49,8 @@ public class Explaination extends AppCompatActivity {
         editor.commit();
     }
     private void sharedResponse2(String response){
-        SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = m.edit();
+        SharedPreferences m2 = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = m2.edit();
         editor.putString("Response2", response);
         editor.commit();
     }
@@ -143,14 +143,14 @@ public class Explaination extends AppCompatActivity {
                     public void onResponse(String response) {
                         System.out.println("Got response ANSWERS");
                         System.out.println(response);
+                        sharedResponse2(response);
+
                         try {
                             JSONArray jsonArr = new JSONArray(response);
 
                             //survey.setQuestions(jsonArr);
                             System.out.println("IN VOLLEY");
                             //callback.onSuccess(jsonArr);
-                            sharedResponse2(response);
-
 
                         } catch (JSONException e) {
                             System.out.println("REtrival Failed");

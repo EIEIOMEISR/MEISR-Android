@@ -35,6 +35,7 @@ import java.util.Map;
 public class DisplayModule extends AppCompatActivity {
 
     String scoresArray;
+
     private void sharedResponse(String response){
         SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = m.edit();
@@ -63,6 +64,8 @@ public class DisplayModule extends AppCompatActivity {
                     public void onResponse(String response) {
                         System.out.println("Got response FOR SCORES JOHN!!!");
                         System.out.println(response);
+                        sharedResponse(response);
+
                         try {
                             JSONArray jsonArr = new JSONArray(response);
                             //survey.setQuestions(jsonArr);
@@ -70,11 +73,7 @@ public class DisplayModule extends AppCompatActivity {
                             System.out.print(jsonArr.length());
                             System.out.println("after len");
 
-
-
                             //callback.onSuccess(jsonArr);
-                            //sharedResponse(response);
-
 
                         } catch (JSONException e) {
                             System.out.println("REtrival Failed");

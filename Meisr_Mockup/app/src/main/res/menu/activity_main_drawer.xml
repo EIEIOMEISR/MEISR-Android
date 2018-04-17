@@ -7,22 +7,22 @@
         <item
             android:id="@+id/nav_camera"
             android:icon="@drawable/ic_assessment_black_24dp"
-            android:title="New Survey" />
+            android:title="Continue Survey" />
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Previous Results" />
+            android:title="Display Results" />
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_close_black_24dp"
-            android:title="Logout" />
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Start New Survey" />
         <item
             android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:icon="@drawable/ic_close_black_24dp"
+            android:title="Logout" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Other">
         <menu>
             <item
                 android:id="@+id/nav_share"

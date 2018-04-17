@@ -42,9 +42,10 @@
 
         <activity android:name=".MainActivity">
         </activity>
-        <activity android:name=".DisplayGraphs">
 
+        <activity android:name=".DisplayGraphs">
         </activity>
+
         <activity android:name=".DisplayModule">
         </activity>
 
