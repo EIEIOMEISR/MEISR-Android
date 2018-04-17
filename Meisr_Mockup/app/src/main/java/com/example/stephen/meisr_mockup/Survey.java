@@ -121,7 +121,8 @@ public class Survey {
                     oneCounter++;
                 }
                 JSONObject currentQ = currentQuestions.getJSONObject(i);
-                NewAnswer answeredQuestion = new NewAnswer(currentQ.getJSONObject("routine").getInt("id"), answers[i], currentQ.getString("id"), currentQ.getString("question_text"));
+                JSONObject routine = currentQ.getJSONObject("routine");
+                NewAnswer answeredQuestion = new NewAnswer(routine.getInt("id"), answers[i], currentQ.getInt("id"), currentQ.getString("question_text"));
                 currentModule.answerQuestion(answeredQuestion);
             }
             catch(JSONException e)
@@ -154,11 +155,13 @@ public class Survey {
             }
             else
             {
+                currentQuestions = returnQuestions;
                 return returnQuestions;
             }
             returnQuestions.put(question);
             i++;
         }
+        currentQuestions = returnQuestions;
         return returnQuestions;
     }
 

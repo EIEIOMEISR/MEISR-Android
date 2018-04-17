@@ -7,11 +7,11 @@ package com.example.stephen.meisr_mockup;
 public class NewAnswer {
 
     private int module;
-    private String questionID;
+    private int questionID;
     private int answer;
     private String questionText;
 
-    public NewAnswer(int mod, int ans, String id, String text) {
+    public NewAnswer(int mod, int ans, int id, String text) {
         module = mod;
         answer = ans;
         questionID = id;
@@ -31,7 +31,7 @@ public class NewAnswer {
         return questionText;
     }
 
-    public String getQuestionID()
+    public int getQuestionID()
     {
         return questionID;
     }
@@ -41,7 +41,7 @@ public class NewAnswer {
         module = id;
     }
 
-    public void setQuestionID(String id)
+    public void setQuestionID(int id)
     {
         questionID = id;
     }
