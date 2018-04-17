@@ -17,6 +17,7 @@ public class Module {
     private int id;
     private boolean complete = false;
     private boolean canBeCompleted = false;
+    private boolean empty = false;
     private Stack<NewAnswer> answers = new Stack();
 
     public Module(int idEntered)
@@ -66,6 +67,10 @@ public class Module {
                 if (questionList.get(i).getInt("starting_age") == age) {
                     question = questionList.get(i);
                     questionList.remove(i);
+                    if(questionList.size() == 0)
+                    {
+                        empty = true;
+                    }
                     break;
                 }
             }
@@ -110,6 +115,11 @@ public class Module {
     public boolean isComplete()
     {
         return complete;
+    }
+
+    public boolean isEmpty()
+    {
+        return empty;
     }
 
     public boolean canComplete()

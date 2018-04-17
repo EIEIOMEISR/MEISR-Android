@@ -29,6 +29,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.5'
     compile 'com.googlecode.json-simple:json-simple:1.1'
     compile 'com.android.support:design:26.1.0'
+    testCompile 'org.json:json:20140107'
     //compile fileTree(dir: 'libs', include: ['*.jar'])
     // Glide image library
     //compile 'com.github.bumptech.glide:glide:3.7.0'

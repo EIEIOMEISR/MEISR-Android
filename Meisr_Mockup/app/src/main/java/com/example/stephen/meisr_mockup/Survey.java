@@ -26,7 +26,7 @@ public class Survey {
     private ArrayList<Integer> ageMilestones;
     private ArrayList<Module> modules;
 
-    public Survey(int age, int module, JSONArray questions)
+    public Survey(int age, JSONArray questions)
     {
         enteredAge = age;
         oneCounter = 0;
@@ -136,15 +136,29 @@ public class Survey {
     {
         JSONArray returnQuestions = new JSONArray();
         int i = 0;
-        JSONObject question = currentModule.getQuestion(currentAge);
-        while(i < 5 && question != null)
+        JSONObject question = null;
+        while(i < 4)
         {
+            if(currentModule.peekQuestion(currentAge) == null && !currentModule.isEmpty())
+            {
+                currentAge += 1;
+                while(!ageMilestones.contains(currentAge))
+                {
+                    currentAge = currentAge + 1;
+                }
+                question = currentModule.getQuestion(currentAge);
+            }
+            else if(currentModule.peekQuestion(currentAge) != null)
+            {
+                question = currentModule.getQuestion(currentAge);
+            }
+            else
+            {
+                return returnQuestions;
+            }
             returnQuestions.put(question);
             i++;
-            question = currentModule.getQuestion(currentAge);
         }
-        currentQuestions = returnQuestions;
-        //advanceQuestion();
         return returnQuestions;
     }
 
