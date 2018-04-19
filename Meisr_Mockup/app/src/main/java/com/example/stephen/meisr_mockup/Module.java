@@ -174,7 +174,7 @@ public class Module {
     {
         try {
             for (int i = 0; i < questionList.size(); i++) {
-                    NewAnswer answer = new NewAnswer(id, 2, questionList.get(i).getInt("id"), questionList.get(i).getString("question_text"));
+                    NewAnswer answer = new NewAnswer(id, 0, questionList.get(i).getInt("id"), questionList.get(i).getString("question_text"));
                     questionList.remove(i);
                     answerQuestion(answer);
                     complete = true;

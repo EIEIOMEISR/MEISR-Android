@@ -26,6 +26,12 @@ public class Survey {
     private ArrayList<Integer> ageMilestones;
     private ArrayList<Module> modules;
 
+    /*
+    This class is designed to store and perform actions upon module objects
+    in the completion of the survey.
+    To construct a Survey object, pass in the age entered in the app and a JSONArray of all of the
+    questions in the survey.
+    */
     public Survey(int age, JSONArray questions)
     {
         enteredAge = age;
@@ -75,6 +81,13 @@ public class Survey {
 
     }
 
+
+    /*
+    This method takes a question in the form of a JSONObject and adds it to the appropriate module.
+    If the module has not been created, the module iss created and added to the list of modules.
+    If the starting age for the question is not in the age milestones, it is added to the age
+    milestones.
+     */
     public void addQuestion(JSONObject question)
     {
         try {
@@ -95,6 +108,10 @@ public class Survey {
         }
     }
 
+    /*
+    This method is used to indicate which module actions are to be performed upon.
+    This method should be called whenever the user selects a module.
+     */
     public void selectModule(int mod)
     {
         currentModuleId = mod;
@@ -107,6 +124,10 @@ public class Survey {
         }
     }
 
+    /*
+    This method takes an array of integers to answer the current questions and push the answers
+    to the current module.
+     */
     public void answerQuestion(int[] answers)
     {
         for(int i = 0; i < currentQuestions.length(); i++)
@@ -133,6 +154,10 @@ public class Survey {
         advanceQuestion();
     }
 
+    /*
+    This method takes no arguments and returns a JSONArray of size 1-4 representing the current
+    questions to be answered. If the method returns null, there are no questions to be answered.
+     */
     public JSONArray getQuestions()
     {
         JSONArray returnQuestions = new JSONArray();
@@ -165,6 +190,10 @@ public class Survey {
         return returnQuestions;
     }
 
+    /*
+    This method checks the answer history to determine if an advancement or regression of age
+    needs to be applied or if the guardian has answered all of the questions at the current age.
+     */
     public void advanceQuestion()
     {
         Collections.sort(ageMilestones);
@@ -251,17 +280,28 @@ public class Survey {
         }
     }
 
+    /*
+    This method returns an arraylist of NewAnswer objects representing the last set of answers submitted
+    to the module.
+     */
     public ArrayList<NewAnswer> getLastAnswered()
     {
         return currentModule.getPreviousAnswers();
     }
 
+    /*
+    This method returns a stack containing all of the answers submitted to a module.
+     */
     public Stack<NewAnswer> getModuleAnswers(int mod)
     {
         Module thisMod = modules.get(mod);
         return thisMod.getAnswers();
     }
 
+    /*
+    This method is used to update the answers held in answer objects returned by getLastAnswered().
+    This method should be called whether or not the answers have changed.
+     */
     public void updateAnswers(Stack<NewAnswer> updated)
     {
         while(!updated.isEmpty())
@@ -270,6 +310,10 @@ public class Survey {
         }
     }
 
+    /*
+    This method puts questions back into the module if the user chooses to go baack to previous
+    questions.
+     */
     public void pushBackQuestionList()
     {
         try {
@@ -283,11 +327,17 @@ public class Survey {
         }
     }
 
+    /*
+    This method returns a flag indicating if the indicated module is complete.
+     */
     public boolean isModuleComplete(int id)
     {
         return modules.get(id).isComplete();
     }
 
+    /*
+    This method returns a flag indicating if the indicated module can be completed.
+     */
     public boolean canModuleComplete(int id)
     {
         return modules.get(id).canComplete();
