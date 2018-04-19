@@ -74,7 +74,7 @@ public class Mockup1 extends AppCompatActivity {
     final String url = "http://httpbin.org/get?param1=hello";
 // add it to the RequestQueue
     String url2 = "http://httpbin.org/post";
-    String url3 = "http://skim99.pythonanywhere.com/rest-auth/login/";
+    String url3 = "http://skim99.pythonanywhere.com/api/rest-auth/login/";
             //"(POST){'test': '', 'password2': ''}";
 
 
@@ -128,7 +128,7 @@ public class Mockup1 extends AppCompatActivity {
     System.out.println(login);
     System.out.println(password);
     //params.put("username", login);
-    params.put("email", "kziegler@crimson.ua.edu");
+    //params.put("email", "kziegler@crimson.ua.edu");
     //params.put("password", password);
         params.put("username", "kevinZ");
         params.put("password", "password2");
