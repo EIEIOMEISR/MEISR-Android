@@ -163,6 +163,7 @@ public class Survey implements Serializable {
         {
             if(currentModule.isEmpty())
             {
+                currentQuestions = returnQuestions;
                 return returnQuestions;
             }
             if(currentModule.peekQuestion(currentAge) == null)
@@ -174,6 +175,7 @@ public class Survey implements Serializable {
                 if(currentAge > maxAge)
                 {
                     currentModule.markComplete();
+                    currentQuestions = returnQuestions;
                     return returnQuestions;
                 }
                 else
@@ -188,6 +190,7 @@ public class Survey implements Serializable {
                 i++;
             }
         }
+        currentQuestions = returnQuestions;
         return returnQuestions;
 
         /*JSONArray returnQuestions = new JSONArray();
