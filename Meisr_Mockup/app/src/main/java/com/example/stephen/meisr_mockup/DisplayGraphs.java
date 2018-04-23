@@ -20,6 +20,11 @@ public class DisplayGraphs extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.display_graphs);
 
+        Intent myIntent = getIntent();
+        final String mod = myIntent.getStringExtra("Module");
+        final String score = myIntent.getStringExtra("Score1");
+
+
 
         GraphView graph = findViewById(R.id.graph);
         BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[]{

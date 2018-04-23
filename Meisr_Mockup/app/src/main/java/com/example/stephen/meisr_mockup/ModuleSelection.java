@@ -2,6 +2,7 @@ package com.example.stephen.meisr_mockup;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 public class ModuleSelection extends AppCompatActivity{
 
     String token;
+    JSONArray jsonarray;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +44,7 @@ public class ModuleSelection extends AppCompatActivity{
         ArrayList<String> listItems = new ArrayList<String>();
 
         try {
-        JSONArray jsonarray = new JSONArray(Jsonarray);
+        jsonarray = new JSONArray(Jsonarray);
         for(int i = 0; i< jsonarray.length(); i++){
             JSONObject obj = jsonarray.getJSONObject(i);
             JSONObject obj2 = (JSONObject) obj.get("routine");
@@ -79,18 +81,31 @@ public class ModuleSelection extends AppCompatActivity{
 
                 // ListView Clicked item value
                 String  itemValue    = (String) myListView.getItemAtPosition(position);
+                System.out.println("Before creating Survey obj");
+                int ag = Integer.parseInt(agef);
+                final Survey returnQues;
+
+                    returnQues = new Survey(Integer.parseInt(agef), Jsonarray);
+                    System.out.println("inbtw creating Survey obj");
+                    System.out.println(itemPosition);
+                    returnQues.selectModule(itemPosition+1);
+
+                    System.out.println("After creating Survey obj");
+                    Intent nextScreen = new Intent(view.getContext(), NewSurvey.class);
+                    nextScreen.putExtra("age",agef);
+                    nextScreen.putExtra("JSONARRAY", Jsonarray);
+                    nextScreen.putExtra("Module", itemValue);
+                    nextScreen.putExtra("Index", "0");
+                    nextScreen.putExtra("Answers", (Serializable) foo);
+                    //nextScreen.putExtra("retQues", (Serializable) returnQues);
+                    nextScreen.putExtra("Token", token);
+
+                    startActivity(nextScreen);
+                    startActivityForResult(nextScreen, 0);
 
 
-                Intent nextScreen = new Intent(view.getContext(), NewSurvey.class);
-                nextScreen.putExtra("age",agef);
-                nextScreen.putExtra("JSONARRAY", Jsonarray);
-                nextScreen.putExtra("Module", itemValue);
-                nextScreen.putExtra("Index", "0");
-                nextScreen.putExtra("Answers", (Serializable) foo);
-                nextScreen.putExtra("Token", token);
 
-                startActivity(nextScreen);
-                startActivityForResult(nextScreen, 0);
+
 
             }
 

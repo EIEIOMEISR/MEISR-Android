@@ -1,10 +1,12 @@
 package com.example.stephen.meisr_mockup;
 
+import java.io.Serializable;
+
 /**
  * Created by sabow on 4/5/2018.
  */
 
-public class NewAnswer {
+public class NewAnswer implements Serializable {
 
     private int module;
     private int questionID;

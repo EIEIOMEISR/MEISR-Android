@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Stack;
@@ -12,7 +13,7 @@ import java.util.Stack;
  * Created by sabow on 3/26/2018.
  */
 
-public class Survey {
+public class Survey implements Serializable {
 
     private int enteredAge;
     private int currentAge;
@@ -32,51 +33,44 @@ public class Survey {
     To construct a Survey object, pass in the age entered in the app and a JSONArray of all of the
     questions in the survey.
     */
-    public Survey(int age, JSONArray questions)
+    public Survey(int age, String questionstr)
     {
-        enteredAge = age;
-        oneCounter = 0;
-        threeCounter = 0;
-        prevOneCounter = 0;
-        prevThreeCounter = 0;
-        modules = new ArrayList<Module>();
-        ageMilestones = new ArrayList<Integer>();
-        ageMilestones.add(0);
-        for(int i = 0; i < 30; i++)
-        {
-            modules.add(null);
-        }
-        try
-        {
-            for(int i = 0; i < questions.length(); i++)
-            {
-                addQuestion(questions.getJSONObject(i));
+        try {
+            JSONArray questions = new JSONArray(questionstr);
+            enteredAge = age;
+            oneCounter = 0;
+            threeCounter = 0;
+            prevOneCounter = 0;
+            prevThreeCounter = 0;
+            modules = new ArrayList<Module>();
+            ageMilestones = new ArrayList<Integer>();
+            ageMilestones.add(0);
+            for (int i = 0; i < 30; i++) {
+                modules.add(null);
             }
-        }
-        catch(JSONException e)
-        {
-            e.printStackTrace();
-        }
-        Collections.sort(ageMilestones);
-        if(enteredAge <= 12)
-        {
-            currentAge = 0;
-        }
-        else if(enteredAge > ageMilestones.get(ageMilestones.size() - 1))
-        {
-            currentAge = ageMilestones.get(ageMilestones.size() - 1) - 12;
-            while(!ageMilestones.contains(currentAge))
-            {
-                currentAge = currentAge - 1;
+            try {
+                for (int i = 0; i < questions.length(); i++) {
+                    addQuestion(questions.getJSONObject(i));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        }
-        else
-        {
-            currentAge = enteredAge - 12;
-            while(!ageMilestones.contains(currentAge))
-            {
-                currentAge = currentAge - 1;
+            Collections.sort(ageMilestones);
+            if (enteredAge <= 12) {
+                currentAge = 0;
+            } else if (enteredAge > ageMilestones.get(ageMilestones.size() - 1)) {
+                currentAge = ageMilestones.get(ageMilestones.size() - 1) - 12;
+                while (!ageMilestones.contains(currentAge)) {
+                    currentAge = currentAge - 1;
+                }
+            } else {
+                currentAge = enteredAge - 12;
+                while (!ageMilestones.contains(currentAge)) {
+                    currentAge = currentAge - 1;
+                }
             }
+        }catch(JSONException e){
+
         }
 
     }
@@ -311,7 +305,7 @@ public class Survey {
     }
 
     /*
-    This method puts questions back into the module if the user chooses to go baack to previous
+    This method puts questions back into the module if the user chooses to go back to previous
     questions.
      */
     public void pushBackQuestionList()

@@ -52,6 +52,7 @@ public class NewSurvey extends AppCompatActivity {
         final String mod = myIntent.getStringExtra("Module");
         final String ind = myIntent.getStringExtra("Index");
         final Answer foo = (Answer) myIntent.getExtras().getSerializable("Answers");
+        //final Survey returnQues = (Survey) myIntent.getExtras().getSerializable("retQues");
         final String token = myIntent.getStringExtra("Token");
 
         System.out.println("New Survey Token");
@@ -66,46 +67,11 @@ public class NewSurvey extends AppCompatActivity {
 
         int age = Integer.parseInt(agef);
 
-       try{
-            JSONArray jsonArr = new JSONArray(Jsonarray);
-            Survey returnQues = new Survey(age, jsonArr);
-            returnQues.selectModule(1);
-
-            System.out.println("GET QUESTIONS CALL!");
-            System.out.println(returnQues.getQuestions());
-            int[] lel = new int[4];
-            lel[0] = 1;
-            lel[1] = 1;
-            lel[2] = 1;
-            lel[3] = 1;
 
 
-            returnQues.answerQuestion(lel);
-
-            System.out.println("GET QUESTIONS CALL2!");
-            System.out.println(returnQues.getQuestions());
-
-            ArrayList<NewAnswer> test = returnQues.getLastAnswered();
-
-           System.out.println("GET PREVIOUS QUESTIONS!");
-           test.get(0).getText();
-            test.get(1).getText();
-            test.get(2).getText();
-            test.get(3).getText();
-           System.out.println("GET PREVIOUS QUESTIONS DONE!");
-
-
-
-
-        } catch (JSONException e) {
-        System.out.println("REtrival Failed");
-        // Recovery
-         }
-
-
-        System.out.println(agef);
-        System.out.println(Jsonarray);
-        System.out.println(mod);
+        //System.out.println(agef);
+        //System.out.println(Jsonarray);
+        //System.out.println(mod);
 
 
 
@@ -117,7 +83,7 @@ public class NewSurvey extends AppCompatActivity {
         final TextView q4 = (TextView) findViewById(R.id.textView9);
 
 
-        try {
+        /*try {
             JSONArray jsonArr = new JSONArray(Jsonarray);
 
             //survey.setQuestions(jsonArr);
@@ -168,6 +134,60 @@ public class NewSurvey extends AppCompatActivity {
 
 
             }
+
+
+        } catch (JSONException e) {
+            System.out.println("REtrival Failed");
+            // Recovery
+        }*/
+
+        try {
+            JSONArray jsonArr = new JSONArray(Jsonarray);
+            Survey returnQues = new Survey(Integer.parseInt(agef), Jsonarray);
+            returnQues.selectModule(1);
+            System.out.println("GET QUESTIONS CALL!");
+            JSONArray  x = returnQues.getQuestions();
+            int[] lel = new int[4];
+            lel[0] = 1;
+            lel[1] = 1;
+            lel[2] = 1;
+            lel[3] = 1;
+
+
+            returnQues.answerQuestion(lel);
+
+            //survey.setQuestions(jsonArr);
+            System.out.println("IN VOLLEY LOOOOOOOOOOPPPPP!!!");
+            System.out.println(tempindex);
+            System.out.println(mod);
+
+            System.out.println("LENGTH OF JSON ARRAY");
+            System.out.println(x.length());
+
+
+            JSONObject jsonObj = x.getJSONObject(0);
+                    String what = (String) jsonObj.get("question_text");
+                    q1.setText(what);
+                    int1 = (int) jsonObj.get("id");
+
+
+                    JSONObject jsonObj2 = jsonArr.getJSONObject(1);
+                    String what2 = (String) jsonObj2.get("question_text");
+                    q2.setText(what2);
+                    int2 = (int) jsonObj2.get("id");
+
+
+                    JSONObject jsonObj3 = jsonArr.getJSONObject(2);
+                    String what3 = (String) jsonObj3.get("question_text");
+                    q3.setText(what3);
+                    int3 = (int) jsonObj3.get("id");
+
+
+                    JSONObject jsonObj4 = jsonArr.getJSONObject(3);
+                    String what4 = (String) jsonObj4.get("question_text");
+                    q4.setText(what4);
+                    int4 = (int) jsonObj4.get("id");
+
 
 
         } catch (JSONException e) {
@@ -644,6 +664,8 @@ public class NewSurvey extends AppCompatActivity {
                 myIntent.putExtra("Module", mod);
                 myIntent.putExtra("Index",Index);
                 myIntent.putExtra("Answers", (Serializable) foo);
+                //myIntent.putExtra("retQues", (Serializable) returnQues);
+
                 myIntent.putExtra("Token", token);
 
                 startActivity(myIntent);
@@ -670,6 +692,7 @@ public class NewSurvey extends AppCompatActivity {
                 myIntent.putExtra("Module", mod);
                 myIntent.putExtra("Index",Index);
                 myIntent.putExtra("Answers", (Serializable) foo);
+                //myIntent.putExtra("retQues", (Serializable) returnQues);
                 myIntent.putExtra("Token", token);
 
                 startActivity(myIntent);

@@ -62,11 +62,11 @@ public class DisplayModule extends AppCompatActivity {
         StringRequest stringRequest;
 
 
-        stringRequest = new StringRequest(Request.Method.POST, url,
+        stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        System.out.println("Got response FOR SCORES JOHN!!!");
+                        System.out.println("Got response FOR SCORES JOHN41!!!");
                         System.out.println(response);
                         sharedResponse(response);
 
@@ -187,7 +187,7 @@ public class DisplayModule extends AppCompatActivity {
                 String  itemValue    = (String) myListView.getItemAtPosition(position);
 
 
-                Intent nextScreen = new Intent(view.getContext(), Scoring.class);
+                Intent nextScreen = new Intent(view.getContext(), DisplayGraphs.class);
                 nextScreen.putExtra("age",agef);
                 nextScreen.putExtra("JSONARRAY", Jsonarray);
                 nextScreen.putExtra("Module", itemValue);
