@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -214,6 +215,9 @@ public class NewSurvey extends AppCompatActivity {
                 int4 = (int) x1.getQuestionID();
 
             }else if(Func.equals("Complete")){
+
+                Toast.makeText(getApplicationContext(), "Module Complete!", 3).show();
+
                 Intent next = new Intent(getApplicationContext(), ModuleSelection.class);
                 next.putExtra("age",agef);
                 next.putExtra("JSONARRAY", Jsonarray);
@@ -522,6 +526,7 @@ public class NewSurvey extends AppCompatActivity {
                 Survey returnQues = app.getSurvey();
 
                 System.out.println("before answerques");
+                System.out.println(answersarray[0]);
                 returnQues.answerQuestion(answersarray);
                 System.out.println("after answerques");
                 app.setSurvey(returnQues);
