@@ -64,7 +64,7 @@ public class Survey implements Serializable {
                     currentAge = currentAge - 1;
                 }
             } else {
-                currentAge = enteredAge - 12;
+                currentAge = enteredAge - 24;
                 while (!ageMilestones.contains(currentAge)) {
                     currentAge = currentAge - 1;
                 }
@@ -154,7 +154,43 @@ public class Survey implements Serializable {
      */
     public JSONArray getQuestions()
     {
+
         JSONArray returnQuestions = new JSONArray();
+        int i = 0;
+        JSONObject question = null;
+        int maxAge = ageMilestones.get(ageMilestones.size() - 1);
+        while(i < 4)
+        {
+            if(currentModule.isEmpty())
+            {
+                return returnQuestions;
+            }
+            if(currentModule.peekQuestion(currentAge) == null)
+            {
+                while(currentModule.peekQuestion(currentAge) == null && currentAge <= maxAge)
+                {
+                    currentAge++;
+                }
+                if(currentAge > maxAge)
+                {
+                    currentModule.markComplete();
+                    return returnQuestions;
+                }
+                else
+                {
+                    returnQuestions.put(currentModule.getQuestion(currentAge));
+                    i++;
+                }
+            }
+            else
+            {
+                returnQuestions.put(currentModule.getQuestion(currentAge));
+                i++;
+            }
+        }
+        return returnQuestions;
+
+        /*JSONArray returnQuestions = new JSONArray();
         int i = 0;
         JSONObject question = null;
         while(i < 4)
@@ -162,7 +198,7 @@ public class Survey implements Serializable {
             if(currentModule.peekQuestion(currentAge) == null && !currentModule.isEmpty())
             {
                 currentAge += 1;
-                while(!ageMilestones.contains(currentAge))
+                while(!ageMilestones.contains(currentAge) || currentModule.peekQuestion(currentAge) == null)
                 {
                     currentAge = currentAge + 1;
                 }
@@ -181,7 +217,7 @@ public class Survey implements Serializable {
             i++;
         }
         currentQuestions = returnQuestions;
-        return returnQuestions;
+        return returnQuestions;*/
     }
 
     /*
