@@ -34,7 +34,7 @@ public class ModuleSelection extends AppCompatActivity{
         token = myIntent.getStringExtra("Token");
 
 
-        System.out.println("HERE IS AGE AND JSONARRAY STEVEN");
+        System.out.println("IN MODULE SELECTION");
         final String agef = myIntent.getStringExtra("age");
         final String Jsonarray = myIntent.getStringExtra("JSONARRAY");
         final Answer foo = (Answer) myIntent.getExtras().getSerializable("Answers");
@@ -92,6 +92,8 @@ public class ModuleSelection extends AppCompatActivity{
                 MyApp app = (MyApp)getApplicationContext();
                 app.setSurvey(returnQues);
 
+                String nextFunc = "Continue";
+
 
                 System.out.println("After creating Survey obj");
                     Intent nextScreen = new Intent(view.getContext(), NewSurvey.class);
@@ -102,8 +104,10 @@ public class ModuleSelection extends AppCompatActivity{
                     nextScreen.putExtra("Answers", (Serializable) foo);
                     //nextScreen.putExtra("retQues", (Serializable) returnQues);
                     nextScreen.putExtra("Token", token);
+                     nextScreen.putExtra("nextFunc",nextFunc);
 
-                    startActivity(nextScreen);
+
+                startActivity(nextScreen);
                     startActivityForResult(nextScreen, 0);
 
 

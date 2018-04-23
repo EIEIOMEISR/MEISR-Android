@@ -54,6 +54,7 @@ public class NewSurvey extends AppCompatActivity {
         final Answer foo = (Answer) myIntent.getExtras().getSerializable("Answers");
         //final Survey returnQues = (Survey) myIntent.getExtras().getSerializable("retQues");
         final String token = myIntent.getStringExtra("Token");
+        final String Func = myIntent.getStringExtra("nextFunc");
 
         System.out.println("New Survey Token");
         System.out.println(token);
@@ -144,51 +145,91 @@ public class NewSurvey extends AppCompatActivity {
         try {
             JSONArray jsonArr = new JSONArray(Jsonarray);
             //Survey returnQues = new Survey(Integer.parseInt(agef), Jsonarray);
+
+
             MyApp app = (MyApp)getApplicationContext();
             Survey returnQues = app.getSurvey();
 
-            returnQues.selectModule(1);
+
+            //returnQues.selectModule(1);
             System.out.println("GET QUESTIONS CALL SurveyStep!");
-            JSONArray  x = returnQues.getQuestions();
-            System.out.println(x);
+            System.out.println(Func);
 
-            //survey.setQuestions(jsonArr);
-            System.out.println(tempindex);
-            System.out.println(mod);
+            if(Func.equals("Continue")) {
+                JSONArray x = returnQues.getQuestions();
+                System.out.println(x);
 
-            System.out.println("LENGTH OF JSON ARRAY");
-            System.out.println(x.length());
-            System.out.println(x);
+                //survey.setQuestions(jsonArr);
+                System.out.println(tempindex);
+                System.out.println(mod);
 
-
-
-            JSONObject jsonObj = x.getJSONObject(0);
-                    String what = (String) jsonObj.get("question_text");
-                    q1.setText(what);
-                    int1 = (int) jsonObj.get("id");
-            System.out.println(int1);
+                System.out.println("LENGTH OF JSON ARRAY");
+                System.out.println(x.getJSONObject(0).length());
+                System.out.println(x);
 
 
 
-            JSONObject jsonObj2 = x.getJSONObject(1);
-                    String what2 = (String) jsonObj2.get("question_text");
-                    q2.setText(what2);
-                    int2 = (int) jsonObj2.get("id");
-            System.out.println(int2);
+                JSONObject jsonObj = x.getJSONObject(0);
+                String what = (String) jsonObj.get("question_text");
+                q1.setText(what);
+                int1 = (int) jsonObj.get("id");
+                System.out.println(int1);
 
 
-                    JSONObject jsonObj3 = x.getJSONObject(2);
-                    String what3 = (String) jsonObj3.get("question_text");
-                    q3.setText(what3);
-                    int3 = (int) jsonObj3.get("id");
-            System.out.println(int3);
+
+                JSONObject jsonObj2 = x.getJSONObject(1);
+                String what2 = (String) jsonObj2.get("question_text");
+                q2.setText(what2);
+                int2 = (int) jsonObj2.get("id");
+                System.out.println(int2);
 
 
-                    JSONObject jsonObj4 = x.getJSONObject(3);
-                    String what4 = (String) jsonObj4.get("question_text");
-                    q4.setText(what4);
-                    int4 = (int) jsonObj4.get("id");
-            System.out.println(int4);
+                JSONObject jsonObj3 = x.getJSONObject(2);
+                String what3 = (String) jsonObj3.get("question_text");
+                q3.setText(what3);
+                int3 = (int) jsonObj3.get("id");
+                System.out.println(int3);
+
+
+                JSONObject jsonObj4 = x.getJSONObject(3);
+                String what4 = (String) jsonObj4.get("question_text");
+                q4.setText(what4);
+                int4 = (int) jsonObj4.get("id");
+                System.out.println(int4);
+
+            }else if(Func.equals("Back")){
+                List<NewAnswer> x = returnQues.getLastAnswered();
+                NewAnswer x1 = x.get(0);
+                NewAnswer x2 = x.get(1);
+                NewAnswer x3 = x.get(2);
+                NewAnswer x4 = x.get(3);
+
+                q1.setText(x4.getText());
+                int1 = (int) x4.getQuestionID();
+                q2.setText(x3.getText());
+                int2 = (int) x3.getQuestionID();
+                q3.setText(x2.getText());
+                int3 = (int) x2.getQuestionID();
+                q4.setText(x1.getText());
+                int4 = (int) x1.getQuestionID();
+
+            }else if(Func.equals("Complete")){
+                Intent next = new Intent(getApplicationContext(), ModuleSelection.class);
+                next.putExtra("age",agef);
+                next.putExtra("JSONARRAY", Jsonarray);
+                next.putExtra("Module", mod);
+                next.putExtra("Answers", (Serializable) foo);
+
+                //myIntent.putExtra("retQues", (Serializable) returnQues);
+                next.putExtra("Token", token);
+
+                startActivity(next);
+                startActivityForResult(next, 0);
+
+
+
+            }
+
 
                      System.out.println("Got questions from step");
 
@@ -675,9 +716,15 @@ public class NewSurvey extends AppCompatActivity {
 
 
                 System.out.println("Bottomcont");
+                Boolean complete =  returnQues.isModuleComplete(1);
+                System.out.println(complete);
+                String nextFunc;
+                if(complete == false) {
+                     nextFunc = "Continue";
+                }else{
+                     nextFunc = "Complete";
 
-
-
+                }
 
                 String Index = Integer.toString(index);
                 Intent myIntent = new Intent(view.getContext(), NewSurvey.class);
@@ -686,6 +733,8 @@ public class NewSurvey extends AppCompatActivity {
                 myIntent.putExtra("Module", mod);
                 myIntent.putExtra("Index",Index);
                 myIntent.putExtra("Answers", (Serializable) foo);
+                myIntent.putExtra("nextFunc",nextFunc);
+
                 //myIntent.putExtra("retQues", (Serializable) returnQues);
 
                 myIntent.putExtra("Token", token);
@@ -707,6 +756,7 @@ public class NewSurvey extends AppCompatActivity {
                 if(tempindex < 0){
                     tempindex = 0;
                 }
+                String nextFunc = "Back";
                 String Index = Integer.toString(tempindex);
                 Intent myIntent = new Intent(view.getContext(), NewSurvey.class);
                 myIntent.putExtra("age",agef);
@@ -714,6 +764,8 @@ public class NewSurvey extends AppCompatActivity {
                 myIntent.putExtra("Module", mod);
                 myIntent.putExtra("Index",Index);
                 myIntent.putExtra("Answers", (Serializable) foo);
+                myIntent.putExtra("nextFunc",nextFunc);
+
                 //myIntent.putExtra("retQues", (Serializable) returnQues);
                 myIntent.putExtra("Token", token);
 
