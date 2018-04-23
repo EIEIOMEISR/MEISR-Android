@@ -12,10 +12,13 @@ import android.widget.ListView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -24,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,7 +62,7 @@ public class DisplayModule extends AppCompatActivity {
         StringRequest stringRequest;
 
 
-        stringRequest = new StringRequest(Request.Method.GET, url,
+        stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -83,8 +87,29 @@ public class DisplayModule extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println("That didn't work!");
+                System.out.println("SCORES api didnt work!");
                 error.printStackTrace();
+
+                NetworkResponse response2 = error.networkResponse;
+                if (error instanceof ServerError && response2 != null) {
+                    try {
+                        String res = new String(response2.data,
+                                HttpHeaderParser.parseCharset(response2.headers, "utf-8"));
+                        // Now you can use any deserializer to make sense of data
+                        System.out.println("ERROR RESPONSE");
+                        System.out.println(res);
+
+                        JSONObject obj = new JSONObject(res);
+                        System.out.println("ERROR RESPONSE");
+                        System.out.println(res);
+                    } catch (UnsupportedEncodingException e1) {
+                        // Couldn't properly decode data to string
+                        e1.printStackTrace();
+                    } catch (JSONException e2) {
+                        // returned data is not JSONObject?
+                        e2.printStackTrace();
+                    }
+                }
             }
         }){
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -107,9 +132,10 @@ public class DisplayModule extends AppCompatActivity {
         };
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(50000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(stringRequest);
+
         SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
         final String mResponse = m.getString("Response", "");
-        System.out.println("Outside Volley w/scores");
+        System.out.println("62Outside Volley w/scores");
         System.out.println(mResponse);
 
 

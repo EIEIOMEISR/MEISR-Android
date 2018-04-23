@@ -101,13 +101,13 @@ public class Explaination extends AppCompatActivity {
                         @Override
                         public void onResponse(String response) {
                             System.out.println("Got response");
-                            //System.out.println(response);
+                            System.out.println(response);
                             try {
                                 JSONArray jsonArr = new JSONArray(response);
 
                                 //survey.setQuestions(jsonArr);
                                 System.out.println("IN VOLLEY");
-                                callback.onSuccess(jsonArr);
+                                //callback.onSuccess(jsonArr);
                                 sharedResponse(response);
 
 

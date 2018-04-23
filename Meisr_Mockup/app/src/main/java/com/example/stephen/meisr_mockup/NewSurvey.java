@@ -66,9 +66,9 @@ public class NewSurvey extends AppCompatActivity {
 
         int age = Integer.parseInt(agef);
 
-       /* try{
+       try{
             JSONArray jsonArr = new JSONArray(Jsonarray);
-            Survey returnQues = new Survey(age, 1, jsonArr);
+            Survey returnQues = new Survey(age, jsonArr);
             returnQues.selectModule(1);
 
             System.out.println("GET QUESTIONS CALL!");
@@ -87,10 +87,12 @@ public class NewSurvey extends AppCompatActivity {
 
             ArrayList<NewAnswer> test = returnQues.getLastAnswered();
 
-            test.get(0).getText();
+           System.out.println("GET PREVIOUS QUESTIONS!");
+           test.get(0).getText();
             test.get(1).getText();
             test.get(2).getText();
             test.get(3).getText();
+           System.out.println("GET PREVIOUS QUESTIONS DONE!");
 
 
 
@@ -98,7 +100,7 @@ public class NewSurvey extends AppCompatActivity {
         } catch (JSONException e) {
         System.out.println("REtrival Failed");
         // Recovery
-         }*/
+         }
 
 
         System.out.println(agef);
@@ -689,15 +691,15 @@ public class NewSurvey extends AppCompatActivity {
 
                 StringRequest stringRequest;
 
-                String url = "http://skim99.pythonanywhere.com/score_survey/";
+                String url = "http://skim99.pythonanywhere.com/api/score_survey/";
                 System.out.println("STARTED SUBMITTTT!!");
 
 
-                /*stringRequest = new StringRequest(Request.Method.PUT, url,
+                stringRequest = new StringRequest(Request.Method.GET, url,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                System.out.println("SCORRRRRRREDD SURVEYYYYYYYYY!!");
+                                System.out.println("SCORRRRRRREDD SURVEYYYYYYYYY newsurveyresp!!");
                                 System.out.println(response);
                                 try {
                                     JSONArray jsonArr = new JSONArray(response);
@@ -766,7 +768,7 @@ public class NewSurvey extends AppCompatActivity {
                 };
                 stringRequest.setRetryPolicy(new DefaultRetryPolicy(50000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                 queue.add(stringRequest);
-                System.out.println("FINSIHED SUBMIT VOLLEY");*/
+                System.out.println("FINSIHED SUBMIT VOLLEY");
 
 
                 Intent myIntent = new Intent(view.getContext(), DisplayModule.class);
