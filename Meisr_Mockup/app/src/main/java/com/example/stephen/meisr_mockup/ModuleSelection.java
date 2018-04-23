@@ -84,13 +84,16 @@ public class ModuleSelection extends AppCompatActivity{
                 System.out.println("Before creating Survey obj");
                 int ag = Integer.parseInt(agef);
                 final Survey returnQues;
-
-                    returnQues = new Survey(Integer.parseInt(agef), Jsonarray);
+                returnQues = new Survey(Integer.parseInt(agef), Jsonarray);
                     System.out.println("inbtw creating Survey obj");
                     System.out.println(itemPosition);
                     returnQues.selectModule(itemPosition+1);
 
-                    System.out.println("After creating Survey obj");
+                MyApp app = (MyApp)getApplicationContext();
+                app.setSurvey(returnQues);
+
+
+                System.out.println("After creating Survey obj");
                     Intent nextScreen = new Intent(view.getContext(), NewSurvey.class);
                     nextScreen.putExtra("age",agef);
                     nextScreen.putExtra("JSONARRAY", Jsonarray);

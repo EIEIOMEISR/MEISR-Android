@@ -143,50 +143,57 @@ public class NewSurvey extends AppCompatActivity {
 
         try {
             JSONArray jsonArr = new JSONArray(Jsonarray);
-            Survey returnQues = new Survey(Integer.parseInt(agef), Jsonarray);
+            //Survey returnQues = new Survey(Integer.parseInt(agef), Jsonarray);
+            MyApp app = (MyApp)getApplicationContext();
+            Survey returnQues = app.getSurvey();
+
             returnQues.selectModule(1);
-            System.out.println("GET QUESTIONS CALL!");
+            System.out.println("GET QUESTIONS CALL SurveyStep!");
             JSONArray  x = returnQues.getQuestions();
-            int[] lel = new int[4];
-            lel[0] = 1;
-            lel[1] = 1;
-            lel[2] = 1;
-            lel[3] = 1;
-
-
-            returnQues.answerQuestion(lel);
+            System.out.println(x);
 
             //survey.setQuestions(jsonArr);
-            System.out.println("IN VOLLEY LOOOOOOOOOOPPPPP!!!");
             System.out.println(tempindex);
             System.out.println(mod);
 
             System.out.println("LENGTH OF JSON ARRAY");
             System.out.println(x.length());
+            System.out.println(x);
+
 
 
             JSONObject jsonObj = x.getJSONObject(0);
                     String what = (String) jsonObj.get("question_text");
                     q1.setText(what);
                     int1 = (int) jsonObj.get("id");
+            System.out.println(int1);
 
 
-                    JSONObject jsonObj2 = jsonArr.getJSONObject(1);
+
+            JSONObject jsonObj2 = x.getJSONObject(1);
                     String what2 = (String) jsonObj2.get("question_text");
                     q2.setText(what2);
                     int2 = (int) jsonObj2.get("id");
+            System.out.println(int2);
 
 
-                    JSONObject jsonObj3 = jsonArr.getJSONObject(2);
+                    JSONObject jsonObj3 = x.getJSONObject(2);
                     String what3 = (String) jsonObj3.get("question_text");
                     q3.setText(what3);
                     int3 = (int) jsonObj3.get("id");
+            System.out.println(int3);
 
 
-                    JSONObject jsonObj4 = jsonArr.getJSONObject(3);
+                    JSONObject jsonObj4 = x.getJSONObject(3);
                     String what4 = (String) jsonObj4.get("question_text");
                     q4.setText(what4);
                     int4 = (int) jsonObj4.get("id");
+            System.out.println(int4);
+
+                     System.out.println("Got questions from step");
+
+            app.setSurvey(returnQues);
+
 
 
 
@@ -465,6 +472,20 @@ public class NewSurvey extends AppCompatActivity {
                     System.out.println("val: " + x.get(i) + " id: " + y.get(i));
                 }
 
+                int[] answersarray = new int[4];
+                answersarray[0] = value;
+                answersarray[1] = value2;
+                answersarray[2] = value3;
+                answersarray[3] = value4;
+                MyApp app = (MyApp)getApplicationContext();
+                Survey returnQues = app.getSurvey();
+
+                System.out.println("before answerques");
+                returnQues.answerQuestion(answersarray);
+                System.out.println("after answerques");
+                app.setSurvey(returnQues);
+
+
                 //Volley POST for the 4 answers
                 final RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
                 String url = "http://skim99.pythonanywhere.com/api/answers/";
@@ -653,6 +674,7 @@ public class NewSurvey extends AppCompatActivity {
 
 
 
+                System.out.println("Bottomcont");
 
 
 
