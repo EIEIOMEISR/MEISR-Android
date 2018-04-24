@@ -155,8 +155,72 @@ public class NewSurvey extends AppCompatActivity {
             //returnQues.selectModule(1);
             System.out.println("GET QUESTIONS CALL SurveyStep!");
             System.out.println(Func);
+            String flag = "t";
 
-            if(Func.equals("Continue")) {
+            if(Func.equals("Back")){
+                List<NewAnswer> x = returnQues.getLastAnswered();
+                System.out.println("LENGHT OF BACK LIST");
+                if(x == null){
+                    System.out.println("LENGHT OF BACK was null");
+                    flag = "n";
+
+                }else{
+                    System.out.println(x.size());
+                    NewAnswer x1 = x.get(0);
+                    NewAnswer x2 = x.get(1);
+                    NewAnswer x3 = x.get(2);
+                    NewAnswer x4 = x.get(3);
+
+                    q1.setText(x4.getText());
+                    int1 = (int) x4.getQuestionID();
+                    q2.setText(x3.getText());
+                    int2 = (int) x3.getQuestionID();
+                    q3.setText(x2.getText());
+                    int3 = (int) x2.getQuestionID();
+                    q4.setText(x1.getText());
+                    int4 = (int) x1.getQuestionID();
+
+                }
+
+            }
+            if(flag.equals("n")) {
+                System.out.println("flag Was null");
+                int[] answersarray = new int[4];
+                answersarray[0] = 2;
+                answersarray[1] = 2;
+                answersarray[2] = 2;
+                answersarray[3] = 2;
+                returnQues.answerQuestion(answersarray);
+
+                //JSONArray y = returnQues.getQuestions();
+
+                //returnQues.answerQuestion(answersarray);
+
+                List<NewAnswer> x = returnQues.getLastAnswered();
+                if(x == null){
+                    System.out.println("LENGHT OF BACK was null");
+                    flag = "n";
+
+                }else{
+                    System.out.println(x.size());
+                    NewAnswer x1 = x.get(0);
+                    NewAnswer x2 = x.get(1);
+                    NewAnswer x3 = x.get(2);
+                    NewAnswer x4 = x.get(3);
+
+                    q1.setText(x4.getText());
+                    int1 = (int) x4.getQuestionID();
+                    q2.setText(x3.getText());
+                    int2 = (int) x3.getQuestionID();
+                    q3.setText(x2.getText());
+                    int3 = (int) x2.getQuestionID();
+                    q4.setText(x1.getText());
+                    int4 = (int) x1.getQuestionID();
+
+                }
+
+
+            }else if(Func.equals("Continue")) {
                 JSONArray x = returnQues.getQuestions();
                 System.out.println(x);
 
@@ -198,25 +262,9 @@ public class NewSurvey extends AppCompatActivity {
                 int4 = (int) jsonObj4.get("id");
                 System.out.println(int4);
 
-            }else if(Func.equals("Back")){
-                List<NewAnswer> x = returnQues.getLastAnswered();
-                NewAnswer x1 = x.get(0);
-                NewAnswer x2 = x.get(1);
-                NewAnswer x3 = x.get(2);
-                NewAnswer x4 = x.get(3);
-
-                q1.setText(x4.getText());
-                int1 = (int) x4.getQuestionID();
-                q2.setText(x3.getText());
-                int2 = (int) x3.getQuestionID();
-                q3.setText(x2.getText());
-                int3 = (int) x2.getQuestionID();
-                q4.setText(x1.getText());
-                int4 = (int) x1.getQuestionID();
-
             }else if(Func.equals("Complete")){
 
-                Toast.makeText(getApplicationContext(), "Module Complete!", 3).show();
+                Toast.makeText(getApplicationContext(), "Module Complete!", Toast.LENGTH_LONG).show();
 
                 Intent next = new Intent(getApplicationContext(), ModuleSelection.class);
                 next.putExtra("age",agef);
