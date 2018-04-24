@@ -84,33 +84,37 @@ public class ModuleSelection extends AppCompatActivity{
                 System.out.println("Before creating Survey obj");
                 int ag = Integer.parseInt(agef);
                 final Survey returnQues;
-                returnQues = new Survey(Integer.parseInt(agef), Jsonarray);
+                try {
+                    JSONArray lol = new JSONArray(Jsonarray);
+                    returnQues = new Survey(Integer.parseInt(agef), lol);
                     System.out.println("inbtw creating Survey obj");
                     System.out.println(itemPosition);
-                    returnQues.selectModule(itemPosition+1);
+                    returnQues.selectModule(itemPosition + 1);
 
-                MyApp app = (MyApp)getApplicationContext();
-                app.setSurvey(returnQues);
+                    MyApp app = (MyApp) getApplicationContext();
+                    app.setSurvey(returnQues);
 
-                String nextFunc = "Continue";
+                    String nextFunc = "Continue";
 
 
-                System.out.println("After creating Survey obj");
+                    System.out.println("After creating Survey obj");
                     Intent nextScreen = new Intent(view.getContext(), NewSurvey.class);
-                    nextScreen.putExtra("age",agef);
+                    nextScreen.putExtra("age", agef);
                     nextScreen.putExtra("JSONARRAY", Jsonarray);
                     nextScreen.putExtra("Module", itemValue);
                     nextScreen.putExtra("Index", "0");
                     nextScreen.putExtra("Answers", (Serializable) foo);
                     //nextScreen.putExtra("retQues", (Serializable) returnQues);
                     nextScreen.putExtra("Token", token);
-                     nextScreen.putExtra("nextFunc",nextFunc);
+                    nextScreen.putExtra("nextFunc", nextFunc);
 
 
-                startActivity(nextScreen);
+                    startActivity(nextScreen);
                     startActivityForResult(nextScreen, 0);
 
+                }catch(JSONException e){
 
+                }
 
 
 

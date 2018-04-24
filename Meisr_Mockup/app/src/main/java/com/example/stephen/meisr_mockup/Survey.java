@@ -33,10 +33,8 @@ public class Survey implements Serializable {
     To construct a Survey object, pass in the age entered in the app and a JSONArray of all of the
     questions in the survey.
     */
-    public Survey(int age, String questionstr)
+    public Survey(int age, JSONArray questions)
     {
-        try {
-            JSONArray questions = new JSONArray(questionstr);
             enteredAge = age;
             oneCounter = 0;
             threeCounter = 0;
@@ -69,9 +67,6 @@ public class Survey implements Serializable {
                     currentAge = currentAge - 1;
                 }
             }
-        }catch(JSONException e){
-
-        }
 
     }
 
