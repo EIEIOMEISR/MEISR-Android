@@ -16,6 +16,7 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".Mockup1">
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,12 +25,15 @@
         </activity>
 
         <activity android:name=".MainPage">
+            android:screenOrientation="portrait">
         </activity>
 
         <activity android:name=".Explaination">
+            android:screenOrientation="portrait">
         </activity>
 
         <activity android:name=".ModuleSelection">
+            android:screenOrientation="portrait">
         </activity>
 
         <activity android:name=".NewSurvey">

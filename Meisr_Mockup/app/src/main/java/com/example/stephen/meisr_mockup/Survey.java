@@ -229,7 +229,11 @@ public class Survey implements Serializable {
         if(oneCounter + prevOneCounter > 4)
         {
             currentModule.fillOnesAbove(currentAge);
-            if(currentIndex != 0) {
+            if(currentModule.isEmpty())
+            {
+                currentModule.markComplete();
+            }
+            else if(currentIndex != 0) {
                 currentAge = ageMilestones.get(currentIndex - 1);
 
                 JSONObject nextQuestion = currentModule.peekQuestion(currentAge);
@@ -239,7 +243,8 @@ public class Survey implements Serializable {
                         currentAge = ageMilestones.get(currentIndex);
                         nextQuestion = currentModule.peekQuestion(currentAge);
                     } else {
-                        currentModule.markCanComplete();
+                        currentModule.markComplete();
+                        break;
                     }
                 }
             }
@@ -255,6 +260,10 @@ public class Survey implements Serializable {
         else if(threeCounter + prevThreeCounter > 4)
         {
             currentModule.fillThreesAbove(currentAge);
+            if(currentModule.isEmpty())
+            {
+                currentModule.markComplete();
+            }
             if(currentIndex != ageMilestones.size() - 1) {
                 currentAge = ageMilestones.get(currentIndex + 1);
 
@@ -265,7 +274,8 @@ public class Survey implements Serializable {
                         currentAge = ageMilestones.get(currentIndex);
                         nextQuestion = currentModule.peekQuestion(currentAge);
                     } else {
-                        currentModule.markCanComplete();
+                        currentModule.markComplete();
+                        break;
                     }
                 }
             }
