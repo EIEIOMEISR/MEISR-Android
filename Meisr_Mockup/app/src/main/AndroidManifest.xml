@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".Mockup1">
+        <activity android:name=".Mockup1"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,34 +24,40 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainPage">
+        <activity android:name=".MainPage"
             android:screenOrientation="portrait">
         </activity>
 
-        <activity android:name=".Explaination">
+        <activity android:name=".Explaination"
             android:screenOrientation="portrait">
         </activity>
 
-        <activity android:name=".ModuleSelection">
+        <activity android:name=".ModuleSelection"
             android:screenOrientation="portrait">
         </activity>
 
-        <activity android:name=".NewSurvey">
-    </activity>
-
-        <activity android:name=".Scoring">
+        <activity android:name=".NewSurvey"
+            android:screenOrientation="portrait">
         </activity>
 
-        <activity android:name=".CreateAccount">
+        <activity android:name=".Scoring"
+            android:screenOrientation="portrait">
         </activity>
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".CreateAccount"
+            android:screenOrientation="portrait">
         </activity>
 
-        <activity android:name=".DisplayGraphs">
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
         </activity>
 
-        <activity android:name=".DisplayModule">
+        <activity android:name=".DisplayGraphs"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity android:name=".DisplayModule"
+            android:screenOrientation="portrait">
         </activity>
 
     </application>

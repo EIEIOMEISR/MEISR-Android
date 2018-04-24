@@ -54,20 +54,25 @@ public class Survey implements Serializable {
                 e.printStackTrace();
             }
             Collections.sort(ageMilestones);
-            if (enteredAge <= 12) {
-                currentAge = 0;
-            } else if (enteredAge > ageMilestones.get(ageMilestones.size() - 1)) {
-                currentAge = ageMilestones.get(ageMilestones.size() - 1) - 12;
-                while (!ageMilestones.contains(currentAge)) {
-                    currentAge = currentAge - 1;
-                }
-            } else {
-                currentAge = enteredAge - 24;
-                while (!ageMilestones.contains(currentAge)) {
-                    currentAge = currentAge - 1;
-                }
-            }
+            initCurrentAge();
 
+    }
+
+    private void initCurrentAge()
+    {
+        if (enteredAge <= 12) {
+            currentAge = 0;
+        } else if (enteredAge > ageMilestones.get(ageMilestones.size() - 1)) {
+            currentAge = ageMilestones.get(ageMilestones.size() - 1) - 12;
+            while (!ageMilestones.contains(currentAge)) {
+                currentAge = currentAge - 1;
+            }
+        } else {
+            currentAge = enteredAge - 24;
+            while (!ageMilestones.contains(currentAge)) {
+                currentAge = currentAge - 1;
+            }
+        }
     }
 
 
@@ -111,6 +116,7 @@ public class Survey implements Serializable {
                 break;
             }
         }
+        initCurrentAge();
     }
 
     /*
