@@ -169,6 +169,7 @@ public class Survey implements Serializable {
             if(currentModule.isEmpty())
             {
                 currentQuestions = returnQuestions;
+                currentModule.markComplete();
                 return returnQuestions;
             }
             if(currentModule.peekQuestion(currentAge) == null)
@@ -176,6 +177,10 @@ public class Survey implements Serializable {
                 while(currentModule.peekQuestion(currentAge) == null && currentAge <= maxAge)
                 {
                     currentAge++;
+                    if(currentAge > maxAge)
+                    {
+                        currentAge = 0;
+                    }
                 }
                 if(currentAge > maxAge)
                 {
@@ -298,7 +303,7 @@ public class Survey implements Serializable {
             threeCounter = 0;
             prevThreeCounter = 0;
         }
-        else
+        /*else
         {   //In the case that neither of the skipping conditions are met, simply circle through all questions
             //until the module is empty
             JSONObject nextQuestion = currentModule.peekQuestion(currentAge);
@@ -351,8 +356,8 @@ public class Survey implements Serializable {
                 {
                     currentModule.markCanComplete();
                 }
-            }*/
-        }
+            }
+        }*/
     }
 
     /*
