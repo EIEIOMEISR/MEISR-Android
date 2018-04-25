@@ -341,22 +341,28 @@ public class Survey implements Serializable {
             JSONArray returnedQuestions = new JSONArray();
         try {
             ArrayList<NewAnswer> answers = currentModule.getPreviousAnswers();
-            for (int i = 0; i < answers.size(); i++) {
-                JSONObject question = new JSONObject();
-                NewAnswer answer = answers.get(i);
-                question.put("id", answer.getQuestionID());
-                question.put("question_text", answer.getText());
-                JSONObject routine = new JSONObject();
-                routine.put("id", currentModuleId);
-                question.put("routine", routine);
-                returnedQuestions.put(question);
+            if(answers == null)
+            {
+                return returnedQuestions;
             }
-            currentQuestions = returnedQuestions;
+            else {
+                for (int i = 0; i < answers.size(); i++) {
+                    JSONObject question = new JSONObject();
+                    NewAnswer answer = answers.get(i);
+                    question.put("id", answer.getQuestionID());
+                    question.put("question_text", answer.getText());
+                    JSONObject routine = new JSONObject();
+                    routine.put("id", currentModuleId);
+                    question.put("routine", routine);
+                    returnedQuestions.put(question);
+                }
+            }
         }
         catch(JSONException e)
         {
             e.printStackTrace();
         }
+        currentQuestions = returnedQuestions;
         return returnedQuestions;
     }
 
