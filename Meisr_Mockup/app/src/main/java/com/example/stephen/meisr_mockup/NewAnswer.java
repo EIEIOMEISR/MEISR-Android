@@ -12,16 +12,23 @@ public class NewAnswer implements Serializable {
     private int questionID;
     private int answer;
     private String questionText;
+    private int startAge;
 
-    public NewAnswer(int mod, int ans, int id, String text) {
+    public NewAnswer(int mod, int ans, int id, String text, int age) {
         module = mod;
         answer = ans;
         questionID = id;
         questionText = text;
+        startAge = age;
     }
 
     public int getModuleId() {
         return module;
+    }
+
+    public int getAge()
+    {
+        return startAge;
     }
 
     public int getAnswer() {

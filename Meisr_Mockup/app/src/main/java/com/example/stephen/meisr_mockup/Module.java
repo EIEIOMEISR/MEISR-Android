@@ -31,6 +31,8 @@ public class Module implements Serializable {
     public void addQuestion(JSONObject question)
     {
         questionList.add(question);
+        empty = false;
+        complete = false;
     }
 
     public void answerQuestion(NewAnswer answer)
@@ -71,6 +73,7 @@ public class Module implements Serializable {
                     if(questionList.size() == 0)
                     {
                         empty = true;
+                        markComplete();
                     }
                     break;
                 }
@@ -143,7 +146,7 @@ public class Module implements Serializable {
         try {
             for (int i = 0; i < questionList.size(); i++) {
                 if (questionList.get(i).getInt("starting_age") > age) {
-                    NewAnswer answer = new NewAnswer(id, 1, questionList.get(i).getInt("id"), questionList.get(i).getString("question_text"));
+                    NewAnswer answer = new NewAnswer(id, 1, questionList.get(i).getInt("id"), questionList.get(i).getString("question_text"), questionList.get(i).getInt("starting_age"));
                     questionList.remove(i);
                     answerQuestion(answer);
                 }
@@ -160,7 +163,7 @@ public class Module implements Serializable {
             try {
                 for (int i = 0; i < questionList.size(); i++) {
                     if (questionList.get(i).getInt("starting_age") < age) {
-                        NewAnswer answer = new NewAnswer(id, 3, questionList.get(i).getInt("id"), questionList.get(i).getString("question_text"));
+                        NewAnswer answer = new NewAnswer(id, 3, questionList.get(i).getInt("id"), questionList.get(i).getString("question_text"), questionList.get(i).getInt("starting_age"));
                         questionList.remove(i);
                         answerQuestion(answer);
                     }
@@ -175,7 +178,7 @@ public class Module implements Serializable {
     {
         try {
             for (int i = 0; i < questionList.size(); i++) {
-                    NewAnswer answer = new NewAnswer(id, 0, questionList.get(i).getInt("id"), questionList.get(i).getString("question_text"));
+                    NewAnswer answer = new NewAnswer(id, 0, questionList.get(i).getInt("id"), questionList.get(i).getString("question_text"), questionList.get(i).getInt("starting_age"));
                     questionList.remove(i);
                     answerQuestion(answer);
                     complete = true;

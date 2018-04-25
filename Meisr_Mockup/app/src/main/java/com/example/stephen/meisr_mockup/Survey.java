@@ -22,10 +22,13 @@ public class Survey implements Serializable {
     private int prevOneCounter;
     private int prevThreeCounter;
     private JSONArray currentQuestions;
+    private JSONArray pushBackQuestions;
     private int currentModuleId;
     private Module currentModule;
     private ArrayList<Integer> ageMilestones;
     private ArrayList<Module> modules;
+    private ArrayList<NewAnswer> currentPastAnswers = null;
+    private Stack<NewAnswer> retrievedPastAnswers;
 
     /*
     This class is designed to store and perform actions upon module objects
@@ -43,6 +46,7 @@ public class Survey implements Serializable {
             modules = new ArrayList<Module>();
             ageMilestones = new ArrayList<Integer>();
             ageMilestones.add(0);
+            retrievedPastAnswers = new Stack();
             for (int i = 0; i < 30; i++) {
                 modules.add(null);
             }
@@ -142,8 +146,9 @@ public class Survey implements Serializable {
                 }
                 JSONObject currentQ = currentQuestions.getJSONObject(i);
                 JSONObject routine = currentQ.getJSONObject("routine");
-                NewAnswer answeredQuestion = new NewAnswer(routine.getInt("id"), answers[i], currentQ.getInt("id"), currentQ.getString("question_text"));
+                NewAnswer answeredQuestion = new NewAnswer(routine.getInt("id"), answers[i], currentQ.getInt("id"), currentQ.getString("question_text"), currentQ.getInt("starting_age"));
                 currentModule.answerQuestion(answeredQuestion);
+                currentPastAnswers = null;
             }
             catch(JSONException e)
             {
@@ -159,78 +164,65 @@ public class Survey implements Serializable {
      */
     public JSONArray getQuestions()
     {
-
+        currentPastAnswers = null;
         JSONArray returnQuestions = new JSONArray();
         int i = 0;
         JSONObject question = null;
         int maxAge = ageMilestones.get(ageMilestones.size() - 1);
-        while(i < 4)
-        {
-            if(currentModule.isEmpty())
-            {
-                currentQuestions = returnQuestions;
-                currentModule.markComplete();
-                return returnQuestions;
-            }
-            if(currentModule.peekQuestion(currentAge) == null)
-            {
-                while(currentModule.peekQuestion(currentAge) == null && currentAge <= maxAge)
-                {
-                    currentAge++;
-                    if(currentAge > maxAge)
-                    {
-                        currentAge = 0;
-                    }
+        if(!retrievedPastAnswers.isEmpty()) {
+            try {
+                for (int j = 0; i < 4; i++) {
+                    question = new JSONObject();
+                    NewAnswer answer = retrievedPastAnswers.pop();
+                    question.put("id", answer.getQuestionID());
+                    question.put("question_text", answer.getText());
+                    JSONObject routine = new JSONObject();
+                    routine.put("id", currentModuleId);
+                    question.put("routine", routine);
+                    question.put("starting_age", answer.getAge());
+                    returnQuestions.put(question);
                 }
-                if(currentAge > maxAge)
-                {
-                    currentModule.markComplete();
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(pushBackQuestions != null)
+        {
+            returnQuestions = pushBackQuestions;
+            pushBackQuestions = null;
+        }
+        else
+        {
+            while (i < 4) {
+                if (currentModule.isEmpty()) {
                     currentQuestions = returnQuestions;
+                    currentModule.markComplete();
                     return returnQuestions;
                 }
-                else
-                {
+                if (currentModule.peekQuestion(currentAge) == null) {
+                    while (currentModule.peekQuestion(currentAge) == null && currentAge <= maxAge) {
+                        currentAge++;
+                        if (currentAge > maxAge) {
+                            currentAge = 0;
+                        }
+                    }
+                    if (currentAge > maxAge) {
+                        currentModule.markComplete();
+                        currentQuestions = returnQuestions;
+                        return returnQuestions;
+                    } else {
+                        returnQuestions.put(currentModule.getQuestion(currentAge));
+                        i++;
+                    }
+                } else {
                     returnQuestions.put(currentModule.getQuestion(currentAge));
                     i++;
                 }
             }
-            else
-            {
-                returnQuestions.put(currentModule.getQuestion(currentAge));
-                i++;
-            }
         }
         currentQuestions = returnQuestions;
         return returnQuestions;
-
-        /*JSONArray returnQuestions = new JSONArray();
-        int i = 0;
-        JSONObject question = null;
-        while(i < 4)
-        {
-            if(currentModule.peekQuestion(currentAge) == null && !currentModule.isEmpty())
-            {
-                currentAge += 1;
-                while(!ageMilestones.contains(currentAge) || currentModule.peekQuestion(currentAge) == null)
-                {
-                    currentAge = currentAge + 1;
-                }
-                question = currentModule.getQuestion(currentAge);
-            }
-            else if(currentModule.peekQuestion(currentAge) != null)
-            {
-                question = currentModule.getQuestion(currentAge);
-            }
-            else
-            {
-                currentQuestions = returnQuestions;
-                return returnQuestions;
-            }
-            returnQuestions.put(question);
-            i++;
-        }
-        currentQuestions = returnQuestions;
-        return returnQuestions;*/
     }
 
     /*
@@ -367,10 +359,22 @@ public class Survey implements Serializable {
     public JSONArray getLastAnswered()
     {
 
-            pushBackQuestionList();
-            JSONArray returnedQuestions = new JSONArray();
+        //pushBackQuestionList();
+        JSONArray returnedQuestions = new JSONArray();
+        if(currentPastAnswers != null)
+        {
+            for(int i =  0; i < currentPastAnswers.size(); i++)
+            {
+                retrievedPastAnswers.push(currentPastAnswers.get(i));
+            }
+        }
+        else
+        {
+            pushBackQuestions = currentQuestions;
+        }
         try {
             ArrayList<NewAnswer> answers = currentModule.getPreviousAnswers();
+            currentPastAnswers = answers;
             if(answers == null)
             {
                 return returnedQuestions;
@@ -384,6 +388,7 @@ public class Survey implements Serializable {
                     JSONObject routine = new JSONObject();
                     routine.put("id", currentModuleId);
                     question.put("routine", routine);
+                    question.put("starting_age", answer.getAge());
                     returnedQuestions.put(question);
                 }
             }
@@ -393,6 +398,8 @@ public class Survey implements Serializable {
             e.printStackTrace();
         }
         currentQuestions = returnedQuestions;
+        threeCounter = prevThreeCounter;
+        prevThreeCounter = 0;
         return returnedQuestions;
     }
 
