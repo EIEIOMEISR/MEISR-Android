@@ -299,9 +299,30 @@ public class Survey implements Serializable {
             prevThreeCounter = 0;
         }
         else
-        {
+        {   //In the case that neither of the skipping conditions are met, simply circle through all questions
+            //until the module is empty
             JSONObject nextQuestion = currentModule.peekQuestion(currentAge);
-            if(currentAge != enteredAge) {
+            if(currentModule.isEmpty())
+            {
+                currentModule.markComplete();
+            }
+            else
+            {
+                int maxAge = ageMilestones.get(ageMilestones.size() - 1);
+                int minAge = ageMilestones.get(0);
+                currentIndex = ageMilestones.indexOf(currentAge);
+                while(nextQuestion == null)
+                {
+                    currentIndex++;
+                    if(currentIndex >= ageMilestones.size())
+                    {
+                        currentIndex = 0;
+                    }
+                    currentAge = ageMilestones.get(currentIndex);
+                    nextQuestion = currentModule.peekQuestion(currentAge);
+                }
+            }
+            /*if(currentAge != enteredAge) {
                 while (nextQuestion == null) {
                     if(currentModule.isEmpty())
                     {
@@ -330,7 +351,7 @@ public class Survey implements Serializable {
                 {
                     currentModule.markCanComplete();
                 }
-            }
+            }*/
         }
     }
 
