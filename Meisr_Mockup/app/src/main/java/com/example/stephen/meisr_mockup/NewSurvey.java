@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 
 public class NewSurvey extends AppCompatActivity {
@@ -160,34 +161,51 @@ public class NewSurvey extends AppCompatActivity {
             String flag = "t";
 
             if(Func.equals("Back")){
+                System.out.println("Pre CRASHED");
+
                 JSONArray x = returnQues.getLastAnswered();
-                JSONObject jsonObj = x.getJSONObject(0);
-                String what = (String) jsonObj.get("question_text");
-                q4.setText(what);
-                int4 = (int) jsonObj.get("id");
-                System.out.println(int4);
+                System.out.println(x);
+                System.out.println("Past CRASHED");
+
+                try{
+                  JSONObject jsonObj = x.getJSONObject(0);
+
+                }catch(JSONException e){
+                    flag = "n";
+                    System.out.println("ISNULL");
+
+                }
+                System.out.println("Past try");
+
+                try {
+                    JSONObject jsonObj = x.getJSONObject(0);
+                    String what = (String) jsonObj.get("question_text");
+                    q4.setText(what);
+                    int4 = (int) jsonObj.get("id");
+                    System.out.println(int4);
+                    JSONObject routobj = (JSONObject) jsonObj.get("routine");
+                    modnum = (int) routobj.get("id");
 
 
-
-                JSONObject jsonObj2 = x.getJSONObject(1);
-                String what2 = (String) jsonObj2.get("question_text");
-                q3.setText(what2);
-                int3 = (int) jsonObj2.get("id");
-                System.out.println(int3);
-
-
-                JSONObject jsonObj3 = x.getJSONObject(2);
-                String what3 = (String) jsonObj3.get("question_text");
-                q2.setText(what3);
-                int2 = (int) jsonObj3.get("id");
-                System.out.println(int2);
+                    JSONObject jsonObj2 = x.getJSONObject(1);
+                    String what2 = (String) jsonObj2.get("question_text");
+                    q3.setText(what2);
+                    int3 = (int) jsonObj2.get("id");
+                    System.out.println(int3);
 
 
-                JSONObject jsonObj4 = x.getJSONObject(3);
-                String what4 = (String) jsonObj4.get("question_text");
-                q1.setText(what4);
-                int1 = (int) jsonObj4.get("id");
-                System.out.println(int1);
+                    JSONObject jsonObj3 = x.getJSONObject(2);
+                    String what3 = (String) jsonObj3.get("question_text");
+                    q2.setText(what3);
+                    int2 = (int) jsonObj3.get("id");
+                    System.out.println(int2);
+
+
+                    JSONObject jsonObj4 = x.getJSONObject(3);
+                    String what4 = (String) jsonObj4.get("question_text");
+                    q1.setText(what4);
+                    int1 = (int) jsonObj4.get("id");
+                    System.out.println(int1);
                 /*List<NewAnswer> x = returnQues.getLastAnswered();
                 System.out.println("LENGHT OF BACK LIST");
                 if(x == null){
@@ -211,8 +229,15 @@ public class NewSurvey extends AppCompatActivity {
                     int4 = (int) x1.getQuestionID();
 
                 }*/
+                }catch(JSONException e){
+
+                }
 
             }
+
+            System.out.println("flag");
+            System.out.println(flag);
+
             if(flag.equals("n")) {
                 System.out.println("flag Was null");
                 int[] answersarray = new int[4];
@@ -251,31 +276,32 @@ public class NewSurvey extends AppCompatActivity {
                 JSONArray x = returnQues.getLastAnswered();
                 JSONObject jsonObj = x.getJSONObject(0);
                 String what = (String) jsonObj.get("question_text");
-                q1.setText(what);
-                int1 = (int) jsonObj.get("id");
-                System.out.println(int1);
-
+                q4.setText(what);
+                int4 = (int) jsonObj.get("id");
+                System.out.println(int4);
+                JSONObject routobj = (JSONObject) jsonObj.get("routine");
+                modnum = (int) routobj.get("id");
 
 
                 JSONObject jsonObj2 = x.getJSONObject(1);
                 String what2 = (String) jsonObj2.get("question_text");
-                q2.setText(what2);
-                int2 = (int) jsonObj2.get("id");
-                System.out.println(int2);
+                q3.setText(what2);
+                int3 = (int) jsonObj2.get("id");
+                System.out.println(int3);
 
 
                 JSONObject jsonObj3 = x.getJSONObject(2);
                 String what3 = (String) jsonObj3.get("question_text");
-                q3.setText(what3);
-                int3 = (int) jsonObj3.get("id");
-                System.out.println(int3);
+                q2.setText(what3);
+                int2 = (int) jsonObj3.get("id");
+                System.out.println(int2);
 
 
                 JSONObject jsonObj4 = x.getJSONObject(3);
                 String what4 = (String) jsonObj4.get("question_text");
-                q4.setText(what4);
-                int4 = (int) jsonObj4.get("id");
-                System.out.println(int4);
+                q1.setText(what4);
+                int1 = (int) jsonObj4.get("id");
+                System.out.println(int1);
 
 
             }else if(Func.equals("Continue")) {
@@ -322,6 +348,18 @@ public class NewSurvey extends AppCompatActivity {
                 System.out.println(int4);
 
             }else if(Func.equals("Complete")){
+
+                System.out.println("trying to get STACK");
+                Stack<NewAnswer> test = returnQues.getModuleAnswers(modnum);
+                System.out.println("GOT STACK");
+                for(int j = 0; j<test.size(); j++){
+                    NewAnswer na = test.pop();
+                    int qid = na.getQuestionID();
+                    int qa = na.getAnswer();
+                    System.out.println(qid);
+                    System.out.println(qa);
+
+                }
 
                 Toast.makeText(getApplicationContext(), "Module Complete!", Toast.LENGTH_LONG).show();
 
