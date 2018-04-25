@@ -54,20 +54,25 @@ public class Survey implements Serializable {
                 e.printStackTrace();
             }
             Collections.sort(ageMilestones);
-            if (enteredAge <= 12) {
-                currentAge = 0;
-            } else if (enteredAge > ageMilestones.get(ageMilestones.size() - 1)) {
-                currentAge = ageMilestones.get(ageMilestones.size() - 1) - 12;
-                while (!ageMilestones.contains(currentAge)) {
-                    currentAge = currentAge - 1;
-                }
-            } else {
-                currentAge = enteredAge - 24;
-                while (!ageMilestones.contains(currentAge)) {
-                    currentAge = currentAge - 1;
-                }
-            }
+            initCurrentAge();
 
+    }
+
+    private void initCurrentAge()
+    {
+        if (enteredAge <= 12) {
+            currentAge = 0;
+        } else if (enteredAge > ageMilestones.get(ageMilestones.size() - 1)) {
+            currentAge = ageMilestones.get(ageMilestones.size() - 1) - 12;
+            while (!ageMilestones.contains(currentAge)) {
+                currentAge = currentAge - 1;
+            }
+        } else {
+            currentAge = enteredAge - 24;
+            while (!ageMilestones.contains(currentAge)) {
+                currentAge = currentAge - 1;
+            }
+        }
     }
 
 
@@ -111,6 +116,7 @@ public class Survey implements Serializable {
                 break;
             }
         }
+        initCurrentAge();
     }
 
     /*
@@ -229,7 +235,11 @@ public class Survey implements Serializable {
         if(oneCounter + prevOneCounter > 4)
         {
             currentModule.fillOnesAbove(currentAge);
-            if(currentIndex != 0) {
+            if(currentModule.isEmpty())
+            {
+                currentModule.markComplete();
+            }
+            else if(currentIndex != 0) {
                 currentAge = ageMilestones.get(currentIndex - 1);
 
                 JSONObject nextQuestion = currentModule.peekQuestion(currentAge);
@@ -256,6 +266,10 @@ public class Survey implements Serializable {
         else if(threeCounter + prevThreeCounter > 4)
         {
             currentModule.fillThreesAbove(currentAge);
+            if(currentModule.isEmpty())
+            {
+                currentModule.markComplete();
+            }
             if(currentIndex != ageMilestones.size() - 1) {
                 currentAge = ageMilestones.get(currentIndex + 1);
 
@@ -266,7 +280,8 @@ public class Survey implements Serializable {
                         currentAge = ageMilestones.get(currentIndex);
                         nextQuestion = currentModule.peekQuestion(currentAge);
                     } else {
-                        currentModule.markCanComplete();
+                        currentModule.markComplete();
+                        break;
                     }
                 }
             }
@@ -304,7 +319,13 @@ public class Survey implements Serializable {
             }
             else if(nextQuestion == null)
             {
-                currentModule.markComplete();
+                if(currentModule.isEmpty()) {
+                    currentModule.markComplete();
+                }
+                else
+                {
+                    currentModule.markCanComplete();
+                }
             }
         }
     }
@@ -313,9 +334,30 @@ public class Survey implements Serializable {
     This method returns an arraylist of NewAnswer objects representing the last set of answers submitted
     to the module.
      */
-    public ArrayList<NewAnswer> getLastAnswered()
+    public JSONArray getLastAnswered()
     {
-        return currentModule.getPreviousAnswers();
+
+            pushBackQuestionList();
+            JSONArray returnedQuestions = new JSONArray();
+        try {
+            ArrayList<NewAnswer> answers = currentModule.getPreviousAnswers();
+            for (int i = 0; i < answers.size(); i++) {
+                JSONObject question = new JSONObject();
+                NewAnswer answer = answers.get(i);
+                question.put("id", answer.getQuestionID());
+                question.put("question_text", answer.getText());
+                JSONObject routine = new JSONObject();
+                routine.put("id", currentModuleId);
+                question.put("routine", routine);
+                returnedQuestions.put(question);
+            }
+            currentQuestions = returnedQuestions;
+        }
+        catch(JSONException e)
+        {
+            e.printStackTrace();
+        }
+        return returnedQuestions;
     }
 
     /*
