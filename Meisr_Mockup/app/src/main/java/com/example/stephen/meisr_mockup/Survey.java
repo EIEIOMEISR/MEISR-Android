@@ -334,9 +334,30 @@ public class Survey implements Serializable {
     This method returns an arraylist of NewAnswer objects representing the last set of answers submitted
     to the module.
      */
-    public ArrayList<NewAnswer> getLastAnswered()
+    public JSONArray getLastAnswered()
     {
-        return currentModule.getPreviousAnswers();
+
+            pushBackQuestionList();
+            JSONArray returnedQuestions = new JSONArray();
+        try {
+            ArrayList<NewAnswer> answers = currentModule.getPreviousAnswers();
+            for (int i = 0; i < answers.size(); i++) {
+                JSONObject question = new JSONObject();
+                NewAnswer answer = answers.get(i);
+                question.put("id", answer.getQuestionID());
+                question.put("question_text", answer.getText());
+                JSONObject routine = new JSONObject();
+                routine.put("id", currentModuleId);
+                question.put("routine", routine);
+                returnedQuestions.put(question);
+            }
+            currentQuestions = returnedQuestions;
+        }
+        catch(JSONException e)
+        {
+            e.printStackTrace();
+        }
+        return returnedQuestions;
     }
 
     /*
