@@ -127,11 +127,11 @@ public class Mockup1 extends AppCompatActivity {
     System.out.println("IN GET PARAMETERS");
     System.out.println(login);
     System.out.println(password);
-    //params.put("username", login);
+    params.put("username", login);
     //params.put("email", "kziegler@crimson.ua.edu");
-    //params.put("password", password);
-        params.put("username", "kevinZ");
-        params.put("password", "password2");
+    params.put("password", password);
+        //params.put("username", "kevinZ");
+        //params.put("password", "password2");
 
         return params;
     }

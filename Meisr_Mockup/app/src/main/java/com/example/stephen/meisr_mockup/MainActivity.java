@@ -116,7 +116,8 @@ public class MainActivity extends AppCompatActivity
                 // Code here executes on main thread after user presses button
                 Intent nextScreen = new Intent(view.getContext(), Explaination.class);
                 nextScreen.putExtra("Token", token);
-                nextScreen.putExtra("JSONArray", array);
+                String temp = array;
+                nextScreen.putExtra("JSONARRAY", temp);
 
                 startActivityForResult(nextScreen, 0);
 
