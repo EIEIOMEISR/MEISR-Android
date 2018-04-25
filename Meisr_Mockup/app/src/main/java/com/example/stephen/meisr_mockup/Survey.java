@@ -102,6 +102,10 @@ public class Survey implements Serializable {
         }
     }
 
+    public int returncurrentModuleId(){
+        return currentModuleId;
+    }
+
     /*
     This method is used to indicate which module actions are to be performed upon.
     This method should be called whenever the user selects a module.

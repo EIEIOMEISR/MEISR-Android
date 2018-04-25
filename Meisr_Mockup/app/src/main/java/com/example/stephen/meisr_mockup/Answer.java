@@ -11,6 +11,7 @@ import java.util.List;
 public class Answer implements Serializable {
     List<Integer> values =new ArrayList<>();
     List<Integer> ids =new ArrayList<>();
+    List<Integer> modid = new ArrayList<>();
 
     public List getValues(){
         return values;
@@ -27,5 +28,11 @@ public class Answer implements Serializable {
     public void setIds(List x){
         ids = x;
     }
+
+    public List getModId(){ return modid;}
+
+    public void setModId(List x){ modid = x;}
+
+
 
 }

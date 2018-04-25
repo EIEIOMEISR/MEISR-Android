@@ -184,8 +184,9 @@ public class NewSurvey extends AppCompatActivity {
                     int4 = (int) jsonObj.get("id");
                     System.out.println(int4);
                     JSONObject routobj = (JSONObject) jsonObj.get("routine");
-                    modnum = (int) routobj.get("id");
-
+                    modnum = (int) Integer.parseInt(routobj.get("id").toString());
+                    System.out.println("Modnum1");
+                    System.out.println(modnum);
 
                     JSONObject jsonObj2 = x.getJSONObject(1);
                     String what2 = (String) jsonObj2.get("question_text");
@@ -280,8 +281,9 @@ public class NewSurvey extends AppCompatActivity {
                 int4 = (int) jsonObj.get("id");
                 System.out.println(int4);
                 JSONObject routobj = (JSONObject) jsonObj.get("routine");
-                modnum = (int) routobj.get("id");
-
+                modnum = (int) Integer.parseInt(routobj.get("id").toString());
+                System.out.println("Modnum2");
+                System.out.println(modnum);
 
                 JSONObject jsonObj2 = x.getJSONObject(1);
                 String what2 = (String) jsonObj2.get("question_text");
@@ -323,8 +325,9 @@ public class NewSurvey extends AppCompatActivity {
                 int1 = (int) jsonObj.get("id");
                 System.out.println(int1);
                 JSONObject routobj = (JSONObject) jsonObj.get("routine");
-                modnum = (int) routobj.get("number");
-
+                modnum = (int) Integer.parseInt(routobj.get("number").toString());
+                System.out.println("Modnum3");
+                System.out.println(modnum);
 
 
                 JSONObject jsonObj2 = x.getJSONObject(1);
@@ -348,8 +351,20 @@ public class NewSurvey extends AppCompatActivity {
                 System.out.println(int4);
 
             }else if(Func.equals("Complete")){
+                System.out.println("IN COMPLETE");
+
+                Toast.makeText(getApplicationContext(), "Module Complete!", Toast.LENGTH_LONG).show();
+
+                //JSONArray x = returnQues.getQuestions();
+                //JSONObject jsonObj = x.getJSONObject(1);
+                //JSONObject routobj = (JSONObject) jsonObj.get("routine");
+                //modnum = (int) Integer.parseInt(routobj.get("number").toString());
+                modnum = returnQues.returncurrentModuleId();
+                System.out.println("Modnum3");
+                System.out.println(modnum);
 
                 System.out.println("trying to get STACK");
+                System.out.println(modnum);
                 Stack<NewAnswer> test = returnQues.getModuleAnswers(modnum);
                 System.out.println("GOT STACK");
                 for(int j = 0; j<test.size(); j++){
@@ -360,8 +375,222 @@ public class NewSurvey extends AppCompatActivity {
                     System.out.println(qa);
 
                 }
+                System.out.println("Finished printing STACK");
+                System.out.println(jsonArr.length());
 
-                Toast.makeText(getApplicationContext(), "Module Complete!", Toast.LENGTH_LONG).show();
+                List<Integer> fooids = foo.getIds();
+                List<Integer> foovals = foo.getValues();
+
+                System.out.println("Complete FOO ANSWERS ARE HERE");
+
+
+
+                for(int i =0; i<jsonArr.length(); i++){
+                    JSONObject temp = (JSONObject) jsonArr.get(i);
+                    int startage = (int) temp.get("starting_age");
+                    System.out.println("Age Compare");
+                    System.out.println(agef);
+                    System.out.println(startage);
+
+                    if(startage > Integer.parseInt(agef)){
+                        continue;
+                    }
+                    JSONObject temp2 = (JSONObject) temp.get("routine");
+                    int tempmodnum = (int) temp2.get("id");
+
+                    System.out.println("MOd compare");
+                    System.out.println(modnum);
+                    System.out.println(tempmodnum);
+
+
+                    if(tempmodnum != modnum){
+                        continue;
+                    }
+
+                    int tempid = (int) temp.get("id");
+
+                    System.out.println("MOd compare");
+                    if(fooids.contains(tempid)){
+                        continue;
+                    }else{
+                        System.out.println("DOES NOT CONTAIN ID: ");
+                        System.out.println(temp);
+                        //Instantiate volley call to fix it
+
+                        final RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                        String url = "http://skim99.pythonanywhere.com/api/answers/";
+
+                        final String subid = Integer.toString(tempid);
+                        System.out.println("SUBID IS");
+                        System.out.println(subid);
+                        final String subval = "3";
+
+
+
+                            StringRequest postRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    System.out.println("Success!");
+                                    Log.d("Response", response);
+                                    //sharedResponse(response);
+
+
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    System.out.println("Failure!");
+                                    System.out.println(error);
+
+                                    error.printStackTrace();
+                                    String response = "Failure";
+
+                                    NetworkResponse response2 = error.networkResponse;
+                                    if (error instanceof ServerError && response2 != null) {
+                                        try {
+                                            String res = new String(response2.data,
+                                                    HttpHeaderParser.parseCharset(response2.headers, "utf-8"));
+                                            // Now you can use any deserializer to make sense of data
+                                            //System.out.println("ERROR RESPONSE");
+                                            //System.out.println(res);
+
+                                            JSONObject obj = new JSONObject(res);
+                                            //System.out.println("ERROR RESPONSE");
+                                            //System.out.println(res);
+                                        } catch (UnsupportedEncodingException e1) {
+                                            // Couldn't properly decode data to string
+                                            //e1.printStackTrace();
+                                        } catch (JSONException e2) {
+                                            // returned data is not JSONObject?
+                                            //e2.printStackTrace();
+                                        }
+                                    }
+
+                                    //sharedResponse(response);
+
+                                    //Log.d("Error.Response", response);
+                                    String url2 = "http://skim99.pythonanywhere.com/api/answers/" + subid + "/";
+
+                                    StringRequest postRequest = new StringRequest(Request.Method.PUT, url2, new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            System.out.println("Success!");
+                                            Log.d("Response", response);
+                                            //sharedResponse(response);
+
+
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            System.out.println("Failure!");
+                                            System.out.println(error);
+
+                                            error.printStackTrace();
+                                            String response = "Failure";
+
+                                            NetworkResponse response2 = error.networkResponse;
+                                            if (error instanceof ServerError && response2 != null) {
+                                                try {
+                                                    String res = new String(response2.data,
+                                                            HttpHeaderParser.parseCharset(response2.headers, "utf-8"));
+                                                    // Now you can use any deserializer to make sense of data
+                                                    System.out.println("UPDATE ERROR RESPONSE");
+                                                    System.out.println(res);
+
+                                                    JSONObject obj = new JSONObject(res);
+                                                    System.out.println("ERROR RESPONSE");
+                                                    System.out.println(res);
+                                                } catch (UnsupportedEncodingException e1) {
+                                                    // Couldn't properly decode data to string
+                                                    e1.printStackTrace();
+                                                } catch (JSONException e2) {
+                                                    // returned data is not JSONObject?
+                                                    e2.printStackTrace();
+                                                }
+                                            }
+
+                                            //sharedResponse(response);
+
+                                            //Log.d("Error.Response", response);
+
+
+                                        }
+                                    }
+                                    ) {
+                                        public Map<String, String> getHeaders() throws AuthFailureError {
+                                            Map<String, String> params = new HashMap<String, String>();
+                                            try {
+                                                JSONObject jsonObj = new JSONObject(token);
+                                                String tok = (String) jsonObj.get("token");
+                                                System.out.println("JWT INC");
+
+                                                System.out.println(tok);
+                                                params.put("Authorization", "JWT " + tok);
+
+
+                                            } catch (JSONException e) {
+                                                System.out.println("Messed up Token");
+                                            }
+                                            return params;
+                                        }
+
+                                        @Override
+                                        protected Map<String, String> getParams() {
+                                            Map<String, String> params = new HashMap<String, String>();
+                                            //System.out.println("IN GET PARAMETERS CA");
+                                            params.put("question", subid);
+                                            params.put("rating", subval);
+
+                                            return params;
+                                        }
+
+                                    };
+
+                                    queue.add(postRequest);
+
+
+                                }
+                            }
+                            ) {
+                                public Map<String, String> getHeaders() throws AuthFailureError {
+                                    Map<String, String> params = new HashMap<String, String>();
+                                    try {
+                                        JSONObject jsonObj = new JSONObject(token);
+                                        String tok = (String) jsonObj.get("token");
+                                        System.out.println("JWT INC");
+
+                                        System.out.println(tok);
+                                        params.put("Authorization", "JWT " + tok);
+
+
+                                    } catch (JSONException e) {
+                                        System.out.println("Messed up Token");
+                                    }
+                                    return params;
+                                }
+
+                                @Override
+                                protected Map<String, String> getParams() {
+                                    Map<String, String> params = new HashMap<String, String>();
+                                    //System.out.println("IN GET PARAMETERS CA");
+                                    params.put("question", subid);
+                                    params.put("rating", subval);
+
+                                    return params;
+                                }
+
+                            };
+
+                            queue.add(postRequest);
+
+                        }
+
+
+
+
+                }
+
 
                 Intent next = new Intent(getApplicationContext(), ModuleSelection.class);
                 next.putExtra("age",agef);
@@ -648,16 +877,34 @@ public class NewSurvey extends AppCompatActivity {
 
                     List<Integer> y = foo.getIds();
                     List<Integer> x = foo.getValues();
+                    List<Integer> arval = new ArrayList<>();
+                    List<Integer> arids = new ArrayList<>();
+                    arids.add(value);
+                    arids.add(value2);
+                    arids.add(value3);
+                    arids.add(value4);
 
-                    x.add(value);
-                    x.add(value2);
-                    x.add(value3);
-                    x.add(value4);
+                    arval.add(fint);
+                    arval.add(sint);
+                    arval.add(tint);
+                    arval.add(foint);
 
-                    y.add(fint);
-                    y.add(sint);
-                    y.add(tint);
-                    y.add(foint);
+                    for(int i = 0; i<arids.size(); i++){
+                        if(y.contains(arids.get(i))){
+                            int index = 0;
+                            for(int j=0; j<y.size(); j++){
+                                if(y.get(j)==arids.get(i)){
+                                    index = j;
+                                }
+                            }
+                            x.set(index, arval.get(i));
+
+                        }else{
+                            x.add(arval.get(i));
+                            y.add(arids.get(i));
+                        }
+                    }
+
 
                     foo.setIds(y);
                     foo.setValues(x);
@@ -921,111 +1168,6 @@ public class NewSurvey extends AppCompatActivity {
                 startActivity(myIntent);
                 startActivityForResult(myIntent, 0);
 
-
-
-                //query login information from database
-            }
-        });
-
-        final Button chase = findViewById(R.id.submit);
-        chase.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                // Code here executes on main thread after user presses button
-
-
-                RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-
-                StringRequest stringRequest;
-
-                String url = "http://skim99.pythonanywhere.com/api/score_survey/";
-                System.out.println("STARTED SUBMITTTT!!");
-
-
-                stringRequest = new StringRequest(Request.Method.GET, url,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                System.out.println("SCORRRRRRREDD SURVEYYYYYYYYY newsurveyresp!!");
-                                System.out.println(response);
-                                try {
-                                    JSONArray jsonArr = new JSONArray(response);
-                                    //survey.setQuestions(jsonArr);
-                                    System.out.println("IN VOLLEY Scores");
-                                    System.out.print(jsonArr.length());
-                                    System.out.println("after len");
-
-
-
-                                    //callback.onSuccess(jsonArr);
-                                    //sharedResponse(response);
-
-
-                                } catch (JSONException e) {
-                                    System.out.println("REtrival Failed");
-                                    // Recovery
-                                }
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        System.out.println("That didn't work Submit newsurvey!");
-                        error.printStackTrace();
-                        NetworkResponse response2 = error.networkResponse;
-                        if (error instanceof ServerError && response2 != null) {
-                            try {
-                                String res = new String(response2.data,
-                                        HttpHeaderParser.parseCharset(response2.headers, "utf-8"));
-                                // Now you can use any deserializer to make sense of data
-                                System.out.println("ERROR RESPONSE");
-                                System.out.println(res);
-
-                                JSONObject obj = new JSONObject(res);
-                                System.out.println("ERROR RESPONSE");
-                                System.out.println(res);
-                            } catch (UnsupportedEncodingException e1) {
-                                // Couldn't properly decode data to string
-                                e1.printStackTrace();
-                            } catch (JSONException e2) {
-                                // returned data is not JSONObject?
-                                e2.printStackTrace();
-                            }
-                        }
-
-
-                    }
-                }){
-                    public Map<String, String> getHeaders() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<String, String>();
-                        try {
-                            JSONObject jsonObj = new JSONObject(token);
-                            String tok = (String) jsonObj.get("token");
-                            System.out.println("JWT INC");
-
-                            System.out.println(tok);
-                            params.put("Authorization", "JWT " + tok);
-
-
-                        } catch (JSONException e) {
-                            System.out.println("Messed up Token");
-                        }
-                        return params;
-                    }
-
-                };
-                stringRequest.setRetryPolicy(new DefaultRetryPolicy(50000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                queue.add(stringRequest);
-                System.out.println("FINSIHED SUBMIT VOLLEY");
-
-
-                Intent myIntent = new Intent(view.getContext(), DisplayModule.class);
-                myIntent.putExtra("age",agef);
-                myIntent.putExtra("JSONArray", Jsonarray);
-                myIntent.putExtra("Module", mod);
-                myIntent.putExtra("Token", token);
-                //myIntent.putExtra("Index",Index);
-                myIntent.putExtra("Answers", (Serializable) foo);
-                startActivity(myIntent);
-                startActivityForResult(myIntent, 0);
 
 
                 //query login information from database

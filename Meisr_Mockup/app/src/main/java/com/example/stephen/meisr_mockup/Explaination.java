@@ -170,6 +170,13 @@ public class Explaination extends AppCompatActivity {
         System.out.println("PREVIOUS ANSWERS");
         System.out.println(prevAns);
 
+        try {
+            JSONArray temp = new JSONArray(prevAns);
+            System.out.println(temp.length());
+        }catch(JSONException e){
+
+        }
+
         final Answer foo = new Answer();
         List<Integer> ids = foo.getIds();
         List<Integer> vals = foo.getValues();
@@ -188,6 +195,7 @@ public class Explaination extends AppCompatActivity {
                 //int tempqval = Integer.parseInt(qval);
                 ids.add(qid);
                 vals.add(qval);
+
 
             }
 
