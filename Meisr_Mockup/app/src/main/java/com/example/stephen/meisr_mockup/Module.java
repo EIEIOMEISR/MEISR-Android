@@ -31,6 +31,8 @@ public class Module implements Serializable {
     public void addQuestion(JSONObject question)
     {
         questionList.add(question);
+        empty = false;
+        complete = false;
     }
 
     public void answerQuestion(NewAnswer answer)
@@ -71,6 +73,7 @@ public class Module implements Serializable {
                     if(questionList.size() == 0)
                     {
                         empty = true;
+                        markComplete();
                     }
                     break;
                 }
