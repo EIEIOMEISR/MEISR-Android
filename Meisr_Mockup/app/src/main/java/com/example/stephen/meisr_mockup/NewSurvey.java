@@ -41,6 +41,8 @@ import java.util.Map;
 
 public class NewSurvey extends AppCompatActivity {
 
+    int modnum;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -289,12 +291,13 @@ public class NewSurvey extends AppCompatActivity {
                 System.out.println(x);
 
 
-
                 JSONObject jsonObj = x.getJSONObject(0);
                 String what = (String) jsonObj.get("question_text");
                 q1.setText(what);
                 int1 = (int) jsonObj.get("id");
                 System.out.println(int1);
+                JSONObject routobj = (JSONObject) jsonObj.get("routine");
+                modnum = (int) routobj.get("number");
 
 
 
@@ -823,7 +826,8 @@ public class NewSurvey extends AppCompatActivity {
 
 
                     System.out.println("Bottomcont");
-                    Boolean complete = returnQues.isModuleComplete(1);
+
+                    Boolean complete = returnQues.isModuleComplete(modnum);
                     System.out.println(complete);
                     String nextFunc;
                     if (complete == false) {
@@ -977,7 +981,7 @@ public class NewSurvey extends AppCompatActivity {
 
                 Intent myIntent = new Intent(view.getContext(), DisplayModule.class);
                 myIntent.putExtra("age",agef);
-                myIntent.putExtra("JSONARRAY", Jsonarray);
+                myIntent.putExtra("JSONArray", Jsonarray);
                 myIntent.putExtra("Module", mod);
                 myIntent.putExtra("Token", token);
                 //myIntent.putExtra("Index",Index);
