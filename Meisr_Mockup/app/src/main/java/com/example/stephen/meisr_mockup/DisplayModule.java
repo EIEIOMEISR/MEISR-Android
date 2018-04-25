@@ -40,10 +40,10 @@ public class DisplayModule extends AppCompatActivity {
 
     String scoresArray;
 
-    private void sharedResponse(String response){
+    private void sharedResponse3(String response){
         SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = m.edit();
-        editor.putString("Response", response);
+        editor.putString("Response3", response);
         editor.commit();
     }
 
@@ -55,6 +55,9 @@ public class DisplayModule extends AppCompatActivity {
         Intent myIntent = getIntent();
 
         final String token = myIntent.getStringExtra("Token");
+        final String agef = myIntent.getStringExtra("age");
+        final String Jsonarray = myIntent.getStringExtra("JSONArray");
+        final Answer foo = (Answer) myIntent.getExtras().getSerializable("Answers");
 
 
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -68,7 +71,7 @@ public class DisplayModule extends AppCompatActivity {
                     public void onResponse(String response) {
                         System.out.println("Got response FOR SCORES JOHN41!!!");
                         System.out.println(response);
-                        sharedResponse(response);
+                        sharedResponse3(response);
 
                         try {
                             JSONArray jsonArr = new JSONArray(response);
@@ -134,14 +137,10 @@ public class DisplayModule extends AppCompatActivity {
         queue.add(stringRequest);
 
         SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
-        final String mResponse = m.getString("Response", "");
-        System.out.println("62Outside Volley w/scores");
+        final String mResponse = m.getString("Response3", "");
+        System.out.println("75Outside Volley w/scores");
         System.out.println(mResponse);
 
-
-        final String agef = myIntent.getStringExtra("age");
-        final String Jsonarray = myIntent.getStringExtra("JSONARRAY");
-        final Answer foo = (Answer) myIntent.getExtras().getSerializable("Answers");
 
         System.out.println(agef);
         System.out.println(Jsonarray);
@@ -185,16 +184,49 @@ public class DisplayModule extends AppCompatActivity {
 
                 // ListView Clicked item value
                 String  itemValue    = (String) myListView.getItemAtPosition(position);
+                ArrayList<String> scorefull = new ArrayList<String>();
+                ArrayList<String> scoreage = new ArrayList<String>();
+                ArrayList<String> scoreid = new ArrayList<String>();
+
+
+                try{
+                    JSONArray retScores = new JSONArray(mResponse);
+
+                    for(int i = 0; i<retScores.length(); i++) {
+                        JSONObject temp = retScores.getJSONObject(i);
+                        int module = Integer.parseInt(temp.get("routine").toString());
+                        if (module == (position + 1)) {
+                            scoreage.add(temp.get("score_age").toString());
+                            scorefull.add(temp.get("score_full").toString());
+                            scoreid.add(temp.get("id").toString());
+
+                        }
+                    }
+
+                }catch(JSONException e){
+
+                }
+
+
+                System.out.println("SCORES ARRAYS");
+                System.out.println(position+1);
+                System.out.println(scorefull);
+                System.out.println(scoreage);
+                System.out.println(scoreid);
 
 
                 Intent nextScreen = new Intent(view.getContext(), DisplayGraphs.class);
                 nextScreen.putExtra("age",agef);
-                nextScreen.putExtra("JSONARRAY", Jsonarray);
+                nextScreen.putExtra("JSONArray", Jsonarray);
                 nextScreen.putExtra("Module", itemValue);
                 nextScreen.putExtra("Index", "0");
                 nextScreen.putExtra("Answers", (Serializable) foo);
                 nextScreen.putExtra("Token", token);
                 nextScreen.putExtra("Score1", "82");
+                nextScreen.putExtra("Scorefull", scorefull);
+                nextScreen.putExtra("Scoreage", scoreage);
+
+
 
                 startActivity(nextScreen);
                 startActivityForResult(nextScreen, 0);

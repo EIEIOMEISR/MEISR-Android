@@ -40,6 +40,7 @@ import java.util.Map;
 public class Explaination extends AppCompatActivity {
 
     String token;
+    String array;
 
 
     private void sharedResponse(String response){
@@ -59,10 +60,10 @@ public class Explaination extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.explaination);
-        String url ="http://skim99.pythonanywhere.com/api/questions/?format=json";
 
         Intent myIntent = getIntent(); // gets the previously created intent
         token = myIntent.getStringExtra("Token");
+        array = myIntent.getStringExtra("JSONArray");
 
 
             final VolleyCallback callback = new VolleyCallback() {
@@ -90,50 +91,7 @@ public class Explaination extends AppCompatActivity {
                 }
             };
 
-
-            RequestQueue queue = Volley.newRequestQueue(this);
-
-            StringRequest stringRequest;
-
-
-            stringRequest = new StringRequest(Request.Method.GET, url,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            System.out.println("Got response");
-                            System.out.println(response);
-                            try {
-                                JSONArray jsonArr = new JSONArray(response);
-
-                                //survey.setQuestions(jsonArr);
-                                System.out.println("IN VOLLEY");
-                                //callback.onSuccess(jsonArr);
-                                sharedResponse(response);
-
-
-                            } catch (JSONException e) {
-                                System.out.println("REtrival Failed");
-                                // Recovery
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    System.out.println("That didn't work!");
-                    error.printStackTrace();
-                }
-            });
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy( 50000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        queue.add(stringRequest);
-
-        System.out.println("Wooooooooooooorked");
-        SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
-        final String mResponse = m.getString("Response", "");
-        //System.out.println(mResponse);
-
-        System.out.println("SECOND VOLLEY CALL");
-
-
+        RequestQueue queue = Volley.newRequestQueue(this);
 
         String url2 ="http://skim99.pythonanywhere.com/api/answers/";
 
@@ -254,7 +212,7 @@ public class Explaination extends AppCompatActivity {
                 //System.out.println(mResponse);
                 Intent nextScreen = new Intent(view.getContext(), ModuleSelection.class);
                 nextScreen.putExtra("age",age);
-                nextScreen.putExtra("JSONARRAY", mResponse);
+                nextScreen.putExtra("JSONARRAY", array);
                 nextScreen.putExtra("Answers", foo);
                 nextScreen.putExtra("Token", token);
 

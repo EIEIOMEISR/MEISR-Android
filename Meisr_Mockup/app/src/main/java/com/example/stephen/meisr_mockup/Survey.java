@@ -239,7 +239,8 @@ public class Survey implements Serializable {
                         currentAge = ageMilestones.get(currentIndex);
                         nextQuestion = currentModule.peekQuestion(currentAge);
                     } else {
-                        currentModule.markCanComplete();
+                        currentModule.markComplete();
+                        break;
                     }
                 }
             }

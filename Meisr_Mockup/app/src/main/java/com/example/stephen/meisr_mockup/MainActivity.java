@@ -1,7 +1,9 @@
 package com.example.stephen.meisr_mockup;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -15,11 +17,28 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     String token;
-
+    String array;
+    private void sharedResponse(String response){
+        SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = m.edit();
+        editor.putString("Response", response);
+        editor.commit();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +52,51 @@ public class MainActivity extends AppCompatActivity
 
         System.out.println("Token in MainActivity");
         System.out.println(token);
+
+        String url ="http://skim99.pythonanywhere.com/api/questions/?format=json";
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        StringRequest stringRequest;
+
+
+        stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        System.out.println("Got response");
+                        System.out.println(response);
+                        try {
+                            JSONArray jsonArr = new JSONArray(response);
+
+                            //survey.setQuestions(jsonArr);
+                            System.out.println("IN VOLLEY");
+                            //callback.onSuccess(jsonArr);
+                            sharedResponse(response);
+
+
+                        } catch (JSONException e) {
+                            System.out.println("REtrival Failed");
+                            // Recovery
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("That didn't work!");
+                error.printStackTrace();
+            }
+        });
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy( 50000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(stringRequest);
+
+        System.out.println("Wooooooooooooorked");
+        SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
+        final String mResponse = m.getString("Response", "");
+        //System.out.println(mResponse);
+        array = mResponse;
+
+        System.out.println("SECOND VOLLEY CALL");
 
 
 
@@ -52,6 +116,8 @@ public class MainActivity extends AppCompatActivity
                 // Code here executes on main thread after user presses button
                 Intent nextScreen = new Intent(view.getContext(), Explaination.class);
                 nextScreen.putExtra("Token", token);
+                nextScreen.putExtra("JSONArray", array);
+
                 startActivityForResult(nextScreen, 0);
 
 
@@ -103,14 +169,21 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the camera action
             Intent nextScreen = new Intent(getApplicationContext(), Explaination.class);
-            nextScreen.putExtra("JSONARRAY", token);
+            //nextScreen.putExtra("JSONARRAY", token);
+            nextScreen.putExtra("Token", token);
+            nextScreen.putExtra("JSONArray", array);
+
             startActivityForResult(nextScreen, 0);
 
 
                     //query login information from database
         } else if (id == R.id.nav_gallery) {
 
-
+            Intent nextScreen = new Intent(getApplicationContext(), DisplayModule.class);
+            //nextScreen.putExtra("JSONARRAY", token);
+            nextScreen.putExtra("Token", token);
+            nextScreen.putExtra("JSONArray", array);
+            startActivityForResult(nextScreen, 0);
 
         } else if (id == R.id.nav_slideshow) {
 
