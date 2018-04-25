@@ -319,7 +319,13 @@ public class Survey implements Serializable {
             }
             else if(nextQuestion == null)
             {
-                currentModule.markComplete();
+                if(currentModule.isEmpty()) {
+                    currentModule.markComplete();
+                }
+                else
+                {
+                    currentModule.markCanComplete();
+                }
             }
         }
     }
