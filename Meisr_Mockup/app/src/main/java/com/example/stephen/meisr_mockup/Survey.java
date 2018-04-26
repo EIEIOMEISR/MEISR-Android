@@ -19,6 +19,7 @@ public class Survey implements Serializable {
     private int currentAge;
     private int oneCounter;
     private int threeCounter;
+    private int startingAge;
     private int prevOneCounter;
     private int prevThreeCounter;
     private JSONArray currentQuestions;
@@ -83,6 +84,7 @@ public class Survey implements Serializable {
                 currentAge = currentAge - 1;
             }
         }
+        startingAge = currentAge;
     }
 
 
@@ -215,7 +217,15 @@ public class Survey implements Serializable {
                         currentModule.markComplete();
                         currentQuestions = returnQuestions;
                         return returnQuestions;
-                    } else {
+                    }
+                    else if(currentAge > enteredAge)
+                    {
+                        currentModule.fillOnesAbove(currentAge);
+                        currentModule.fillThreesAbove(startingAge);
+                        currentModule.markComplete();
+                        return returnQuestions;
+                    }
+                    else {
                         returnQuestions.put(currentModule.getQuestion(currentAge));
                         i++;
                     }

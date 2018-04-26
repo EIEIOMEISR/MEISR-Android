@@ -98,7 +98,7 @@ public class Explaination extends AppCompatActivity {
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        String url2 ="http://skim99.pythonanywhere.com/api/answers/";
+        String url2 ="http://www.meisr.org/api/answers/";
 
         StringRequest previousanswers = new StringRequest(Request.Method.GET, url2,
                 new Response.Listener<String>() {

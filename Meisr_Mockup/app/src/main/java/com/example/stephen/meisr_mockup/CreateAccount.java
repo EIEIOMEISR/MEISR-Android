@@ -77,7 +77,7 @@ public class CreateAccount extends AppCompatActivity {
                 System.out.println(dob);
 
                 if (password.equals(password2)) {
-                    String url = "http://skim99.pythonanywhere.com/api/rest-auth/registration/";
+                    String url = "http://www.meisr.org/api/rest-auth/registration/";
 
 
                     StringRequest postRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {

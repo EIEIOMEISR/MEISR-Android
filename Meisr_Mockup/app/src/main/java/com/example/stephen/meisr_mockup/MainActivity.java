@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity
         System.out.println("Token in MainActivity");
         System.out.println(token);
 
-        String url ="http://skim99.pythonanywhere.com/api/questions/?format=json";
+        String url ="http://www.meisr.org/api/questions/?format=json";
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
