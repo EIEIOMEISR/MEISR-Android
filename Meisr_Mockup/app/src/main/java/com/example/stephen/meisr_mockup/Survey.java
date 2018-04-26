@@ -221,7 +221,7 @@ public class Survey implements Serializable {
                     }
                     else if(currentAge > enteredAge)
                     {
-                        currentModule.fillOnesAbove(currentAge);
+                        currentModule.fillOnesAbove(currentAge, enteredAge);
                         currentModule.fillThreesAbove(startingAge);
                         currentModule.markComplete();
                         currentQuestions = returnQuestions;
@@ -269,11 +269,11 @@ public class Survey implements Serializable {
                         break;
                     }
                 }
-                currentModule.fillOnesAbove(currentAge);
+                currentModule.fillOnesAbove(currentAge, enteredAge);
             }
             else
             {
-                currentModule.fillOnesAbove(currentAge);
+                currentModule.fillOnesAbove(currentAge, enteredAge);
                 currentModule.markCanComplete(); //Might need to remove this condition
             }
             oneCounter = 0;
