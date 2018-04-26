@@ -392,6 +392,8 @@ public class NewSurvey extends AppCompatActivity {
                     Func = "Complete";
                 }
 
+                if(Func.equals("Continue")){
+
                 JSONObject jsonObj = x.getJSONObject(0);
                 String what = (String) jsonObj.get("question_text");
                 what = what.replaceAll("â\u0080\u0099", "\'");
@@ -437,7 +439,8 @@ public class NewSurvey extends AppCompatActivity {
                 int4 = (int) jsonObj4.get("id");
                 System.out.println(int4);
 
-            }else if(Func.equals("Complete")){
+            }}
+            if(Func.equals("Complete")){
                 System.out.println("IN COMPLETE");
 
                 Toast.makeText(getApplicationContext(), "Module Complete!", Toast.LENGTH_LONG).show();
@@ -1200,6 +1203,8 @@ public class NewSurvey extends AppCompatActivity {
                     answersarray[1] = value2;
                     answersarray[2] = value3;
                     answersarray[3] = value4;
+
+
                     MyApp app = (MyApp) getApplicationContext();
                     Survey returnQues = app.getSurvey();
 
