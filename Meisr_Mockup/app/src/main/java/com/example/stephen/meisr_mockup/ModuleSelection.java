@@ -147,7 +147,7 @@ public class ModuleSelection extends AppCompatActivity{
                     completedRoutines.add(1);
                 }else{
                     completedRoutines.add(0);
-                    flag = 1;
+                    flagcomplete = 1;
                 }
             }
             int wbflag = 0;
@@ -234,7 +234,7 @@ public class ModuleSelection extends AppCompatActivity{
 
                 itemPosition = indexlistItems2.get(position);
                 System.out.println("CLICKED CHILDREN");
-                System.out.println(myListView.getChildCount());
+                System.out.println(itemPosition);
 
 
                 // ListView Clicked item value
@@ -243,8 +243,14 @@ public class ModuleSelection extends AppCompatActivity{
                 int ag = Integer.parseInt(agef);
                 final Survey returnQues;
                 try {
+                    System.out.println("MS trycatch");
+                    System.out.println(Jsonarray);
+
                     JSONArray lol = new JSONArray(Jsonarray);
-                    returnQues = new Survey(Integer.parseInt(agef), lol);
+                    System.out.println("created json");
+                    System.out.println(ag);
+
+                    returnQues = new Survey(ag, lol);
                     System.out.println("inbtw creating Survey obj");
                     System.out.println(itemPosition);
 

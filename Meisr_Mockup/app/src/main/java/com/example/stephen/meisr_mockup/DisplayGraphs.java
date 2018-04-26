@@ -11,6 +11,7 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.ArrayList;
 
@@ -28,7 +29,7 @@ public class DisplayGraphs extends AppCompatActivity {
 
         Intent myIntent = getIntent();
         final String mod = myIntent.getStringExtra("Module");
-        final String score = myIntent.getStringExtra("Score1");
+        //final String score = myIntent.getStringExtra("Score1");
         final ArrayList<String> scorefull = myIntent.getStringArrayListExtra("Scorefull");
         final ArrayList<String> scoreage = myIntent.getStringArrayListExtra("Scoreage");
         final String token = myIntent.getStringExtra("Token");
@@ -56,8 +57,13 @@ public class DisplayGraphs extends AppCompatActivity {
 
         int counter = 0;
         for(int i =scorefull.size()-offset; i<scorefull.size(); i++) {
+            System.out.println("i: ");
+            System.out.println(i);
+
+
             float val = Float.parseFloat(scorefull.get(i))*100;
-            addsf[counter] = new DataPoint(counter, val);
+            double val2 = (counter + 1);
+            addsf[counter] = new DataPoint(val2, val);
             //addsf[counter] = new DataPoint(counter, 1);
             counter++;
         }
@@ -76,11 +82,11 @@ public class DisplayGraphs extends AppCompatActivity {
         System.out.println(addsa);
 
 
+        BarGraphSeries<DataPoint> s2 = new BarGraphSeries<>(addsa);
         BarGraphSeries<DataPoint> series = new BarGraphSeries<>(addsf);
         series.setColor(Color.BLUE);
         series.setTitle("Up to FULL");
-
-        BarGraphSeries<DataPoint> s2 = new BarGraphSeries<>(addsa);
+        graph.addSeries(series);
 
         s2.setColor(Color.RED);
         s2.setTitle("Up to Age");
@@ -89,7 +95,6 @@ public class DisplayGraphs extends AppCompatActivity {
         System.out.println(series);
         System.out.println(s2);
 
-        graph.addSeries(series);
         graph.addSeries(s2);
 
 
@@ -110,12 +115,15 @@ public class DisplayGraphs extends AppCompatActivity {
         series.setSpacing(25);
         s2.setSpacing(25);
 
-        graph.getViewport().setXAxisBoundsManual(true);
         graph.getViewport().setMaxX(11);
         graph.getViewport().setMinX(0);
-        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setXAxisBoundsManual(true);
+
         graph.getViewport().setMaxY(100);
         graph.getViewport().setMinY(0);
+        graph.getViewport().setYAxisBoundsManual(true);
+
+
         graph.getGridLabelRenderer().setVerticalAxisTitle("Percentage of 3's");
         graph.getGridLabelRenderer().setHorizontalAxisTitle("Time");
         graph.getLegendRenderer().setVisible(true);

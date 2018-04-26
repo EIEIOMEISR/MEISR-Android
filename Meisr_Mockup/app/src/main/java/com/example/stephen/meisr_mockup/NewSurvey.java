@@ -420,6 +420,9 @@ public class NewSurvey extends AppCompatActivity {
                 List<Integer> foovals = foo.getValues();
 
                 System.out.println("Complete FOO ANSWERS ARE HERE");
+                System.out.println(fooids);
+                System.out.println(foovals);
+
 
 
 
@@ -667,8 +670,9 @@ public class NewSurvey extends AppCompatActivity {
         System.out.println("FOO ANSWERS ARE HERE");
 
         for(int i = 0; i<fooids.size(); i++){
-            System.out.println(fooids.get(i));
-            System.out.println(foovals.get(i));
+            System.out.println("id" + fooids.get(i));
+            System.out.println("val" + foovals.get(i));
+
 
         }
 
@@ -917,15 +921,15 @@ public class NewSurvey extends AppCompatActivity {
                     List<Integer> x = foo.getValues();
                     List<Integer> arval = new ArrayList<>();
                     List<Integer> arids = new ArrayList<>();
-                    arids.add(value);
-                    arids.add(value2);
-                    arids.add(value3);
-                    arids.add(value4);
+                    arval.add(value);
+                    arval.add(value2);
+                    arval.add(value3);
+                    arval.add(value4);
 
-                    arval.add(fint);
-                    arval.add(sint);
-                    arval.add(tint);
-                    arval.add(foint);
+                    arids.add(fint);
+                    arids.add(sint);
+                    arids.add(tint);
+                    arids.add(foint);
 
                     for(int i = 0; i<arids.size(); i++){
                         if(y.contains(arids.get(i))){
@@ -1149,15 +1153,20 @@ public class NewSurvey extends AppCompatActivity {
 
 
                     System.out.println("Bottomcont");
-
-                    Boolean complete = returnQues.isModuleComplete(modnum);
-                    System.out.println(complete);
+                    System.out.println(modnum);
                     String nextFunc;
-                    if (complete == false) {
-                        nextFunc = "Continue";
-                    } else {
-                        nextFunc = "Complete";
 
+                    if(modnum > 0) {
+                        Boolean complete = returnQues.isModuleComplete(modnum);
+                        System.out.println(complete);
+                        if (complete == false) {
+                            nextFunc = "Continue";
+                        } else {
+                            nextFunc = "Complete";
+
+                        }
+                    } else{
+                        nextFunc = "Complete";
                     }
 
                     String Index = Integer.toString(index);
