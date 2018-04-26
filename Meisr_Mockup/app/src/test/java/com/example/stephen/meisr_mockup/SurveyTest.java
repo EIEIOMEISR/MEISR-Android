@@ -74,8 +74,8 @@ public class SurveyTest {
         JSONArray returnedQuestions = testSurvey.getQuestions();
         int[] answers = new int[] {1, 3, 1, 1};
         testSurvey.answerQuestion(answers);
-        ArrayList<NewAnswer> returnedAnswers = testSurvey.getLastAnswered();
-        assertEquals(4, returnedAnswers.size());
+        JSONArray returnedAnswers = testSurvey.getLastAnswered();
+        assertEquals(4, returnedAnswers.length());
     }
     @Test
     public void surveySkipDownQuestions() throws Exception {
@@ -102,7 +102,7 @@ public class SurveyTest {
         testSurvey.getQuestions();
         testSurvey.answerQuestion(answers);
         returnedQuestions = testSurvey.getQuestions();
-        ArrayList<NewAnswer> returnedAnswers = testSurvey.getLastAnswered();
+        JSONArray returnedAnswers = testSurvey.getLastAnswered();
         assertEquals(23, returnedQuestions.getJSONObject(0).getInt("starting_age"));
     }
     @Test
@@ -130,7 +130,7 @@ public class SurveyTest {
         testSurvey.getQuestions();
         testSurvey.answerQuestion(answers);
         returnedQuestions = testSurvey.getQuestions();
-        ArrayList<NewAnswer> returnedAnswers = testSurvey.getLastAnswered();
+        JSONArray returnedAnswers = testSurvey.getLastAnswered();
         assertEquals(25, returnedQuestions.getJSONObject(0).getInt("starting_age"));
     }
     @Test
@@ -158,7 +158,7 @@ public class SurveyTest {
         testSurvey.getQuestions();
         testSurvey.answerQuestion(answers);
         returnedQuestions = testSurvey.getQuestions();
-        ArrayList<NewAnswer> returnedAnswers = testSurvey.getLastAnswered();
+        JSONArray returnedAnswers = testSurvey.getLastAnswered();
         assertEquals(true, testSurvey.canModuleComplete(1));
     }
     @Test
