@@ -47,7 +47,7 @@ public class Survey implements Serializable {
             ageMilestones = new ArrayList<Integer>();
             ageMilestones.add(0);
             retrievedPastAnswers = new Stack();
-            for (int i = 0; i < 30; i++) {
+            for (int i = 0; i < 100; i++) {
                 modules.add(null);
             }
             try {
@@ -96,11 +96,11 @@ public class Survey implements Serializable {
     {
         try {
             JSONObject routine = question.getJSONObject("routine");
-            if(modules.get(routine.getInt("id")) == null)
+            if(modules.get(routine.getInt("number")) == null)
             {
-                modules.set(routine.getInt("id"), new Module(routine.getInt("id")));
+                modules.set(routine.getInt("number"), new Module(routine.getInt("number")));
             }
-            modules.get(routine.getInt("id")).addQuestion(question);
+            modules.get(routine.getInt("number")).addQuestion(question);
             if(!ageMilestones.contains(question.getInt("starting_age")))
             {
                 ageMilestones.add(question.getInt("starting_age"));
@@ -209,11 +209,12 @@ public class Survey implements Serializable {
                 if (currentModule.peekQuestion(currentAge) == null) {
                     while (currentModule.peekQuestion(currentAge) == null && currentAge <= maxAge) {
                         currentAge++;
-                        if (currentAge > maxAge) {
+                        /*if (currentAge > maxAge) {
                             currentAge = 0;
-                        }
+                        }*/
                     }
                     if (currentAge > maxAge) {
+                        currentModule.fillThreesAbove(currentAge);
                         currentModule.markComplete();
                         currentQuestions = returnQuestions;
                         return returnQuestions;
