@@ -33,7 +33,7 @@ public class DisplayGraphs extends AppCompatActivity {
         final ArrayList<String> scorefull = myIntent.getStringArrayListExtra("Scorefull");
         final ArrayList<String> scoreage = myIntent.getStringArrayListExtra("Scoreage");
         final String token = myIntent.getStringExtra("Token");
-        Jsonarray = myIntent.getStringExtra("JSONArray");
+        Jsonarray = myIntent.getStringExtra("JSONARRAY");
         System.out.println("DG Intents");
         System.out.println(Jsonarray);
 
@@ -139,7 +139,7 @@ public class DisplayGraphs extends AppCompatActivity {
                 nextScreen.putExtra("Token", token);
                 System.out.println("DGBACK BUTTON");
                 System.out.println(Jsonarray);
-                nextScreen.putExtra("JSONArray", Jsonarray);
+                nextScreen.putExtra("JSONARRAY", Jsonarray);
                 startActivityForResult(nextScreen, 0);
 
 

@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity
             Intent nextScreen = new Intent(getApplicationContext(), Explaination.class);
             //nextScreen.putExtra("JSONARRAY", token);
             nextScreen.putExtra("Token", token);
-            nextScreen.putExtra("JSONArray", array);
+            nextScreen.putExtra("JSONARRAY", array);
 
             startActivityForResult(nextScreen, 0);
 
@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity
             Intent nextScreen = new Intent(getApplicationContext(), DisplayModule.class);
             //nextScreen.putExtra("JSONARRAY", token);
             nextScreen.putExtra("Token", token);
-            nextScreen.putExtra("JSONArray", array);
+            nextScreen.putExtra("JSONARRAY", array);
             startActivityForResult(nextScreen, 0);
 
         } else if (id == R.id.nav_slideshow) {

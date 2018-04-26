@@ -164,7 +164,12 @@ public class ModuleSelection extends AppCompatActivity{
                 }
             }
 
+            System.out.println("Flags");
+            System.out.println(flagcomplete);
+            System.out.println(wbflag);
+
             if(flagcomplete == 0 && wbflag==0){
+                System.out.println("IN CHECK SUBMIT");
                 Intent nextScreen = new Intent(getApplicationContext(), CheckSubmit.class);
                 nextScreen.putExtra("age", agef);
                 nextScreen.putExtra("JSONARRAY", Jsonarray);
@@ -365,6 +370,33 @@ public class ModuleSelection extends AppCompatActivity{
                 //query login information from database
             }
         });
+
+        final Button submit = findViewById(R.id.button13);
+        submit.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                // Code here executes on main thread after user presses button
+                Intent nextScreen = new Intent(getApplicationContext(), CheckSubmit.class);
+                nextScreen.putExtra("age", agef);
+                nextScreen.putExtra("JSONARRAY", Jsonarray);
+                //nextScreen.putExtra("Module", itemValue);
+                nextScreen.putExtra("Index", "0");
+                nextScreen.putExtra("Answers", (Serializable) foo);
+                //nextScreen.putExtra("retQues", (Serializable) returnQues);
+                nextScreen.putExtra("Token", token);
+                //nextScreen.putExtra("nextFunc", nextFunc);
+
+
+                startActivity(nextScreen);
+                startActivityForResult(nextScreen, 0);
+
+
+
+
+                //query login information from database
+            }
+        });
+
+
     }
 
 }

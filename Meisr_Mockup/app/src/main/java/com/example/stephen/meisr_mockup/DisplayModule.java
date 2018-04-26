@@ -58,7 +58,7 @@ public class DisplayModule extends AppCompatActivity {
 
         final String token = myIntent.getStringExtra("Token");
         final String agef = myIntent.getStringExtra("age");
-        final String Jsonarray = myIntent.getStringExtra("JSONArray");
+        final String Jsonarray = myIntent.getStringExtra("JSONARRAY");
         final Answer foo = (Answer) myIntent.getExtras().getSerializable("Answers");
         final SharedPreferences m3 = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -230,7 +230,7 @@ public class DisplayModule extends AppCompatActivity {
 
                             Intent nextScreen = new Intent(view.getContext(), DisplayGraphs.class);
                             nextScreen.putExtra("age",agef);
-                            nextScreen.putExtra("JSONArray", Jsonarray);
+                            nextScreen.putExtra("JSONARRAY", Jsonarray);
                             nextScreen.putExtra("Module", itemValue);
                             nextScreen.putExtra("Index", "0");
                             nextScreen.putExtra("Answers", (Serializable) foo);

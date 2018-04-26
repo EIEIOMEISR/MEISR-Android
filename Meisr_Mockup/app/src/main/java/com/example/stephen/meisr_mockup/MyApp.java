@@ -6,7 +6,7 @@ import android.app.Application;
  * Created by sabow on 4/23/2018.
  */
 
-class MyApp extends Application {
+public class MyApp extends Application {
     private Survey survey;
     public Survey getSurvey(){
         return survey;

@@ -143,7 +143,7 @@ public class CheckSubmit extends AppCompatActivity {
 
                             Intent myIntent = new Intent(getApplicationContext(), DisplayModule.class);
                             myIntent.putExtra("age",agef);
-                            myIntent.putExtra("JSONArray", Jsonarray);
+                            myIntent.putExtra("JSONARRAY", Jsonarray);
                             //myIntent.putExtra("Module", mod);
                             myIntent.putExtra("Token", token);
                             //myIntent.putExtra("Index",Index);

@@ -259,6 +259,7 @@ public class Explaination extends AppCompatActivity {
                     // Code here executes on main thread after user presses button
                     Intent nextScreen = new Intent(view.getContext(), MainActivity.class);
                     nextScreen.putExtra("Token", token);
+                    nextScreen.putExtra("JSONARRAY", array);
 
                     startActivityForResult(nextScreen, 0);
 
