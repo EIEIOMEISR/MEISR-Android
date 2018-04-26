@@ -46,13 +46,13 @@ public class Explaination extends AppCompatActivity {
     private void sharedResponse(String response){
         SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = m.edit();
-        editor.putString("Response", response);
+        editor.putString("Response2", response);
         editor.commit();
     }
     private void sharedResponse2(String response){
-        SharedPreferences m2 = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = m2.edit();
-        editor.putString("Response2", response);
+        SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = m.edit();
+        editor.putString("Response", response);
         editor.commit();
     }
 
@@ -63,7 +63,7 @@ public class Explaination extends AppCompatActivity {
 
         Intent myIntent = getIntent(); // gets the previously created intent
         token = myIntent.getStringExtra("Token");
-        array = myIntent.getStringExtra("JSONArray");
+        array = myIntent.getStringExtra("JSONARRAY");
 
 
             final VolleyCallback callback = new VolleyCallback() {
@@ -101,7 +101,7 @@ public class Explaination extends AppCompatActivity {
                     public void onResponse(String response) {
                         System.out.println("Got response ANSWERS");
                         System.out.println(response);
-                        sharedResponse2(response);
+                        sharedResponse(response);
 
                         try {
                             JSONArray jsonArr = new JSONArray(response);
@@ -165,8 +165,8 @@ public class Explaination extends AppCompatActivity {
 
         System.out.println("Wooooooooooooorked2");
         System.out.println(token);
-        SharedPreferences m2 = PreferenceManager.getDefaultSharedPreferences(this);
-        final String prevAns = m2.getString("Response2", "");
+        SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
+        final String prevAns = m.getString("Response2", "");
         System.out.println("PREVIOUS ANSWERS");
         System.out.println(prevAns);
 

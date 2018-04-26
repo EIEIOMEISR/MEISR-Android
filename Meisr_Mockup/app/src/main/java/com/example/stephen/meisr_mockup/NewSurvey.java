@@ -180,6 +180,9 @@ public class NewSurvey extends AppCompatActivity {
                 try {
                     JSONObject jsonObj = x.getJSONObject(0);
                     String what = (String) jsonObj.get("question_text");
+                    what = what.replaceAll("â\u0080\u0099", "\'");
+                    what = what.replaceAll("â\u0080\u009C", "\"");
+                    what = what.replaceAll("â\u0080\u009D", "\"");
                     q4.setText(what);
                     int4 = (int) jsonObj.get("id");
                     System.out.println(int4);
@@ -190,6 +193,9 @@ public class NewSurvey extends AppCompatActivity {
 
                     JSONObject jsonObj2 = x.getJSONObject(1);
                     String what2 = (String) jsonObj2.get("question_text");
+                    what2 = what2.replaceAll("â\u0080\u0099", "\'");
+                    what2 = what2.replaceAll("â\u0080\u009C", "\"");
+                    what2 = what2.replaceAll("â\u0080\u009D", "\"");
                     q3.setText(what2);
                     int3 = (int) jsonObj2.get("id");
                     System.out.println(int3);
@@ -197,6 +203,9 @@ public class NewSurvey extends AppCompatActivity {
 
                     JSONObject jsonObj3 = x.getJSONObject(2);
                     String what3 = (String) jsonObj3.get("question_text");
+                    what3 = what3.replaceAll("â\u0080\u0099", "\'");
+                    what3 = what3.replaceAll("â\u0080\u009C", "\"");
+                    what3 = what3.replaceAll("â\u0080\u009D", "\"");
                     q2.setText(what3);
                     int2 = (int) jsonObj3.get("id");
                     System.out.println(int2);
@@ -204,6 +213,9 @@ public class NewSurvey extends AppCompatActivity {
 
                     JSONObject jsonObj4 = x.getJSONObject(3);
                     String what4 = (String) jsonObj4.get("question_text");
+                    what4 = what4.replaceAll("â\u0080\u0099", "\'");
+                    what4 = what4.replaceAll("â\u0080\u009C", "\"");
+                    what4 = what4.replaceAll("â\u0080\u009D", "\"");
                     q1.setText(what4);
                     int1 = (int) jsonObj4.get("id");
                     System.out.println(int1);
@@ -277,6 +289,9 @@ public class NewSurvey extends AppCompatActivity {
                 JSONArray x = returnQues.getLastAnswered();
                 JSONObject jsonObj = x.getJSONObject(0);
                 String what = (String) jsonObj.get("question_text");
+                what = what.replaceAll("â\u0080\u0099", "\'");
+                what = what.replaceAll("â\u0080\u009C", "\"");
+                what = what.replaceAll("â\u0080\u009D", "\"");
                 q4.setText(what);
                 int4 = (int) jsonObj.get("id");
                 System.out.println(int4);
@@ -287,6 +302,9 @@ public class NewSurvey extends AppCompatActivity {
 
                 JSONObject jsonObj2 = x.getJSONObject(1);
                 String what2 = (String) jsonObj2.get("question_text");
+                what2 = what2.replaceAll("â\u0080\u0099", "\'");
+                what2 = what2.replaceAll("â\u0080\u009C", "\"");
+                what2 = what2.replaceAll("â\u0080\u009D", "\"");
                 q3.setText(what2);
                 int3 = (int) jsonObj2.get("id");
                 System.out.println(int3);
@@ -294,6 +312,9 @@ public class NewSurvey extends AppCompatActivity {
 
                 JSONObject jsonObj3 = x.getJSONObject(2);
                 String what3 = (String) jsonObj3.get("question_text");
+                what3 = what3.replaceAll("â\u0080\u0099", "\'");
+                what3 = what3.replaceAll("â\u0080\u009C", "\"");
+                what3 = what3.replaceAll("â\u0080\u009D", "\"");
                 q2.setText(what3);
                 int2 = (int) jsonObj3.get("id");
                 System.out.println(int2);
@@ -301,6 +322,9 @@ public class NewSurvey extends AppCompatActivity {
 
                 JSONObject jsonObj4 = x.getJSONObject(3);
                 String what4 = (String) jsonObj4.get("question_text");
+                what4 = what4.replaceAll("â\u0080\u0099", "\'");
+                what4 = what4.replaceAll("â\u0080\u009C", "\"");
+                what4 = what4.replaceAll("â\u0080\u009D", "\"");
                 q1.setText(what4);
                 int1 = (int) jsonObj4.get("id");
                 System.out.println(int1);
@@ -321,24 +345,35 @@ public class NewSurvey extends AppCompatActivity {
 
                 JSONObject jsonObj = x.getJSONObject(0);
                 String what = (String) jsonObj.get("question_text");
+                what = what.replaceAll("â\u0080\u0099", "\'");
+                what = what.replaceAll("â\u0080\u009C", "\"");
+                what = what.replaceAll("â\u0080\u009D", "\"");
                 q1.setText(what);
                 int1 = (int) jsonObj.get("id");
                 System.out.println(int1);
                 JSONObject routobj = (JSONObject) jsonObj.get("routine");
-                modnum = (int) Integer.parseInt(routobj.get("number").toString());
+                modnum = (int) Integer.parseInt(routobj.get("id").toString());
                 System.out.println("Modnum3");
                 System.out.println(modnum);
 
 
                 JSONObject jsonObj2 = x.getJSONObject(1);
                 String what2 = (String) jsonObj2.get("question_text");
+                what2 = what2.replaceAll("â\u0080\u0099", "\'");
+                what2 = what2.replaceAll("â\u0080\u009C", "\"");
+                what2 = what2.replaceAll("â\u0080\u009D", "\"");
                 q2.setText(what2);
                 int2 = (int) jsonObj2.get("id");
                 System.out.println(int2);
 
+                //Attending to sound of caregiverâs voice
+                //Using pointing to communicate (e.g., as if to say âlookâ or âI wantâ)
 
                 JSONObject jsonObj3 = x.getJSONObject(2);
                 String what3 = (String) jsonObj3.get("question_text");
+                what3 = what3.replaceAll("â\u0080\u0099", "\'");
+                what3 = what3.replaceAll("â\u0080\u009C", "\"");
+                what3 = what3.replaceAll("â\u0080\u009D", "\"");
                 q3.setText(what3);
                 int3 = (int) jsonObj3.get("id");
                 System.out.println(int3);
@@ -346,6 +381,9 @@ public class NewSurvey extends AppCompatActivity {
 
                 JSONObject jsonObj4 = x.getJSONObject(3);
                 String what4 = (String) jsonObj4.get("question_text");
+                what4 = what4.replaceAll("â\u0080\u0099", "\'");
+                what4 = what4.replaceAll("â\u0080\u009C", "\"");
+                what4 = what4.replaceAll("â\u0080\u009D", "\"");
                 q4.setText(what4);
                 int4 = (int) jsonObj4.get("id");
                 System.out.println(int4);
@@ -382,6 +420,9 @@ public class NewSurvey extends AppCompatActivity {
                 List<Integer> foovals = foo.getValues();
 
                 System.out.println("Complete FOO ANSWERS ARE HERE");
+                System.out.println(fooids);
+                System.out.println(foovals);
+
 
 
 
@@ -629,8 +670,9 @@ public class NewSurvey extends AppCompatActivity {
         System.out.println("FOO ANSWERS ARE HERE");
 
         for(int i = 0; i<fooids.size(); i++){
-            System.out.println(fooids.get(i));
-            System.out.println(foovals.get(i));
+            System.out.println("id" + fooids.get(i));
+            System.out.println("val" + foovals.get(i));
+
 
         }
 
@@ -879,15 +921,15 @@ public class NewSurvey extends AppCompatActivity {
                     List<Integer> x = foo.getValues();
                     List<Integer> arval = new ArrayList<>();
                     List<Integer> arids = new ArrayList<>();
-                    arids.add(value);
-                    arids.add(value2);
-                    arids.add(value3);
-                    arids.add(value4);
+                    arval.add(value);
+                    arval.add(value2);
+                    arval.add(value3);
+                    arval.add(value4);
 
-                    arval.add(fint);
-                    arval.add(sint);
-                    arval.add(tint);
-                    arval.add(foint);
+                    arids.add(fint);
+                    arids.add(sint);
+                    arids.add(tint);
+                    arids.add(foint);
 
                     for(int i = 0; i<arids.size(); i++){
                         if(y.contains(arids.get(i))){
@@ -1111,15 +1153,20 @@ public class NewSurvey extends AppCompatActivity {
 
 
                     System.out.println("Bottomcont");
-
-                    Boolean complete = returnQues.isModuleComplete(modnum);
-                    System.out.println(complete);
+                    System.out.println(modnum);
                     String nextFunc;
-                    if (complete == false) {
-                        nextFunc = "Continue";
-                    } else {
-                        nextFunc = "Complete";
 
+                    if(modnum > 0) {
+                        Boolean complete = returnQues.isModuleComplete(modnum);
+                        System.out.println(complete);
+                        if (complete == false) {
+                            nextFunc = "Continue";
+                        } else {
+                            nextFunc = "Complete";
+
+                        }
+                    } else{
+                        nextFunc = "Complete";
                     }
 
                     String Index = Integer.toString(index);

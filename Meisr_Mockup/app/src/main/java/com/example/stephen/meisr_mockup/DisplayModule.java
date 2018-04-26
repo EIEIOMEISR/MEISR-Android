@@ -41,8 +41,8 @@ public class DisplayModule extends AppCompatActivity {
     String scoresArray;
 
     private void sharedResponse3(String response){
-        SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = m.edit();
+        SharedPreferences m3 = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = m3.edit();
         editor.putString("Response3", response);
         editor.commit();
     }
@@ -136,8 +136,8 @@ public class DisplayModule extends AppCompatActivity {
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(50000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(stringRequest);
 
-        SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
-        final String mResponse = m.getString("Response3", "");
+        SharedPreferences m3 = PreferenceManager.getDefaultSharedPreferences(this);
+        final String mResponse = m3.getString("Response3", "");
         System.out.println("75Outside Volley w/scores");
         System.out.println(mResponse);
 
