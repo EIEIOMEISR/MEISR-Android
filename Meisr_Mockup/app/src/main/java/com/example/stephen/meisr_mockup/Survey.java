@@ -241,7 +241,6 @@ public class Survey implements Serializable {
         int currentIndex = ageMilestones.indexOf(currentAge);
         if(oneCounter + prevOneCounter > 4)
         {
-            currentModule.fillOnesAbove(currentAge);
             if(currentModule.isEmpty())
             {
                 currentModule.markComplete();
@@ -260,10 +259,12 @@ public class Survey implements Serializable {
                         break;
                     }
                 }
+                currentModule.fillOnesAbove(currentAge);
             }
             else
             {
-                currentModule.markCanComplete();
+                currentModule.fillOnesAbove(currentAge);
+                currentModule.markCanComplete(); //Might need to remove this condition
             }
             oneCounter = 0;
             prevOneCounter = 0;
@@ -272,12 +273,11 @@ public class Survey implements Serializable {
         }
         else if(threeCounter + prevThreeCounter > 4)
         {
-            currentModule.fillThreesAbove(currentAge);
             if(currentModule.isEmpty())
             {
                 currentModule.markComplete();
             }
-            if(currentIndex != ageMilestones.size() - 1) {
+            else if(currentIndex != ageMilestones.size() - 1) {
                 currentAge = ageMilestones.get(currentIndex + 1);
 
                 JSONObject nextQuestion = currentModule.peekQuestion(currentAge);
@@ -291,9 +291,11 @@ public class Survey implements Serializable {
                         break;
                     }
                 }
+                currentModule.fillThreesAbove(currentAge);
             }
             else
             {
+                currentModule.fillThreesAbove(currentAge);
                 currentModule.markCanComplete();
             }
             oneCounter = 0;
