@@ -257,7 +257,7 @@ public class Explaination extends AppCompatActivity {
             back.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
                     // Code here executes on main thread after user presses button
-                    Intent nextScreen = new Intent(view.getContext(), MainPage.class);
+                    Intent nextScreen = new Intent(view.getContext(), MainActivity.class);
                     nextScreen.putExtra("Token", token);
 
                     startActivityForResult(nextScreen, 0);

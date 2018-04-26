@@ -189,14 +189,14 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_slideshow) {
 
-                    // Code here executes on main thread after user presses button
-                    Intent nextScreen = new Intent(getApplicationContext(), Mockup1.class);
-                    startActivityForResult(nextScreen, 0);
-
 
                     //query login information from database
 
         } else if (id == R.id.nav_manage) {
+            System.out.println("GO LOGIN PAGE");
+            // Code here executes on main thread after user presses button
+            Intent nextScreen = new Intent(getApplicationContext(), Mockup1.class);
+            startActivityForResult(nextScreen, 0);
 
         } else if (id == R.id.nav_share) {
 

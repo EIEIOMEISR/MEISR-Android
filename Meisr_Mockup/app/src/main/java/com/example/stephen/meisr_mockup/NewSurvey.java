@@ -338,10 +338,38 @@ public class NewSurvey extends AppCompatActivity {
                 System.out.println(tempindex);
                 System.out.println(mod);
 
-                System.out.println("LENGTH OF JSON ARRAY");
-                System.out.println(x.getJSONObject(0).length());
+                System.out.println("LENGTH81 OF JSON ARRAY");
                 System.out.println(x);
+                int lengthradio = x.length();
+                System.out.println(x.length());
 
+                if(lengthradio < 4){
+                    RadioButton rb = (RadioButton) findViewById(R.id.radiobutton13);
+                    rb.setChecked(true);
+                    rb.setVisibility(View.INVISIBLE);
+                    RadioButton rb2 = (RadioButton) findViewById(R.id.radiobutton14);
+                    rb2.setVisibility(View.INVISIBLE);
+                    RadioButton rb3 = (RadioButton) findViewById(R.id.radiobutton15);
+                    rb3.setVisibility(View.INVISIBLE);
+                }
+                if(lengthradio < 3){
+                    RadioButton rb = (RadioButton) findViewById(R.id.radiobutton9);
+                    rb.setChecked(true);
+                    rb.setVisibility(View.INVISIBLE);
+                    RadioButton rb2 = (RadioButton) findViewById(R.id.radiobutton10);
+                    rb2.setVisibility(View.INVISIBLE);
+                    RadioButton rb3 = (RadioButton) findViewById(R.id.radiobutton11);
+                    rb3.setVisibility(View.INVISIBLE);
+                }
+                if(lengthradio < 2){
+                    RadioButton rb = (RadioButton) findViewById(R.id.radiobutton5);
+                    rb.setChecked(true);
+                    rb.setVisibility(View.INVISIBLE);
+                    RadioButton rb2 = (RadioButton) findViewById(R.id.radiobutton6);
+                    rb2.setVisibility(View.INVISIBLE);
+                    RadioButton rb3 = (RadioButton) findViewById(R.id.radiobutton7);
+                    rb3.setVisibility(View.INVISIBLE);
+                }
 
                 JSONObject jsonObj = x.getJSONObject(0);
                 String what = (String) jsonObj.get("question_text");
@@ -405,6 +433,12 @@ public class NewSurvey extends AppCompatActivity {
                 System.out.println(modnum);
                 Stack<NewAnswer> test = returnQues.getModuleAnswers(modnum);
                 System.out.println("GOT STACK");
+                List<Integer> fooids = foo.getIds();
+                List<Integer> foovals = foo.getValues();
+
+                Toast.makeText(getApplicationContext(), "Submitting Routine", Toast.LENGTH_LONG).show();
+
+
                 while(test.isEmpty()==false){
                     NewAnswer na = test.pop();
                     int qid = na.getQuestionID();
@@ -412,12 +446,187 @@ public class NewSurvey extends AppCompatActivity {
                     System.out.println(qid);
                     System.out.println(qa);
 
+                    if(fooids.contains(qid) == false){
+                        fooids.add(qid);
+                        foovals.add(qa);
+                    }
+
+                    final RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                    String url = "http://skim99.pythonanywhere.com/api/answers/";
+
+                    final String subid = Integer.toString(qid);
+                    System.out.println("SUBID IS");
+                    System.out.println(subid);
+                    final String subval = Integer.toString(qa);
+
+
+
+
+
+                    StringRequest postRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            System.out.println("Success!");
+                            Log.d("Response", response);
+                            //sharedResponse(response);
+
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            System.out.println("Failure!");
+                            System.out.println(error);
+
+                            error.printStackTrace();
+                            String response = "Failure";
+
+                            NetworkResponse response2 = error.networkResponse;
+                            if (error instanceof ServerError && response2 != null) {
+                                try {
+                                    String res = new String(response2.data,
+                                            HttpHeaderParser.parseCharset(response2.headers, "utf-8"));
+                                    // Now you can use any deserializer to make sense of data
+                                    //System.out.println("ERROR RESPONSE");
+                                    //System.out.println(res);
+
+                                    JSONObject obj = new JSONObject(res);
+                                    //System.out.println("ERROR RESPONSE");
+                                    //System.out.println(res);
+                                } catch (UnsupportedEncodingException e1) {
+                                    // Couldn't properly decode data to string
+                                    //e1.printStackTrace();
+                                } catch (JSONException e2) {
+                                    // returned data is not JSONObject?
+                                    //e2.printStackTrace();
+                                }
+                            }
+
+                            //sharedResponse(response);
+
+                            //Log.d("Error.Response", response);
+                            String url2 = "http://skim99.pythonanywhere.com/api/answers/" + subid + "/";
+
+                            StringRequest postRequest = new StringRequest(Request.Method.PUT, url2, new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    System.out.println("Success!");
+                                    Log.d("Response", response);
+                                    //sharedResponse(response);
+
+
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    System.out.println("Failure!");
+                                    System.out.println(error);
+
+                                    error.printStackTrace();
+                                    String response = "Failure";
+
+                                    NetworkResponse response2 = error.networkResponse;
+                                    if (error instanceof ServerError && response2 != null) {
+                                        try {
+                                            String res = new String(response2.data,
+                                                    HttpHeaderParser.parseCharset(response2.headers, "utf-8"));
+                                            // Now you can use any deserializer to make sense of data
+                                            System.out.println("UPDATE ERROR RESPONSE");
+                                            System.out.println(res);
+
+                                            JSONObject obj = new JSONObject(res);
+                                            System.out.println("ERROR RESPONSE");
+                                            System.out.println(res);
+                                        } catch (UnsupportedEncodingException e1) {
+                                            // Couldn't properly decode data to string
+                                            e1.printStackTrace();
+                                        } catch (JSONException e2) {
+                                            // returned data is not JSONObject?
+                                            e2.printStackTrace();
+                                        }
+                                    }
+
+                                    //sharedResponse(response);
+
+                                    //Log.d("Error.Response", response);
+
+
+                                }
+                            }
+                            ) {
+                                public Map<String, String> getHeaders() throws AuthFailureError {
+                                    Map<String, String> params = new HashMap<String, String>();
+                                    try {
+                                        JSONObject jsonObj = new JSONObject(token);
+                                        String tok = (String) jsonObj.get("token");
+                                        System.out.println("JWT INC");
+
+                                        System.out.println(tok);
+                                        params.put("Authorization", "JWT " + tok);
+
+
+                                    } catch (JSONException e) {
+                                        System.out.println("Messed up Token");
+                                    }
+                                    return params;
+                                }
+
+                                @Override
+                                protected Map<String, String> getParams() {
+                                    Map<String, String> params = new HashMap<String, String>();
+                                    //System.out.println("IN GET PARAMETERS CA");
+                                    params.put("question", subid);
+                                    params.put("rating", subval);
+
+                                    return params;
+                                }
+
+                            };
+
+                            queue.add(postRequest);
+
+
+                        }
+                    }
+                    ) {
+                        public Map<String, String> getHeaders() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<String, String>();
+                            try {
+                                JSONObject jsonObj = new JSONObject(token);
+                                String tok = (String) jsonObj.get("token");
+                                System.out.println("JWT INC");
+
+                                System.out.println(tok);
+                                params.put("Authorization", "JWT " + tok);
+
+
+                            } catch (JSONException e) {
+                                System.out.println("Messed up Token");
+                            }
+                            return params;
+                        }
+
+                        @Override
+                        protected Map<String, String> getParams() {
+                            Map<String, String> params = new HashMap<String, String>();
+                            //System.out.println("IN GET PARAMETERS CA");
+                            params.put("question", subid);
+                            params.put("rating", subval);
+
+                            return params;
+                        }
+
+                    };
+
+                    queue.add(postRequest);
+
+
+
+
                 }
                 System.out.println("Finished printing STACK");
                 System.out.println(jsonArr.length());
 
-                List<Integer> fooids = foo.getIds();
-                List<Integer> foovals = foo.getValues();
 
                 System.out.println("Complete FOO ANSWERS ARE HERE");
                 System.out.println(fooids);

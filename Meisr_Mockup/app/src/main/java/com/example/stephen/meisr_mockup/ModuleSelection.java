@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -349,6 +350,20 @@ public class ModuleSelection extends AppCompatActivity{
 
 
 
+        });
+
+        final Button back = findViewById(R.id.button11);
+        back.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                // Code here executes on main thread after user presses button
+                Intent nextScreen = new Intent(view.getContext(), MainActivity.class);
+                nextScreen.putExtra("Token", token);
+
+                startActivityForResult(nextScreen, 0);
+
+
+                //query login information from database
+            }
         });
     }
 
