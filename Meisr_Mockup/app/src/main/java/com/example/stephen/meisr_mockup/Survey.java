@@ -185,7 +185,7 @@ public class Survey implements Serializable {
                     question.put("id", answer.getQuestionID());
                     question.put("question_text", answer.getText());
                     JSONObject routine = new JSONObject();
-                    routine.put("id", currentModuleId);
+                    routine.put("number", currentModuleId);
                     question.put("routine", routine);
                     question.put("starting_age", answer.getAge());
                     returnQuestions.put(question);
@@ -404,7 +404,7 @@ public class Survey implements Serializable {
                     question.put("id", answer.getQuestionID());
                     question.put("question_text", answer.getText());
                     JSONObject routine = new JSONObject();
-                    routine.put("id", currentModuleId);
+                    routine.put("number", currentModuleId);
                     question.put("routine", routine);
                     question.put("starting_age", answer.getAge());
                     returnedQuestions.put(question);
