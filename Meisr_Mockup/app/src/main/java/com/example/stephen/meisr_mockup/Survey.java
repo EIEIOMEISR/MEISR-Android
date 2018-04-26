@@ -67,12 +67,18 @@ public class Survey implements Serializable {
         if (enteredAge <= 12) {
             currentAge = 0;
         } else if (enteredAge > ageMilestones.get(ageMilestones.size() - 1)) {
-            currentAge = ageMilestones.get(ageMilestones.size() - 1) - 12;
+            if(ageMilestones.get(ageMilestones.size() - 1) > 24) {
+                currentAge = ageMilestones.get(ageMilestones.size() - 1) - 24;
+            }
+            else
+            {
+                currentAge = ageMilestones.get(ageMilestones.size() - 1) - 12;
+            }
             while (!ageMilestones.contains(currentAge)) {
                 currentAge = currentAge - 1;
             }
         } else {
-            currentAge = enteredAge - 24;
+            currentAge = enteredAge - 12;
             while (!ageMilestones.contains(currentAge)) {
                 currentAge = currentAge - 1;
             }
