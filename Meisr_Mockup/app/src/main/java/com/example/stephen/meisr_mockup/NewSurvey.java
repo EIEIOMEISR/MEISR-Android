@@ -43,6 +43,7 @@ import java.util.Stack;
 public class NewSurvey extends AppCompatActivity {
 
     int modnum;
+    String Func;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,7 @@ public class NewSurvey extends AppCompatActivity {
         final Answer foo = (Answer) myIntent.getExtras().getSerializable("Answers");
         //final Survey returnQues = (Survey) myIntent.getExtras().getSerializable("retQues");
         final String token = myIntent.getStringExtra("Token");
-        final String Func = myIntent.getStringExtra("nextFunc");
+        Func = myIntent.getStringExtra("nextFunc");
 
         System.out.println("New Survey Token");
         System.out.println(token);
@@ -369,6 +370,26 @@ public class NewSurvey extends AppCompatActivity {
                     rb2.setVisibility(View.INVISIBLE);
                     RadioButton rb3 = (RadioButton) findViewById(R.id.radiobutton7);
                     rb3.setVisibility(View.INVISIBLE);
+                }
+
+                if(lengthradio < 2){
+                    RadioButton rb = (RadioButton) findViewById(R.id.radiobutton5);
+                    rb.setChecked(true);
+                    rb.setVisibility(View.INVISIBLE);
+                    RadioButton rb2 = (RadioButton) findViewById(R.id.radiobutton6);
+                    rb2.setVisibility(View.INVISIBLE);
+                    RadioButton rb3 = (RadioButton) findViewById(R.id.radiobutton7);
+                    rb3.setVisibility(View.INVISIBLE);
+                }
+                if(lengthradio < 1){
+                    RadioButton rb = (RadioButton) findViewById(R.id.radiobutton1);
+                    rb.setChecked(true);
+                    rb.setVisibility(View.INVISIBLE);
+                    RadioButton rb2 = (RadioButton) findViewById(R.id.radiobutton2);
+                    rb2.setVisibility(View.INVISIBLE);
+                    RadioButton rb3 = (RadioButton) findViewById(R.id.radiobutton3);
+                    rb3.setVisibility(View.INVISIBLE);
+                    Func = "Complete";
                 }
 
                 JSONObject jsonObj = x.getJSONObject(0);
