@@ -58,7 +58,7 @@ public class CheckSubmit extends AppCompatActivity {
 
                 StringRequest stringRequest;
 
-                String url = "http://skim99.pythonanywhere.com/api/score_survey/";
+                String url = "http://www.meisr.org/api/score_survey/";
                 System.out.println("STARTED SUBMITTTT!!");
 
 

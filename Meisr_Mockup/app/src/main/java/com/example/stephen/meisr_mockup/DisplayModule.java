@@ -53,7 +53,7 @@ public class DisplayModule extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.display_module);
         System.out.println("WIthin Display Module!");
-        String url = "http://skim99.pythonanywhere.com/api/scores/";
+        String url = "http://www.meisr.org/api/scores/";
         Intent myIntent = getIntent();
 
         final String token = myIntent.getStringExtra("Token");
