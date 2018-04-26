@@ -405,7 +405,7 @@ public class NewSurvey extends AppCompatActivity {
                 System.out.println(modnum);
                 Stack<NewAnswer> test = returnQues.getModuleAnswers(modnum);
                 System.out.println("GOT STACK");
-                for(int j = 0; j<test.size(); j++){
+                while(test.isEmpty()==false){
                     NewAnswer na = test.pop();
                     int qid = na.getQuestionID();
                     int qa = na.getAnswer();
@@ -466,9 +466,14 @@ public class NewSurvey extends AppCompatActivity {
                         System.out.println(subid);
                         final String subval = "3";
 
+                        fooids.add(Integer.parseInt(subid));
+                        foovals.add(3);
 
 
-                            StringRequest postRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+
+
+
+                        StringRequest postRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
                                     System.out.println("Success!");
@@ -631,6 +636,10 @@ public class NewSurvey extends AppCompatActivity {
 
 
                 }
+
+                foo.setIds(fooids);
+                foo.setValues(foovals);
+
 
 
                 Intent next = new Intent(getApplicationContext(), ModuleSelection.class);

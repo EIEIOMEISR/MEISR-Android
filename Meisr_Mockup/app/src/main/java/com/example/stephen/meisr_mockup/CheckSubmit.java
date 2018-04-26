@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -134,18 +135,26 @@ public class CheckSubmit extends AppCompatActivity {
                 };
                 stringRequest.setRetryPolicy(new DefaultRetryPolicy(50000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                 queue.add(stringRequest);
-                System.out.println("FINSIHED SUBMIT VOLLEY");
+
+                RequestQueue.RequestFinishedListener listener =
+                        new RequestQueue.RequestFinishedListener()
+                        { @Override public void onRequestFinished(Request request) {
+                            System.out.println("FINSIHED SUBMIT VOLLEY");
+
+                            Intent myIntent = new Intent(getApplicationContext(), DisplayModule.class);
+                            myIntent.putExtra("age",agef);
+                            myIntent.putExtra("JSONArray", Jsonarray);
+                            //myIntent.putExtra("Module", mod);
+                            myIntent.putExtra("Token", token);
+                            //myIntent.putExtra("Index",Index);
+                            myIntent.putExtra("Answers", (Serializable) foo);
+                            startActivity(myIntent);
+                            startActivityForResult(myIntent, 0);
 
 
-                Intent myIntent = new Intent(view.getContext(), DisplayModule.class);
-                myIntent.putExtra("age",agef);
-                myIntent.putExtra("JSONArray", Jsonarray);
-                //myIntent.putExtra("Module", mod);
-                myIntent.putExtra("Token", token);
-                //myIntent.putExtra("Index",Index);
-                myIntent.putExtra("Answers", (Serializable) foo);
-                startActivity(myIntent);
-                startActivityForResult(myIntent, 0);
+                        }
+                        };
+                queue.addRequestFinishedListener(listener);
 
 
                 //query login information from database

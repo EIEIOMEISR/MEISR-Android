@@ -104,6 +104,8 @@ public class ModuleSelection extends AppCompatActivity{
 
 
 
+
+
             System.out.println("IDS IN ROUTINES");
             System.out.println(containid.get(0));
             System.out.println(containid.get(1));
@@ -118,11 +120,13 @@ public class ModuleSelection extends AppCompatActivity{
             int inAns = 0;
             for(int i =0; i <= countroutines; i++){
                 inAns = 0;
+                System.out.println(i);
+
                 for(int j = 0; j<fooids.size(); j++){
                     if(containid.get(i).contains(fooids.get(j))){
                         inAns++;
-                        System.out.println(i);
-                        System.out.println(fooids.get(j));
+                        System.out.print(i);
+                        System.out.print(fooids.get(j));
                     }
 
                 }

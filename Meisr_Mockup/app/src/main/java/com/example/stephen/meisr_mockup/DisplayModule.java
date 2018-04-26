@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -58,6 +59,8 @@ public class DisplayModule extends AppCompatActivity {
         final String agef = myIntent.getStringExtra("age");
         final String Jsonarray = myIntent.getStringExtra("JSONArray");
         final Answer foo = (Answer) myIntent.getExtras().getSerializable("Answers");
+        final SharedPreferences m3 = PreferenceManager.getDefaultSharedPreferences(this);
+
 
 
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -133,109 +136,126 @@ public class DisplayModule extends AppCompatActivity {
         }
 
         };
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(50000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //stringRequest.setRetryPolicy(new DefaultRetryPolicy(50000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(stringRequest);
 
-        SharedPreferences m3 = PreferenceManager.getDefaultSharedPreferences(this);
-        final String mResponse = m3.getString("Response3", "");
-        System.out.println("75Outside Volley w/scores");
-        System.out.println(mResponse);
+
+        RequestQueue.RequestFinishedListener listener =
+                new RequestQueue.RequestFinishedListener()
+                { @Override public void onRequestFinished(Request request)
+                {
+
+                    final String mResponse = m3.getString("Response3", "");
+                    System.out.println("75Outside Volley w/scores");
+                    System.out.println(mResponse);
 
 
-        System.out.println(agef);
-        System.out.println(Jsonarray);
-        ArrayList<String> listItems = new ArrayList<String>();
-
-        try {
-            JSONArray jsonarray = new JSONArray(Jsonarray);
-            for(int i = 0; i< jsonarray.length(); i++){
-                JSONObject obj = jsonarray.getJSONObject(i);
-                JSONObject obj2 = (JSONObject) obj.get("routine");
-                String mods = (String) obj2.get("description");
-                //String mods = Integer.toString(mod);
-                if(listItems.contains(mods)){
-                    //nothing
-                }else{
-                    listItems.add(mods);
-                }
-
-            }
 
 
-        }catch (JSONException e){
+                    System.out.println(agef);
+                    System.out.println(Jsonarray);
+                    ArrayList<String> listItems = new ArrayList<String>();
 
-        }
-
-        final ListView myListView = (ListView) findViewById(R.id.listView2);
-
-
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems);
-        myListView.setAdapter(adapter);
-
-        myListView.setAdapter(adapter);
-
-        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                // ListView Clicked item index
-                int itemPosition     = position;
-
-                // ListView Clicked item value
-                String  itemValue    = (String) myListView.getItemAtPosition(position);
-                ArrayList<String> scorefull = new ArrayList<String>();
-                ArrayList<String> scoreage = new ArrayList<String>();
-                ArrayList<String> scoreid = new ArrayList<String>();
-
-
-                try{
-                    JSONArray retScores = new JSONArray(mResponse);
-
-                    for(int i = 0; i<retScores.length(); i++) {
-                        JSONObject temp = retScores.getJSONObject(i);
-                        int module = Integer.parseInt(temp.get("routine").toString());
-                        if (module == (position + 1)) {
-                            scoreage.add(temp.get("score_age").toString());
-                            scorefull.add(temp.get("score_full").toString());
-                            scoreid.add(temp.get("id").toString());
+                    try {
+                        JSONArray jsonarray = new JSONArray(Jsonarray);
+                        for(int i = 0; i< jsonarray.length(); i++){
+                            JSONObject obj = jsonarray.getJSONObject(i);
+                            JSONObject obj2 = (JSONObject) obj.get("routine");
+                            String mods = (String) obj2.get("description");
+                            //String mods = Integer.toString(mod);
+                            if(listItems.contains(mods)){
+                                //nothing
+                            }else{
+                                listItems.add(mods);
+                            }
 
                         }
+
+
+                    }catch (JSONException e){
+
                     }
 
-                }catch(JSONException e){
+                    final ListView myListView = (ListView) findViewById(R.id.listView2);
+
+
+                    ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, listItems);
+                    myListView.setAdapter(adapter);
+
+                    myListView.setAdapter(adapter);
+
+                    myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                            // ListView Clicked item index
+                            int itemPosition     = position;
+
+                            // ListView Clicked item value
+                            String  itemValue    = (String) myListView.getItemAtPosition(position);
+                            ArrayList<String> scorefull = new ArrayList<String>();
+                            ArrayList<String> scoreage = new ArrayList<String>();
+                            ArrayList<String> scoreid = new ArrayList<String>();
+
+
+                            try{
+                                JSONArray retScores = new JSONArray(mResponse);
+
+                                for(int i = 0; i<retScores.length(); i++) {
+                                    JSONObject temp = retScores.getJSONObject(i);
+                                    int module = Integer.parseInt(temp.get("routine").toString());
+                                    if (module == (position + 1)) {
+                                        scoreage.add(temp.get("score_age").toString());
+                                        scorefull.add(temp.get("score_full").toString());
+                                        scoreid.add(temp.get("id").toString());
+
+                                    }
+                                }
+
+                            }catch(JSONException e){
+
+                            }
+
+
+                            System.out.println("SCORES ARRAYS");
+                            System.out.println(position+1);
+                            System.out.println(scorefull);
+                            System.out.println(scoreage);
+                            System.out.println(scoreid);
+
+
+                            Intent nextScreen = new Intent(view.getContext(), DisplayGraphs.class);
+                            nextScreen.putExtra("age",agef);
+                            nextScreen.putExtra("JSONArray", Jsonarray);
+                            nextScreen.putExtra("Module", itemValue);
+                            nextScreen.putExtra("Index", "0");
+                            nextScreen.putExtra("Answers", (Serializable) foo);
+                            nextScreen.putExtra("Token", token);
+                            nextScreen.putExtra("Score1", "82");
+                            nextScreen.putExtra("Scorefull", scorefull);
+                            nextScreen.putExtra("Scoreage", scoreage);
+
+
+
+                            startActivity(nextScreen);
+                            startActivityForResult(nextScreen, 0);
+
+                        }
+
+
+
+                    });
+
+
 
                 }
-
-
-                System.out.println("SCORES ARRAYS");
-                System.out.println(position+1);
-                System.out.println(scorefull);
-                System.out.println(scoreage);
-                System.out.println(scoreid);
-
-
-                Intent nextScreen = new Intent(view.getContext(), DisplayGraphs.class);
-                nextScreen.putExtra("age",agef);
-                nextScreen.putExtra("JSONArray", Jsonarray);
-                nextScreen.putExtra("Module", itemValue);
-                nextScreen.putExtra("Index", "0");
-                nextScreen.putExtra("Answers", (Serializable) foo);
-                nextScreen.putExtra("Token", token);
-                nextScreen.putExtra("Score1", "82");
-                nextScreen.putExtra("Scorefull", scorefull);
-                nextScreen.putExtra("Scoreage", scoreage);
+                };
+        queue.addRequestFinishedListener(listener);
 
 
 
-                startActivity(nextScreen);
-                startActivityForResult(nextScreen, 0);
 
-            }
-
-
-
-        });
     }
 
 

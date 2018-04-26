@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -32,6 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by kevin on 3/29/2018.
@@ -65,9 +67,11 @@ public class Explaination extends AppCompatActivity {
         Intent myIntent = getIntent(); // gets the previously created intent
         token = myIntent.getStringExtra("Token");
         array = myIntent.getStringExtra("JSONARRAY");
+        final SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
 
 
-            final VolleyCallback callback = new VolleyCallback() {
+
+        final VolleyCallback callback = new VolleyCallback() {
                 @Override
                 public void onSuccess(JSONArray result) {
                     System.out.println("We got the array");
@@ -165,79 +169,89 @@ public class Explaination extends AppCompatActivity {
         //previousanswers.setRetryPolicy(new DefaultRetryPolicy( 50000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(previousanswers);
 
+        RequestQueue.RequestFinishedListener listener =
+                new RequestQueue.RequestFinishedListener()
+                { @Override public void onRequestFinished(Request request)
+                {
+
+                    System.out.println("Wooooooooooooorked2");
+                    System.out.println(token);
+                    final String prevAns = m.getString("Response2", "");
+                    System.out.println("PREVIOUS ANSWERS");
+                    System.out.println(prevAns);
+
+                    try {
+                        JSONArray temp = new JSONArray(prevAns);
+                        System.out.println(temp.length());
+                    }catch(JSONException e){
+
+                    }
+
+                    final Answer foo = new Answer();
+                    List<Integer> ids = foo.getIds();
+                    List<Integer> vals = foo.getValues();
+
+
+                    try {
+                        JSONArray jsonArr = new JSONArray(prevAns);
+                        for(int i = 0; i<jsonArr.length(); i++){
+                            JSONObject obj = jsonArr.getJSONObject(i);
+                            int qid = (int) obj.get("question");
+                            int qval = (int) obj.get("rating");
+                            System.out.println(qid);
+                            System.out.println(qval);
+
+                            // int tempqid = Integer.parseInt(qid);
+                            //int tempqval = Integer.parseInt(qval);
+                            ids.add(qid);
+                            vals.add(qval);
+
+
+                        }
+
+                    }catch( JSONException e) {
+
+                    }
+                    foo.setIds(ids);
+                    foo.setValues(vals);
+
+                    final Button next = findViewById(R.id.button6);
+                    final EditText textviewage = findViewById(R.id.editText5);
+
+                    next.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View view) {
+                            // Code here executes on main thread after user presses button
+                            // final NewSurvey test = new NewSurvey(16);
+
+                            String age = textviewage.getText().toString();
+
+                            //Intent nextScreen = new Intent(view.getContext(), NewSurvey.class);
+                            System.out.println("End of Explaination");
+                            //System.out.println(mResponse);
+                            Intent nextScreen = new Intent(view.getContext(), ModuleSelection.class);
+                            nextScreen.putExtra("age",age);
+                            nextScreen.putExtra("JSONARRAY", array);
+                            nextScreen.putExtra("Answers", foo);
+                            nextScreen.putExtra("Token", token);
+
+                            startActivity(nextScreen);
+                            startActivityForResult(nextScreen, 0);
+
+
+                            //query login information from database
+                        }
+                    });
+
+                }
+                };
+
+        queue.addRequestFinishedListener(listener);
+
+
+
         //if(queue.addRequestFinishedListener();)
 
-        System.out.println("Wooooooooooooorked2");
-        System.out.println(token);
-        //while(syncflag ==0){
-        //    //nothing
-        //}
-        SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
-        final String prevAns = m.getString("Response2", "");
-        System.out.println("PREVIOUS ANSWERS");
-        System.out.println(prevAns);
 
-        try {
-            JSONArray temp = new JSONArray(prevAns);
-            System.out.println(temp.length());
-        }catch(JSONException e){
-
-        }
-
-        final Answer foo = new Answer();
-        List<Integer> ids = foo.getIds();
-        List<Integer> vals = foo.getValues();
-
-
-        try {
-            JSONArray jsonArr = new JSONArray(prevAns);
-            for(int i = 0; i<jsonArr.length(); i++){
-                JSONObject obj = jsonArr.getJSONObject(i);
-                int qid = (int) obj.get("question");
-                int qval = (int) obj.get("rating");
-                System.out.println(qid);
-                System.out.println(qval);
-
-                // int tempqid = Integer.parseInt(qid);
-                //int tempqval = Integer.parseInt(qval);
-                ids.add(qid);
-                vals.add(qval);
-
-
-            }
-
-    }catch( JSONException e) {
-
-        }
-        foo.setIds(ids);
-        foo.setValues(vals);
-
-        final Button next = findViewById(R.id.button6);
-        final EditText textviewage = findViewById(R.id.editText5);
-
-        next.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                // Code here executes on main thread after user presses button
-               // final NewSurvey test = new NewSurvey(16);
-
-                String age = textviewage.getText().toString();
-
-                //Intent nextScreen = new Intent(view.getContext(), NewSurvey.class);
-                System.out.println("End of Explaination");
-                //System.out.println(mResponse);
-                Intent nextScreen = new Intent(view.getContext(), ModuleSelection.class);
-                nextScreen.putExtra("age",age);
-                nextScreen.putExtra("JSONARRAY", array);
-                nextScreen.putExtra("Answers", foo);
-                nextScreen.putExtra("Token", token);
-
-                startActivity(nextScreen);
-                startActivityForResult(nextScreen, 0);
-
-
-                //query login information from database
-            }
-        });
 
             final Button back = findViewById(R.id.button7);
             back.setOnClickListener(new View.OnClickListener() {
