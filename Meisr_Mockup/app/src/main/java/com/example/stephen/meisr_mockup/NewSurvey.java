@@ -188,7 +188,7 @@ public class NewSurvey extends AppCompatActivity {
                     int4 = (int) jsonObj.get("id");
                     System.out.println(int4);
                     JSONObject routobj = (JSONObject) jsonObj.get("routine");
-                    modnum = (int) Integer.parseInt(routobj.get("id").toString());
+                    modnum = (int) Integer.parseInt(routobj.get("number").toString());
                     System.out.println("Modnum1");
                     System.out.println(modnum);
 
@@ -297,7 +297,7 @@ public class NewSurvey extends AppCompatActivity {
                 int4 = (int) jsonObj.get("id");
                 System.out.println(int4);
                 JSONObject routobj = (JSONObject) jsonObj.get("routine");
-                modnum = (int) Integer.parseInt(routobj.get("id").toString());
+                modnum = (int) Integer.parseInt(routobj.get("number").toString());
                 System.out.println("Modnum2");
                 System.out.println(modnum);
 
@@ -403,7 +403,7 @@ public class NewSurvey extends AppCompatActivity {
                 int1 = (int) jsonObj.get("id");
                 System.out.println(int1);
                 JSONObject routobj = (JSONObject) jsonObj.get("routine");
-                modnum = (int) Integer.parseInt(routobj.get("id").toString());
+                modnum = (int) Integer.parseInt(routobj.get("number").toString());
                 System.out.println("Modnum3");
                 System.out.println(modnum);
 
@@ -473,6 +473,8 @@ public class NewSurvey extends AppCompatActivity {
                     if(fooids.contains(qid) == false){
                         fooids.add(qid);
                         foovals.add(qa);
+                    }else{
+                        continue;
                     }
 
                     final RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
@@ -670,7 +672,7 @@ public class NewSurvey extends AppCompatActivity {
                         continue;
                     }
                     JSONObject temp2 = (JSONObject) temp.get("routine");
-                    int tempmodnum = (int) temp2.get("id");
+                    int tempmodnum = (int) temp2.get("number");
 
                     System.out.println("MOd compare");
                     System.out.println(modnum);
