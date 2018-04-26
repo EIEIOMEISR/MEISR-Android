@@ -205,7 +205,9 @@ public class DisplayModule extends AppCompatActivity {
 
                                 for(int i = 0; i<retScores.length(); i++) {
                                     JSONObject temp = retScores.getJSONObject(i);
-                                    int module = Integer.parseInt(temp.get("routine").toString());
+                                    JSONObject temp2 = (JSONObject) temp.get("routine");
+
+                                    int module = Integer.parseInt(temp2.get("number").toString());
                                     if (module == (position + 1)) {
                                         scoreage.add(temp.get("score_age").toString());
                                         scorefull.add(temp.get("score_full").toString());
