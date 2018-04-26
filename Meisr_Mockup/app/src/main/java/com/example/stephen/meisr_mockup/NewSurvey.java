@@ -43,6 +43,7 @@ import java.util.Stack;
 public class NewSurvey extends AppCompatActivity {
 
     int modnum;
+    String Func;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,7 @@ public class NewSurvey extends AppCompatActivity {
         final Answer foo = (Answer) myIntent.getExtras().getSerializable("Answers");
         //final Survey returnQues = (Survey) myIntent.getExtras().getSerializable("retQues");
         final String token = myIntent.getStringExtra("Token");
-        final String Func = myIntent.getStringExtra("nextFunc");
+        Func = myIntent.getStringExtra("nextFunc");
 
         System.out.println("New Survey Token");
         System.out.println(token);
@@ -371,6 +372,28 @@ public class NewSurvey extends AppCompatActivity {
                     rb3.setVisibility(View.INVISIBLE);
                 }
 
+                if(lengthradio < 2){
+                    RadioButton rb = (RadioButton) findViewById(R.id.radiobutton5);
+                    rb.setChecked(true);
+                    rb.setVisibility(View.INVISIBLE);
+                    RadioButton rb2 = (RadioButton) findViewById(R.id.radiobutton6);
+                    rb2.setVisibility(View.INVISIBLE);
+                    RadioButton rb3 = (RadioButton) findViewById(R.id.radiobutton7);
+                    rb3.setVisibility(View.INVISIBLE);
+                }
+                if(lengthradio < 1){
+                    RadioButton rb = (RadioButton) findViewById(R.id.radiobutton1);
+                    rb.setChecked(true);
+                    rb.setVisibility(View.INVISIBLE);
+                    RadioButton rb2 = (RadioButton) findViewById(R.id.radiobutton2);
+                    rb2.setVisibility(View.INVISIBLE);
+                    RadioButton rb3 = (RadioButton) findViewById(R.id.radiobutton3);
+                    rb3.setVisibility(View.INVISIBLE);
+                    Func = "Complete";
+                }
+
+                if(Func.equals("Continue")){
+
                 JSONObject jsonObj = x.getJSONObject(0);
                 String what = (String) jsonObj.get("question_text");
                 what = what.replaceAll("â\u0080\u0099", "\'");
@@ -416,7 +439,8 @@ public class NewSurvey extends AppCompatActivity {
                 int4 = (int) jsonObj4.get("id");
                 System.out.println(int4);
 
-            }else if(Func.equals("Complete")){
+            }}
+            if(Func.equals("Complete")){
                 System.out.println("IN COMPLETE");
 
                 Toast.makeText(getApplicationContext(), "Module Complete!", Toast.LENGTH_LONG).show();
@@ -1179,6 +1203,8 @@ public class NewSurvey extends AppCompatActivity {
                     answersarray[1] = value2;
                     answersarray[2] = value3;
                     answersarray[3] = value4;
+
+
                     MyApp app = (MyApp) getApplicationContext();
                     Survey returnQues = app.getSurvey();
 
