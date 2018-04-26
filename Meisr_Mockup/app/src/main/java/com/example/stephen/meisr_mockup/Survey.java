@@ -209,9 +209,6 @@ public class Survey implements Serializable {
                 if (currentModule.peekQuestion(currentAge) == null) {
                     while (currentModule.peekQuestion(currentAge) == null && currentAge <= maxAge) {
                         currentAge++;
-                        /*if (currentAge > maxAge) {
-                            currentAge = 0;
-                        }*/
                     }
                     if (currentAge > maxAge) {
                         currentModule.fillThreesAbove(currentAge);

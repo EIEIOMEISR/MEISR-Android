@@ -144,11 +144,16 @@ public class Module implements Serializable {
     public void fillOnesAbove(int age)
     {
         try {
-            for (int i = 0; i < questionList.size(); i++) {
+            int i = 0;
+            while(i < questionList.size()) {
                 if (questionList.get(i).getInt("starting_age") > age) {
                     NewAnswer answer = new NewAnswer(id, 1, questionList.get(i).getInt("id"), questionList.get(i).getString("question_text"), questionList.get(i).getInt("starting_age"));
                     questionList.remove(i);
                     answerQuestion(answer);
+                }
+                else
+                {
+                    i++;
                 }
             }
         }
