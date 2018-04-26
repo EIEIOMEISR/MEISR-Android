@@ -41,6 +41,7 @@ public class Explaination extends AppCompatActivity {
 
     String token;
     String array;
+    int syncflag = 0;
 
 
     private void sharedResponse(String response){
@@ -102,6 +103,7 @@ public class Explaination extends AppCompatActivity {
                         System.out.println("Got response ANSWERS");
                         System.out.println(response);
                         sharedResponse(response);
+                        syncflag =1;
 
                         try {
                             JSONArray jsonArr = new JSONArray(response);
@@ -160,11 +162,16 @@ public class Explaination extends AppCompatActivity {
             }
 
         };
-        previousanswers.setRetryPolicy(new DefaultRetryPolicy( 50000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //previousanswers.setRetryPolicy(new DefaultRetryPolicy( 50000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(previousanswers);
+
+        //if(queue.addRequestFinishedListener();)
 
         System.out.println("Wooooooooooooorked2");
         System.out.println(token);
+        //while(syncflag ==0){
+        //    //nothing
+        //}
         SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
         final String prevAns = m.getString("Response2", "");
         System.out.println("PREVIOUS ANSWERS");
