@@ -156,10 +156,6 @@ public class DisplayModule extends AppCompatActivity {
                     System.out.println("75Outside Volley w/scores");
                     System.out.println(mResponse);
 
-
-
-
-                    System.out.println(agef);
                     System.out.println(Jsonarray);
                     ArrayList<String> listItems = new ArrayList<String>();
 

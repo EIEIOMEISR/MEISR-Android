@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.LegendRenderer;
@@ -43,6 +44,9 @@ public class DisplayGraphs extends AppCompatActivity {
         System.out.println("sCORE IN DISPLAY GRAPH");
         System.out.println(scorefull);
         System.out.println(scoreage);
+
+        TextView title = findViewById(R.id.textView28);
+        title.setText(mod);
 
         GraphView graph = findViewById(R.id.graph);
 
@@ -99,10 +103,10 @@ public class DisplayGraphs extends AppCompatActivity {
 
         graph.addSeries(s2);
 
-        series.setSpacing(25);
-        s2.setSpacing(25);
+        //series.setSpacing(25);
+        //s2.setSpacing(25);
 
-        graph.getViewport().setMaxX(11);
+        graph.getViewport().setMaxX(10);
         graph.getViewport().setMinX(0);
         graph.getViewport().setXAxisBoundsManual(true);
 
@@ -112,17 +116,17 @@ public class DisplayGraphs extends AppCompatActivity {
 
 
         graph.getGridLabelRenderer().setVerticalAxisTitle("Percent of 3s");
-        graph.getGridLabelRenderer().setHorizontalAxisTitle("Survey Instance");
+        graph.getGridLabelRenderer().setHorizontalAxisTitle("Last 10 Surveys");
         graph.getLegendRenderer().setVisible(true);
         graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-        int titlelen = mod.length();
+        /*int titlelen = mod.length();
         graph.setTitle(mod);
         if(titlelen <=20) {
             graph.setTitleTextSize(100);
         }else{
             graph.setTitleTextSize(50);
 
-        }
+        }*/
 
         final Button back = findViewById(R.id.button5);
         back.setOnClickListener(new View.OnClickListener() {
@@ -133,7 +137,9 @@ public class DisplayGraphs extends AppCompatActivity {
                 System.out.println("DGBACK BUTTON");
                 System.out.println(Jsonarray);
                 nextScreen.putExtra("JSONARRAY", Jsonarray);
+
                 startActivityForResult(nextScreen, 0);
+
 
 
                 //query login information from database

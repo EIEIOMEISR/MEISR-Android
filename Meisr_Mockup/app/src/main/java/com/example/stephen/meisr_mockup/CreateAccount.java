@@ -72,19 +72,30 @@ public class CreateAccount extends AppCompatActivity {
 
         final RequestQueue queue = Volley.newRequestQueue(this);
         final SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
+         String prev1 = "";
+         String prev2 = "";
+         String prev3 = "";
+         String prev4 = "";
+         String prev5 = "";
 
-        Intent myIntent = getIntent();
-        final String prev1 = myIntent.getStringExtra("login");
-        final String prev2 = myIntent.getStringExtra("password1");
-        final String prev3 = myIntent.getStringExtra("password2");
-        final String prev4 = myIntent.getStringExtra("email");
-        final String prev5 = myIntent.getStringExtra("birth_date");
-        System.out.println("LOGIN IS");
-        System.out.println(prev1);
-        System.out.println(prev2);
-        System.out.println(prev3);
-        System.out.println(prev4);
-        System.out.println(prev5);
+
+        if( getIntent().getExtras() != null) {
+
+            Intent myIntent = getIntent();
+            prev1 = myIntent.getStringExtra("login");
+            prev2 = myIntent.getStringExtra("password1");
+            prev3 = myIntent.getStringExtra("password2");
+            prev4 = myIntent.getStringExtra("email");
+            prev5 = myIntent.getStringExtra("birth_date");
+
+            System.out.println("LOGIN IS");
+            System.out.println(prev1);
+            System.out.println(prev2);
+            System.out.println(prev3);
+            System.out.println(prev4);
+            System.out.println(prev5);
+        }
+
 
 
 

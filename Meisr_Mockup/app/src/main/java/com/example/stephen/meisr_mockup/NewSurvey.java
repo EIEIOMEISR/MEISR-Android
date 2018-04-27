@@ -397,7 +397,7 @@ public class NewSurvey extends AppCompatActivity {
                         fooids.add(qid);
                         foovals.add(qa);
                     }else{
-                        continue;
+                        //continue;
                     }
 
                     final RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
