@@ -1,5 +1,7 @@
 package com.example.stephen.meisr_mockup;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,11 +30,23 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+/**
+ * Created by kevin on 3/29/2018.
+ * This is called by Mockup1
+ * This class displays the background information of the survey
+ * The class makes a volley call to http://www.meisr.org/api/questions/?format=json inorder to retrieve the questions
+ * There is a side bar used for calling the following classes: Explaination, DisplayModule, and Mockup1
+ * You can also prompt for more information
+ * The skeleton of this class was taken from an online example
+ */
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     String token;
     String array;
+
+    //Shared Response Functions remember responses of Volley
     private void sharedResponse(String response){
         SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = m.edit();
@@ -45,7 +59,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
         Intent myIntent = getIntent(); // gets the previously created intent
         System.out.println("HERE IS AGE, JSONARRAY, AND MODULE STEVEN!!!");
         token = myIntent.getStringExtra("Token");
@@ -54,12 +67,8 @@ public class MainActivity extends AppCompatActivity
         System.out.println(token);
 
         String url ="http://www.meisr.org/api/questions/?format=json";
-
         RequestQueue queue = Volley.newRequestQueue(this);
-
         StringRequest stringRequest;
-
-
         stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
@@ -190,7 +199,25 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_slideshow) {
 
 
-                    //query login information from database
+            AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create(); //Read Update
+            alertDialog.setTitle("Help");
+            alertDialog.setMessage( "This application lets the user fill out a MEISR survey. " +
+                            "You must be connected to the internet for the application to store and score answers. " +
+                    "Upon completion the answers are scored by age can be viewed under Display Results." +
+                            "\n\nIf you have technical problems please visit our online page" +
+                            " at meisr.org or contact kziegler@crimson.ua.edu");
+            alertDialog.setButton("Continue", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // here you can add functions
+                }
+            });
+
+
+            alertDialog.show();  //<-- See This!
+
+
+
+            //query login information from database
 
         } else if (id == R.id.nav_manage) {
             System.out.println("GO LOGIN PAGE");
@@ -200,9 +227,31 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+            AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create(); //Read Update
+            alertDialog.setTitle("Contact Information");
+            alertDialog.setMessage( "This application was developed by students at The University of Alabama upon the request of Dr. Robin McWilliam. " +
+                    "For more information about this survey please visit the Evidence-based International Early Intervention Office (EIEIO). \n" +
+                    "\nURL: http://eieio.ua.edu/\n" +
+                    "Email: eieio@ua.edu\n" +
+                    "Phone: (205)-348-6010\n" +
+                    "Address:The University of Alabama\n" +
+                    "Box 870232\n" +
+                    "Tuscaloosa, Alabama 35487-0232");
+            alertDialog.setButton("Continue", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // here you can add functions
+                }
+
+            });
+
+            alertDialog.show();  //<-- See This!
+
+
 
         }
+        //else if (id == R.id.nav_send) {
+
+        //}
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

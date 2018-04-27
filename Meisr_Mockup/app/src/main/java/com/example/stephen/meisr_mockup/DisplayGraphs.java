@@ -17,6 +17,9 @@ import java.util.ArrayList;
 
 /**
  * Created by chasefeaster on 4/14/18.
+ * Finished by kevin
+ * This class takes the scores generated in DisplayModule for the module selected and puts them on a graph
+ * Important note the scores are representative of the age of the child based what was entered in CreateAccount
  */
 
 public class DisplayGraphs extends AppCompatActivity {
@@ -29,7 +32,6 @@ public class DisplayGraphs extends AppCompatActivity {
 
         Intent myIntent = getIntent();
         final String mod = myIntent.getStringExtra("Module");
-        //final String score = myIntent.getStringExtra("Score1");
         final ArrayList<String> scorefull = myIntent.getStringArrayListExtra("Scorefull");
         final ArrayList<String> scoreage = myIntent.getStringArrayListExtra("Scoreage");
         final String token = myIntent.getStringExtra("Token");
@@ -97,21 +99,6 @@ public class DisplayGraphs extends AppCompatActivity {
 
         graph.addSeries(s2);
 
-
-
-        /*BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[]{
-                new DataPoint(1,85),
-                new DataPoint(2,75)
-        });
-        series.setColor(Color.BLUE);
-        series.setTitle("Up to Age");
-        BarGraphSeries<DataPoint> s2 = new BarGraphSeries<>(new DataPoint[]{
-                new DataPoint(1,83.6),
-                new DataPoint(2,70)
-        });
-        s2.setColor(Color.RED);
-        s2.setTitle("Total Survey");*/
-
         series.setSpacing(25);
         s2.setSpacing(25);
 
@@ -124,12 +111,18 @@ public class DisplayGraphs extends AppCompatActivity {
         graph.getViewport().setYAxisBoundsManual(true);
 
 
-        graph.getGridLabelRenderer().setVerticalAxisTitle("Percentage of 3's");
-        graph.getGridLabelRenderer().setHorizontalAxisTitle("Time");
+        graph.getGridLabelRenderer().setVerticalAxisTitle("Percent of 3s");
+        graph.getGridLabelRenderer().setHorizontalAxisTitle("Survey Instance");
         graph.getLegendRenderer().setVisible(true);
         graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        int titlelen = mod.length();
         graph.setTitle(mod);
-        graph.setTitleTextSize(100);
+        if(titlelen <=20) {
+            graph.setTitleTextSize(100);
+        }else{
+            graph.setTitleTextSize(50);
+
+        }
 
         final Button back = findViewById(R.id.button5);
         back.setOnClickListener(new View.OnClickListener() {

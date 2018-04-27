@@ -6,6 +6,7 @@ import java.util.List;
 
 /**
  * Created by kevin on 3/29/2018.
+ * This Class stores previously answered questions
  */
 
 public class Answer implements Serializable {

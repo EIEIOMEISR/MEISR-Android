@@ -2,6 +2,10 @@ package com.example.stephen.meisr_mockup;
 
 /**
  * Created by kevin on 3/8/2018.
+ * This is the most complicated Class by far there are incode comments to explain what it is doing
+ * The function of this class is to iterate through questions
+ * This class is called by ModuleSelection
+ * This class navigates back to ModuleSelection when the Routine is deemed correct
  */
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -50,14 +54,39 @@ public class NewSurvey extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_survey);
 
-        Intent myIntent = getIntent(); // gets the previously created intent
+        //Break down of NewSurvey Class
+
+        //Lines 88 through 800 a try catch to parse what to do based on what the variable "Func" is
+        //"Continue" proceeds as normal, it pulls questions from getQuestions()
+        //"Back" returns previous questions
+        //"Complete submits the survey.
+        // It parses a stack to make sure and submit an skipped questions using a nest volley call to answer/update
+        //It also parses questions up to the age to make sure they have all been answered. If they have not the answer/update volley call is used
+
+        //Lines ~800-915 fill in radio buttons based on previous answers
+        //Answers are stored in the answer class object foo
+
+        //ON CLICK Listener for Continue Button Lines 920-1300
+        //First it retrieves the values in the radio buttons
+        //Next there is an answer/update volley call for the answers
+        //Next the routine is checked to see if it is complete
+        //Finally the NewSurvey Class is called again to restart this screen
+
+
+
+        //ON CLICK Listener for Back Lines 1300-1330
+        // Recalls NewSurvey with the var Func = "Back"
+
+
+
+        //Call Intents to get previously passed messages
+        Intent myIntent = getIntent();
         System.out.println("HERE IS AGE, JSONARRAY, AND MODULE STEVEN!!!");
         final String agef = myIntent.getStringExtra("age");
         final String Jsonarray = myIntent.getStringExtra("JSONARRAY");
         final String mod = myIntent.getStringExtra("Module");
         final String ind = myIntent.getStringExtra("Index");
         final Answer foo = (Answer) myIntent.getExtras().getSerializable("Answers");
-        //final Survey returnQues = (Survey) myIntent.getExtras().getSerializable("retQues");
         final String token = myIntent.getStringExtra("Token");
         Func = myIntent.getStringExtra("nextFunc");
 
@@ -65,22 +94,14 @@ public class NewSurvey extends AppCompatActivity {
         System.out.println(token);
 
 
-        int tempindex = Integer.parseInt(ind);
+
+        //Declare values for radio buttons and questions
         int int1 = 0;
         int int2 = 0;
         int int3 = 0;
         int int4 = 0;
 
         int age = Integer.parseInt(agef);
-
-
-
-        //System.out.println(agef);
-        //System.out.println(Jsonarray);
-        //System.out.println(mod);
-
-
-
 
         final TextView mTextView = (TextView) findViewById(R.id.textView12);
         final TextView q1 = (TextView) findViewById(R.id.textView6);
@@ -89,74 +110,22 @@ public class NewSurvey extends AppCompatActivity {
         final TextView q4 = (TextView) findViewById(R.id.textView9);
 
 
-        /*try {
-            JSONArray jsonArr = new JSONArray(Jsonarray);
-
-            //survey.setQuestions(jsonArr);
-            System.out.println("IN VOLLEY LOOOOOOOOOOPPPPP!!!");
-            System.out.println(tempindex);
-            System.out.println(mod);
-
-            for(int i = 0; i< jsonArr.length(); i++) {
-                JSONObject jsonObj = jsonArr.getJSONObject(i);
-                JSONObject obj2 = (JSONObject) jsonObj.get("routine");
-                String modstr = (String) obj2.get("description");
-                //String modstr = (String) jsonObj.get("routine");
-                //String modstr = Integer.toString(modint);
-                if(modstr.equals(mod)){
-                    jsonObj = jsonArr.getJSONObject(i+tempindex);
-                    System.out.println("created object");
-                    System.out.println(jsonObj);
-                    System.out.println(jsonObj.get("id"));
-                    System.out.println(jsonObj.get("question_text"));
-                    String what = (String) jsonObj.get("question_text");
-                    q1.setText(what);
-                    int1 = (int) jsonObj.get("id");
 
 
-                    JSONObject jsonObj2 = jsonArr.getJSONObject(i+1+tempindex);
-                    String what2 = (String) jsonObj2.get("question_text");
-                    q2.setText(what2);
-                    int2 = (int) jsonObj2.get("id");
-
-
-                    JSONObject jsonObj3 = jsonArr.getJSONObject(i+2+tempindex);
-                    String what3 = (String) jsonObj3.get("question_text");
-                    q3.setText(what3);
-                    int3 = (int) jsonObj3.get("id");
-
-
-                    JSONObject jsonObj4 = jsonArr.getJSONObject(i+3+tempindex);
-                    String what4 = (String) jsonObj4.get("question_text");
-                    q4.setText(what4);
-                    int4 = (int) jsonObj4.get("id");
-
-
-                    tempindex = tempindex + 4;
-                    break;
-
-                }
-
-
-
-            }
-
-
-        } catch (JSONException e) {
-            System.out.println("REtrival Failed");
-            // Recovery
-        }*/
+        //Lines 88 through 800 a try catch to parse what to do based on what the variable "Func" is
+        //"Continue" proceeds as normal, it pulls questions from getQuestions()
+        //"Back" returns previous questions
+        //"Complete submits the survey.
+        // It parses a stack to make sure and submit an skipped questions using a nest volley call to answer/update
+        //It also parses questions up to the age to make sure they have all been answered. If they have not the answer/update volley call is used
 
         try {
             JSONArray jsonArr = new JSONArray(Jsonarray);
-            //Survey returnQues = new Survey(Integer.parseInt(agef), Jsonarray);
 
 
             MyApp app = (MyApp)getApplicationContext();
             Survey returnQues = app.getSurvey();
 
-
-            //returnQues.selectModule(1);
             System.out.println("GET QUESTIONS CALL SurveyStep!");
             System.out.println(Func);
             String flag = "t";
@@ -220,29 +189,7 @@ public class NewSurvey extends AppCompatActivity {
                     q1.setText(what4);
                     int1 = (int) jsonObj4.get("id");
                     System.out.println(int1);
-                /*List<NewAnswer> x = returnQues.getLastAnswered();
-                System.out.println("LENGHT OF BACK LIST");
-                if(x == null){
-                    System.out.println("LENGHT OF BACK was null");
-                    flag = "n";
 
-                }else{
-                    System.out.println(x.size());
-                    NewAnswer x1 = x.get(0);
-                    NewAnswer x2 = x.get(1);
-                    NewAnswer x3 = x.get(2);
-                    NewAnswer x4 = x.get(3);
-
-                    q1.setText(x4.getText());
-                    int1 = (int) x4.getQuestionID();
-                    q2.setText(x3.getText());
-                    int2 = (int) x3.getQuestionID();
-                    q3.setText(x2.getText());
-                    int3 = (int) x2.getQuestionID();
-                    q4.setText(x1.getText());
-                    int4 = (int) x1.getQuestionID();
-
-                }*/
                 }catch(JSONException e){
 
                 }
@@ -261,32 +208,7 @@ public class NewSurvey extends AppCompatActivity {
                 answersarray[3] = 2;
                 returnQues.answerQuestion(answersarray);
 
-                //JSONArray y = returnQues.getQuestions();
 
-                //returnQues.answerQuestion(answersarray);
-
-                /*List<NewAnswer> x = returnQues.getLastAnswered();
-                if(x == null){
-                    System.out.println("LENGHT OF BACK was null");
-                    flag = "n";
-
-                }else{
-                    System.out.println(x.size());
-                    NewAnswer x1 = x.get(0);
-                    NewAnswer x2 = x.get(1);
-                    NewAnswer x3 = x.get(2);
-                    NewAnswer x4 = x.get(3);
-
-                    q1.setText(x4.getText());
-                    int1 = (int) x4.getQuestionID();
-                    q2.setText(x3.getText());
-                    int2 = (int) x3.getQuestionID();
-                    q3.setText(x2.getText());
-                    int3 = (int) x2.getQuestionID();
-                    q4.setText(x1.getText());
-                    int4 = (int) x1.getQuestionID();
-
-                }*/
                 JSONArray x = returnQues.getLastAnswered();
                 JSONObject jsonObj = x.getJSONObject(0);
                 String what = (String) jsonObj.get("question_text");
@@ -335,8 +257,6 @@ public class NewSurvey extends AppCompatActivity {
                 JSONArray x = returnQues.getQuestions();
                 System.out.println(x);
 
-                //survey.setQuestions(jsonArr);
-                System.out.println(tempindex);
                 System.out.println(mod);
 
                 System.out.println("LENGTH81 OF JSON ARRAY");
@@ -344,6 +264,7 @@ public class NewSurvey extends AppCompatActivity {
                 int lengthradio = x.length();
                 System.out.println(x.length());
 
+                //Dont display radio buttons if there are no questions
                 if(lengthradio < 4){
                     RadioButton rb = (RadioButton) findViewById(R.id.radiobutton13);
                     rb.setChecked(true);
@@ -462,6 +383,8 @@ public class NewSurvey extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(), "Submitting Routine", Toast.LENGTH_LONG).show();
 
+                //Parses the stack of answered and skipped questions
+                //Submits a volley call for any previously unanswered question
 
                 while(test.isEmpty()==false){
                     NewAnswer na = test.pop();
@@ -488,14 +411,13 @@ public class NewSurvey extends AppCompatActivity {
 
 
 
+                    //Nested Volley Call: try answer if that fails try update
 
                     StringRequest postRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             System.out.println("Success!");
                             Log.d("Response", response);
-                            //sharedResponse(response);
-
 
                         }
                     }, new Response.ErrorListener() {
@@ -512,13 +434,8 @@ public class NewSurvey extends AppCompatActivity {
                                 try {
                                     String res = new String(response2.data,
                                             HttpHeaderParser.parseCharset(response2.headers, "utf-8"));
-                                    // Now you can use any deserializer to make sense of data
-                                    //System.out.println("ERROR RESPONSE");
-                                    //System.out.println(res);
 
                                     JSONObject obj = new JSONObject(res);
-                                    //System.out.println("ERROR RESPONSE");
-                                    //System.out.println(res);
                                 } catch (UnsupportedEncodingException e1) {
                                     // Couldn't properly decode data to string
                                     //e1.printStackTrace();
@@ -528,9 +445,6 @@ public class NewSurvey extends AppCompatActivity {
                                 }
                             }
 
-                            //sharedResponse(response);
-
-                            //Log.d("Error.Response", response);
                             String url2 = "http://www.meisr.org/api/answers/" + subid + "/";
 
                             StringRequest postRequest = new StringRequest(Request.Method.PUT, url2, new Response.Listener<String>() {
@@ -660,7 +574,8 @@ public class NewSurvey extends AppCompatActivity {
 
 
 
-
+                //Make sure all questions to the age have been submitted
+                //If any are not call the answer/update nested volley call again
                 for(int i =0; i<jsonArr.length(); i++){
                     JSONObject temp = (JSONObject) jsonArr.get(i);
                     int startage = (int) temp.get("starting_age");
@@ -876,7 +791,7 @@ public class NewSurvey extends AppCompatActivity {
                 foo.setValues(foovals);
 
 
-
+                //Bring them back to module selection
                 Intent next = new Intent(getApplicationContext(), ModuleSelection.class);
                 next.putExtra("age",agef);
                 next.putExtra("JSONARRAY", Jsonarray);
@@ -903,10 +818,10 @@ public class NewSurvey extends AppCompatActivity {
 
         } catch (JSONException e) {
             System.out.println("REtrival Failed");
-            // Recovery
         }
 
-        //Fill in radio buttons
+        //Lines ~800-915 fill in radio buttons based on previous answers
+        //Answers are stored in the answer class object foo
 
         List<Integer> fooids = foo.getIds();
         List<Integer> foovals = foo.getValues();
@@ -1028,32 +943,15 @@ public class NewSurvey extends AppCompatActivity {
 
 
 
-// Instantiate the RequestQueue.
-
-        String url3 ="http://www.google.com";
-        String url2 = "https://api.androidhive.info/volley/person_object.json";
-        String url ="http://www.meisr.org/api/questions/?format=json";
-        String urlf="http://www.meisr.org/api/questions/?format=json";
-
-
-// Request a string response from the provided URL.
         System.out.println("Before Request");
 
+        //ON CLICK Listener for Continue Button Lines 920-1300
+        //First it retrieves the values in the radio buttons
+        //Next there is an answer/update volley call for the answers
+        //Next the routine is checked to see if it is complete
+        //Finally the NewSurvey Class is called again to restart this screen
 
-       /* {
 
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                //headers.put("Content-Type", "application/json");
-                headers.put("key", "value");
-                return headers;
-            }
-        };*/
-
-// Add the request to the RequestQueue.
-        //stringRequest
-        final int index = tempindex;
         final int fint = int1;
         final int sint = int2;
         final int tint = int3;
@@ -1123,10 +1021,6 @@ public class NewSurvey extends AppCompatActivity {
                         value3 = 3;
                         break;
 
-                    // case R.id.radiobutton12:
-                    //     value3 = 4;
-                    //     break;
-
                 }
                 System.out.println("value3");
                 System.out.println(value3);
@@ -1145,9 +1039,6 @@ public class NewSurvey extends AppCompatActivity {
                         value4 = 3;
                         break;
 
-                    //case R.id.radiobutton16:
-                    //    value4 = 4;
-                    //    break;
 
                 }
                 System.out.println("value4");
@@ -1415,17 +1306,12 @@ public class NewSurvey extends AppCompatActivity {
                         nextFunc = "Complete";
                     }
 
-                    String Index = Integer.toString(index);
                     Intent myIntent = new Intent(view.getContext(), NewSurvey.class);
                     myIntent.putExtra("age", agef);
                     myIntent.putExtra("JSONARRAY", Jsonarray);
                     myIntent.putExtra("Module", mod);
-                    myIntent.putExtra("Index", Index);
                     myIntent.putExtra("Answers", (Serializable) foo);
                     myIntent.putExtra("nextFunc", nextFunc);
-
-                    //myIntent.putExtra("retQues", (Serializable) returnQues);
-
                     myIntent.putExtra("Token", token);
 
                     startActivity(myIntent);
@@ -1433,36 +1319,42 @@ public class NewSurvey extends AppCompatActivity {
 
 
                 }
-                //query login information from database
             }
         });
+
+
+        //ON CLICK Listener for Back Lines 1300-1330
+        // Recalls NewSurvey with the var Func = "Back"
 
         final Button back = findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 // Code here executes on main thread after user presses button
-                int tempindex = index - 8;
-                if(tempindex < 0){
-                    tempindex = 0;
+                MyApp app = (MyApp) getApplicationContext();
+                Survey returnQues = app.getSurvey();
+
+                Stack<NewAnswer> test = returnQues.getModuleAnswers(modnum);
+
+                if(test.isEmpty()){
+                    System.out.println("FIRST BACK");
+                }else {
+
+                    String nextFunc = "Back";
+                    Intent myIntent = new Intent(view.getContext(), NewSurvey.class);
+                    myIntent.putExtra("age", agef);
+                    myIntent.putExtra("JSONARRAY", Jsonarray);
+                    myIntent.putExtra("Module", mod);
+                    myIntent.putExtra("Answers", (Serializable) foo);
+                    myIntent.putExtra("nextFunc", nextFunc);
+
+                    //myIntent.putExtra("retQues", (Serializable) returnQues);
+                    myIntent.putExtra("Token", token);
+
+                    startActivity(myIntent);
+                    startActivityForResult(myIntent, 0);
+
+
                 }
-                String nextFunc = "Back";
-                String Index = Integer.toString(tempindex);
-                Intent myIntent = new Intent(view.getContext(), NewSurvey.class);
-                myIntent.putExtra("age",agef);
-                myIntent.putExtra("JSONARRAY", Jsonarray);
-                myIntent.putExtra("Module", mod);
-                myIntent.putExtra("Index",Index);
-                myIntent.putExtra("Answers", (Serializable) foo);
-                myIntent.putExtra("nextFunc",nextFunc);
-
-                //myIntent.putExtra("retQues", (Serializable) returnQues);
-                myIntent.putExtra("Token", token);
-
-                startActivity(myIntent);
-                startActivityForResult(myIntent, 0);
-
-
-
                 //query login information from database
             }
         });

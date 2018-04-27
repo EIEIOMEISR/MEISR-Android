@@ -31,6 +31,17 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Created by saboules
+ * This class is the base login screen
+ * You can login with correct credentials by volley call to  http://www.meisr.org/api/rest-auth/login/
+ * Upon correct login redirects to MainActivity Class
+ * You can also choose to CreateAccount
+ */
+
+
+
+
 public class Mockup1 extends AppCompatActivity {
 
     private void sharedResponse(String response){
@@ -152,7 +163,7 @@ public class Mockup1 extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "Login Failed", 3).show();
                             }else{
                                 //login is correct
-                                Toast.makeText(getApplicationContext(), "Login Suceeded", 3).show();
+                                Toast.makeText(getApplicationContext(), "Login Succeeded", 3).show();
                                 Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
                                 myIntent.putExtra("Token", mResponse);
                                 startActivity(myIntent);
@@ -165,23 +176,9 @@ public class Mockup1 extends AppCompatActivity {
                 queue.addRequestFinishedListener(listener);
 
 
-
-                //SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
-
-
                 Log.d("Login is", login);
                 Log.d("Password is", password);
 
-                /*if(login.equals("username") && password.equals("password")){
-                    Log.d("correct password", password);
-                    Intent nextScreen = new Intent(view.getContext(), MainPage.class);
-                    startActivityForResult(nextScreen, 0);
-                }
-                else
-                    Toast.makeText(view.getContext(), "Login Failed", 3).show();
-                */
-
-                //query login information from database
             }
         });
 

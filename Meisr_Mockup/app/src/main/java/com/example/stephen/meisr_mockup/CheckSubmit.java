@@ -30,6 +30,10 @@ import java.util.Map;
 
 /**
  * Created by kevin on 4/25/2018.
+ * This class is called by ModuleSelection
+ * This class asks you if you are sure you want to submit the survey as it is so far
+ * It makes a volley call to "http://www.meisr.org/api/score_survey/" in order to score the survey
+ * This class calls DisplayModule
  */
 
 public class CheckSubmit extends AppCompatActivity {

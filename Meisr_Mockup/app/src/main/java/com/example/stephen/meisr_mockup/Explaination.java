@@ -37,6 +37,9 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by kevin on 3/29/2018.
+ * This is called by MainActivity
+ * This class displays the instructions of the survey and prompts them for the childs age
+ * This class calls ModuleSelection
  */
 
 public class Explaination extends AppCompatActivity {
@@ -201,8 +204,6 @@ public class Explaination extends AppCompatActivity {
                             System.out.println(qid);
                             System.out.println(qval);
 
-                            // int tempqid = Integer.parseInt(qid);
-                            //int tempqval = Integer.parseInt(qval);
                             ids.add(qid);
                             vals.add(qval);
 
@@ -223,13 +224,19 @@ public class Explaination extends AppCompatActivity {
                             // Code here executes on main thread after user presses button
                             // final NewSurvey test = new NewSurvey(16);
 
+
                             String age = textviewage.getText().toString();
 
-                            //Intent nextScreen = new Intent(view.getContext(), NewSurvey.class);
+                            if (age.equals("")) {
+                                System.out.println("NOAGE");
+                                Toast.makeText(view.getContext(), "Please enter an Age!", 3).show();
+
+                            }else{
+
                             System.out.println("End of Explaination");
                             //System.out.println(mResponse);
                             Intent nextScreen = new Intent(view.getContext(), ModuleSelection.class);
-                            nextScreen.putExtra("age",age);
+                            nextScreen.putExtra("age", age);
                             nextScreen.putExtra("JSONARRAY", array);
                             nextScreen.putExtra("Answers", foo);
                             nextScreen.putExtra("Token", token);
@@ -240,6 +247,7 @@ public class Explaination extends AppCompatActivity {
 
                             //query login information from database
                         }
+                    }
                     });
 
                 }

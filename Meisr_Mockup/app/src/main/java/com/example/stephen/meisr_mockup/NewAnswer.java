@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 /**
  * Created by sabow on 4/5/2018.
+ * Stores answers for Backend
  */
 
 public class NewAnswer implements Serializable {

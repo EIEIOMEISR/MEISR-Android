@@ -36,12 +36,18 @@ import java.util.Map;
 
 /**
  * Created by kevin on 4/14/2018.
+ * This class is called by CheckSubmit
+ * This class takes has an ListView for you to select the Routine you would like to see a score of
+ * A volley call is made to String url = "http://www.meisr.org/api/scores/" and parsed for the module you select
+ * The parsed score are sent to DisplayGraph
  */
 
 public class DisplayModule extends AppCompatActivity {
 
     String scoresArray;
 
+
+    //The Shared Response Functions take values out of volley calls
     private void sharedResponse3(String response){
         SharedPreferences m3 = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = m3.edit();

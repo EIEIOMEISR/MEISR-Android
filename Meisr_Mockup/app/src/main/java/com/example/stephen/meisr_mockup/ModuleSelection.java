@@ -224,7 +224,6 @@ public class ModuleSelection extends AppCompatActivity{
 
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems2);
-        //CustomListAdapter adapter = new CustomListAdapter(this , android.R.layout.simple_list_item_1 , lol);
 
         myListView.setAdapter(adapter);
 

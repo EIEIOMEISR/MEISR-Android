@@ -4,6 +4,7 @@ import android.app.Application;
 
 /**
  * Created by sabow on 4/23/2018.
+ * Saves the Survey object for later reference
  */
 
 public class MyApp extends Application {
