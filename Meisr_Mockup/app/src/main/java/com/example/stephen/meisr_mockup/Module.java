@@ -88,7 +88,7 @@ public class Module implements Serializable {
     }
 
     public JSONObject peekQuestion(int age)
-    {
+    {//View next question without removing it from the list
         JSONObject question = null;
         try {
             for (int i = 0; i < questionList.size(); i++) {
@@ -109,11 +109,6 @@ public class Module implements Serializable {
     public int getId()
     {
         return id;
-    }
-
-    public void pushAnswer(NewAnswer answer)
-    {
-        answers.push(answer);
     }
 
     public boolean isComplete()
@@ -163,7 +158,7 @@ public class Module implements Serializable {
         }
     }
 
-    public void fillThreesAbove(int age)
+    public void fillThreesBelow(int age)
     {
             try {
                 int i = 0;
@@ -184,21 +179,6 @@ public class Module implements Serializable {
                 e.printStackTrace();
             }
         }
-    public void fillInRemainingQuestions()
-    {
-        try {
-            for (int i = 0; i < questionList.size(); i++) {
-                    NewAnswer answer = new NewAnswer(id, 0, questionList.get(i).getInt("id"), questionList.get(i).getString("question_text"), questionList.get(i).getInt("starting_age"));
-                    questionList.remove(i);
-                    answerQuestion(answer);
-                    complete = true;
-            }
-        }
-        catch(JSONException e)
-        {
-            e.printStackTrace();
-        }
-    }
-    
+
 }
 

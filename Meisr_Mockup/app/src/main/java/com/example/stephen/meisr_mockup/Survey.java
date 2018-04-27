@@ -64,7 +64,7 @@ public class Survey implements Serializable {
     }
 
     private void initCurrentAge()
-    {
+    {//Set the initial value of starting age based on the relation of enteredAge to ageMilestones
         if (enteredAge <= 12) {
             currentAge = 0;
         } else if (enteredAge > ageMilestones.get(ageMilestones.size() - 1)) {
@@ -177,7 +177,7 @@ public class Survey implements Serializable {
         int i = 0;
         JSONObject question = null;
         int maxAge = ageMilestones.get(ageMilestones.size() - 1);
-        if(!retrievedPastAnswers.isEmpty()) {
+        if(!retrievedPastAnswers.isEmpty()) {//Check to see if we are going back over questions
             try {
                 for (int j = 0; i < 4; i++) {
                     question = new JSONObject();
@@ -196,13 +196,13 @@ public class Survey implements Serializable {
             }
         }
         else if(pushBackQuestions != null)
-        {
+        {//Check if we have just finished going back over questions
             returnQuestions = pushBackQuestions;
             pushBackQuestions = null;
         }
         else
         {
-            while (i < 4) {
+            while (i < 4) {//Gather questions until enteredAge is reached, the routine is empty, or 4 questions are retrieved
                 if (currentModule.isEmpty()) {
                     currentQuestions = returnQuestions;
                     currentModule.markComplete();
@@ -213,7 +213,7 @@ public class Survey implements Serializable {
                         currentAge++;
                     }
                     if (currentAge > maxAge) {
-                        currentModule.fillThreesAbove(currentAge);
+                        currentModule.fillThreesBelow(currentAge);
                         currentModule.markComplete();
                         currentQuestions = returnQuestions;
                         currentQuestions = returnQuestions;
@@ -222,7 +222,7 @@ public class Survey implements Serializable {
                     else if(currentAge > enteredAge)
                     {
                         currentModule.fillOnesAbove(currentAge, enteredAge);
-                        currentModule.fillThreesAbove(startingAge);
+                        currentModule.fillThreesBelow(startingAge);
                         currentModule.markComplete();
                         currentQuestions = returnQuestions;
                         return returnQuestions;
@@ -250,14 +250,15 @@ public class Survey implements Serializable {
         Collections.sort(ageMilestones);
         int currentIndex = ageMilestones.indexOf(currentAge);
         if(oneCounter + prevOneCounter > 4)
-        {
+        {//This case indicates that the user has failed out of their current age.
+            //All questions from this age to the entered age will be marked as 1.
             if(currentModule.isEmpty())
             {
                 currentModule.markComplete();
             }
             else if(currentIndex != 0) {
                 currentAge = ageMilestones.get(currentIndex - 1);
-
+                //Search for unanswered questions below the current age.
                 JSONObject nextQuestion = currentModule.peekQuestion(currentAge);
                 while (nextQuestion == null) {
                     currentIndex = currentIndex - 1;
@@ -282,14 +283,14 @@ public class Survey implements Serializable {
             prevThreeCounter = 0;
         }
         else if(threeCounter + prevThreeCounter > 4)
-        {
+        {//This case indicated that the user appears to be beyond the current age
             if(currentModule.isEmpty())
             {
                 currentModule.markComplete();
             }
             else if(currentIndex != ageMilestones.size() - 1) {
                 currentAge = ageMilestones.get(currentIndex + 1);
-
+                //Search for unanswered questions above the current age
                 JSONObject nextQuestion = currentModule.peekQuestion(currentAge);
                 while (nextQuestion == null) {
                     currentIndex = currentIndex + 1;
@@ -301,11 +302,11 @@ public class Survey implements Serializable {
                         break;
                     }
                 }
-                currentModule.fillThreesAbove(currentAge);
+                currentModule.fillThreesBelow(currentAge);
             }
             else
             {
-                currentModule.fillThreesAbove(currentAge);
+                currentModule.fillThreesBelow(currentAge);
                 currentModule.markCanComplete();
             }
             oneCounter = 0;
@@ -313,61 +314,6 @@ public class Survey implements Serializable {
             threeCounter = 0;
             prevThreeCounter = 0;
         }
-        /*else
-        {   //In the case that neither of the skipping conditions are met, simply circle through all questions
-            //until the module is empty
-            JSONObject nextQuestion = currentModule.peekQuestion(currentAge);
-            if(currentModule.isEmpty())
-            {
-                currentModule.markComplete();
-            }
-            else
-            {
-                int maxAge = ageMilestones.get(ageMilestones.size() - 1);
-                int minAge = ageMilestones.get(0);
-                currentIndex = ageMilestones.indexOf(currentAge);
-                while(nextQuestion == null)
-                {
-                    currentIndex++;
-                    if(currentIndex >= ageMilestones.size())
-                    {
-                        currentIndex = 0;
-                    }
-                    currentAge = ageMilestones.get(currentIndex);
-                    nextQuestion = currentModule.peekQuestion(currentAge);
-                }
-            }
-            /*if(currentAge != enteredAge) {
-                while (nextQuestion == null) {
-                    if(currentModule.isEmpty())
-                    {
-                        currentModule.markComplete();
-                        break;
-                    }
-                    currentIndex = currentIndex + 1;
-                    if (currentIndex >= 0 && currentIndex <= ageMilestones.size() - 1) {
-                        currentAge = ageMilestones.get(currentIndex);
-                        nextQuestion = currentModule.getQuestion(currentAge);
-                    } else {
-                        currentModule.markCanComplete();
-                    }
-                }
-                prevOneCounter = oneCounter;
-                oneCounter = 0;
-                prevThreeCounter = threeCounter;
-                threeCounter = 0;
-            }
-            else if(nextQuestion == null)
-            {
-                if(currentModule.isEmpty()) {
-                    currentModule.markComplete();
-                }
-                else
-                {
-                    currentModule.markCanComplete();
-                }
-            }
-        }*/
     }
 
     /*
@@ -382,22 +328,22 @@ public class Survey implements Serializable {
         if(currentPastAnswers != null)
         {
             for(int i =  0; i < currentPastAnswers.size(); i++)
-            {
+            {//Retain app history if the user goes back more than once
                 retrievedPastAnswers.push(currentPastAnswers.get(i));
             }
         }
         else
-        {
+        {//Retain the questions displayed when the user pressed back
             pushBackQuestions = currentQuestions;
         }
         try {
             ArrayList<NewAnswer> answers = currentModule.getPreviousAnswers();
             currentPastAnswers = answers;
             if(answers == null)
-            {
+            {//If no questions are answered, return an empty array
                 return returnedQuestions;
             }
-            else {
+            else {//build JSONArray of answers
                 for (int i = 0; i < answers.size(); i++) {
                     JSONObject question = new JSONObject();
                     NewAnswer answer = answers.get(i);
@@ -415,6 +361,8 @@ public class Survey implements Serializable {
         {
             e.printStackTrace();
         }
+        //Revert counter.
+        //Set to 0 if the user continues to go back.
         currentQuestions = returnedQuestions;
         threeCounter = prevThreeCounter;
         prevThreeCounter = 0;
@@ -428,35 +376,6 @@ public class Survey implements Serializable {
     {
         Module thisMod = modules.get(mod);
         return thisMod.getAnswers();
-    }
-
-    /*
-    This method is used to update the answers held in answer objects returned by getLastAnswered().
-    This method should be called whether or not the answers have changed.
-     */
-    public void updateAnswers(Stack<NewAnswer> updated)
-    {
-        while(!updated.isEmpty())
-        {
-            currentModule.pushAnswer(updated.pop());
-        }
-    }
-
-    /*
-    This method puts questions back into the module if the user chooses to go back to previous
-    questions.
-     */
-    public void pushBackQuestionList()
-    {
-        try {
-            for (int i = 0; i < currentQuestions.length(); i++) {
-                currentModule.addQuestion(currentQuestions.getJSONObject(i));
-            }
-        }
-        catch(JSONException e)
-        {
-            e.printStackTrace();
-        }
     }
 
     /*
@@ -474,10 +393,5 @@ public class Survey implements Serializable {
     {
         return modules.get(id).canComplete();
     }
-
-    //To Do
-    //Add network functions
-    //Add question answering
-    //Add question selection algorithm
 
 }
