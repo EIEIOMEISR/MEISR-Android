@@ -85,7 +85,7 @@ public class Mockup1 extends AppCompatActivity {
     final String url = "http://httpbin.org/get?param1=hello";
 // add it to the RequestQueue
     String url2 = "http://httpbin.org/post";
-    String url3 = "http://www.meisr.org/api/rest-auth/login/";
+    String url3 = "https://www.meisr.org/api/rest-auth/login/";
             //"(POST){'test': '', 'password2': ''}";
 
 

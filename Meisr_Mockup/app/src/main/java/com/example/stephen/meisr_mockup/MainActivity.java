@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity
         System.out.println("Token in MainActivity");
         System.out.println(token);
 
-        String url ="http://www.meisr.org/api/questions/?format=json";
+        String url ="https://www.meisr.org/api/questions/?format=json";
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest stringRequest;
         stringRequest = new StringRequest(Request.Method.GET, url,

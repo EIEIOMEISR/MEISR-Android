@@ -401,7 +401,7 @@ public class NewSurvey extends AppCompatActivity {
                     }
 
                     final RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                    String url = "http://www.meisr.org/api/answers/";
+                    String url = "https://www.meisr.org/api/answers/";
 
                     final String subid = Integer.toString(qid);
                     System.out.println("SUBID IS");
@@ -445,7 +445,7 @@ public class NewSurvey extends AppCompatActivity {
                                 }
                             }
 
-                            String url2 = "http://www.meisr.org/api/answers/" + subid + "/";
+                            String url2 = "https://www.meisr.org/api/answers/" + subid + "/";
 
                             StringRequest postRequest = new StringRequest(Request.Method.PUT, url2, new Response.Listener<String>() {
                                 @Override
@@ -609,7 +609,7 @@ public class NewSurvey extends AppCompatActivity {
                         //Instantiate volley call to fix it
 
                         final RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                        String url = "http://www.meisr.org/api/answers/";
+                        String url = "https://www.meisr.org/api/answers/";
 
                         final String subid = Integer.toString(tempid);
                         System.out.println("SUBID IS");
@@ -665,7 +665,7 @@ public class NewSurvey extends AppCompatActivity {
                                     //sharedResponse(response);
 
                                     //Log.d("Error.Response", response);
-                                    String url2 = "http://www.meisr.org/api/answers/" + subid + "/";
+                                    String url2 = "https://www.meisr.org/api/answers/" + subid + "/";
 
                                     StringRequest postRequest = new StringRequest(Request.Method.PUT, url2, new Response.Listener<String>() {
                                         @Override
@@ -1110,7 +1110,7 @@ public class NewSurvey extends AppCompatActivity {
 
                     //Volley POST for the 4 answers
                     final RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                    String url = "http://www.meisr.org/api/answers/";
+                    String url = "https://www.meisr.org/api/answers/";
 
                     final ArrayList<Integer> values = new ArrayList<>();
                     final ArrayList<Integer> qids = new ArrayList<>();
@@ -1171,7 +1171,7 @@ public class NewSurvey extends AppCompatActivity {
                                 //sharedResponse(response);
 
                                 //Log.d("Error.Response", response);
-                                String url2 = "http://www.meisr.org/api/answers/" + qids.get(count) + "/";
+                                String url2 = "https://www.meisr.org/api/answers/" + qids.get(count) + "/";
 
                                 StringRequest postRequest = new StringRequest(Request.Method.PUT, url2, new Response.Listener<String>() {
                                     @Override

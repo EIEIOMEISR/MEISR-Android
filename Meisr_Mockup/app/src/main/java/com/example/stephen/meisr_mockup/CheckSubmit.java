@@ -62,7 +62,7 @@ public class CheckSubmit extends AppCompatActivity {
 
                 StringRequest stringRequest;
 
-                String url = "http://www.meisr.org/api/score_survey/";
+                String url = "https://www.meisr.org/api/score_survey/";
                 System.out.println("STARTED SUBMITTTT!!");
 
 

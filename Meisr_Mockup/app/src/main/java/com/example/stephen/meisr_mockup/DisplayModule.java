@@ -38,7 +38,7 @@ import java.util.Map;
  * Created by kevin on 4/14/2018.
  * This class is called by CheckSubmit
  * This class takes has an ListView for you to select the Routine you would like to see a score of
- * A volley call is made to String url = "http://www.meisr.org/api/scores/" and parsed for the module you select
+ * A volley call is made to String url = "https://www.meisr.org/api/scores/" and parsed for the module you select
  * The parsed score are sent to DisplayGraph
  */
 
@@ -59,7 +59,7 @@ public class DisplayModule extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.display_module);
         System.out.println("WIthin Display Module!");
-        String url = "http://www.meisr.org/api/scores/";
+        String url = "https://www.meisr.org/api/scores/";
         Intent myIntent = getIntent();
 
         final String token = myIntent.getStringExtra("Token");
